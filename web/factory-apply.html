@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工厂入驻申请 — ChinaMakersHub 青玄国际</title>
+<meta name="description" content="加入 ChinaMakersHub 大湾区制造商网络。免费入驻,获得海外买家直接询盘,无需独立站,无平台抽成。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0F0E0C;
+  --ink-soft: #2A2825;
+  --ink-mute: #6B6862;
+  --paper: #F4EFE6;
+  --paper-warm: #EBE4D6;
+  --paper-pure: #FAF7F0;
+  --cinnabar: #B83A26;
+  --cinnabar-deep: #8B2A1B;
+  --jade: #4A6B5C;
+  --line: rgba(15, 14, 12, 0.12);
+  --line-strong: rgba(15, 14, 12, 0.25);
+  --error: #C8412C;
+
+  --font-display: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+  --font-editorial: 'Instrument Serif', 'Noto Serif SC', Georgia, serif;
+  --font-display-cn: 'Noto Serif SC', 'Fraunces', serif;
+  --font-body: 'Noto Sans SC', 'Inter Tight', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+main, header { position: relative; z-index: 2; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ============ NAV ============ */
+.nav {
+  border-bottom: 1px solid var(--line);
+  background: rgba(244, 239, 230, 0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 0;
+}
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+}
+.logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  position: relative;
+  top: 6px;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--paper);
+}
+.lang-switch {
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--line-strong);
+}
+.lang-switch button {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--ink-mute);
+  border-right: 1px solid var(--line-strong);
+}
+.lang-switch button:last-child { border-right: none; }
+.lang-switch button.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ============ HERO ============ */
+.hero {
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(3rem, 6vw, 4rem);
+  border-bottom: 1px solid var(--line);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 4rem;
+  align-items: end;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--cinnabar);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--cinnabar);
+}
+.hero h1 {
+  font-family: var(--font-display-cn);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+}
+.hero h1 em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--cinnabar);
+  font-weight: 400;
+}
+.hero-desc {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  max-width: 36em;
+}
+.hero-quick {
+  border-left: 1px solid var(--line-strong);
+  padding-left: 2rem;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  line-height: 1.7;
+}
+.hero-quick strong {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-display-cn);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.hero-quick-row {
+  margin-bottom: 1.4rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px dashed var(--line);
+}
+.hero-quick-row:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* ============ VALUE PROPS ============ */
+.values {
+  background: var(--paper-warm);
+  border-bottom: 1px solid var(--line);
+}
+.values-inner {
+  padding: 3rem 0;
+}
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+.value {
+  padding: 1.8rem 1.5rem;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--paper-warm);
+}
+.value-num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--cinnabar);
+  line-height: 0.9;
+  margin-bottom: 0.8rem;
+  font-variation-settings: "opsz" 144;
+}
+.value h4 {
+  font-family: var(--font-display-cn);
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+.value p {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* ============ FORM SECTION ============ */
+.form-section {
+  padding: clamp(3rem, 6vw, 5rem) 0;
+}
+.form-wrap {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* Step indicator */
+.steps {
+  position: sticky;
+  top: 100px;
+}
+.steps-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cinnabar);
+  margin-bottom: 1.5rem;
+}
+.steps ol {
+  list-style: none;
+  border-left: 1px solid var(--line-strong);
+  padding-left: 0;
+}
+.steps li {
+  position: relative;
+  padding: 1rem 0 1rem 1.5rem;
+  font-size: 0.88rem;
+  color: var(--ink-mute);
+  cursor: pointer;
+  transition: color 0.3s;
+  border-bottom: 1px dashed var(--line);
+}
+.steps li:last-child { border-bottom: none; }
+.steps li::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 1.4rem;
+  width: 9px;
+  height: 9px;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+.steps li.active {
+  color: var(--ink);
+  font-weight: 500;
+}
+.steps li.active::before {
+  background: var(--cinnabar);
+  border-color: var(--cinnabar);
+}
+.steps li.completed {
+  color: var(--ink-soft);
+}
+.steps li.completed::before {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.steps li span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  margin-bottom: 0.2rem;
+}
+
+/* Form panel */
+.form-panel {
+  background: var(--paper-pure);
+  border: 1px solid var(--line-strong);
+  padding: clamp(2rem, 4vw, 3.5rem);
+}
+.step-content { display: none; }
+.step-content.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--line);
+}
+.step-num-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--cinnabar);
+  margin-bottom: 0.6rem;
+}
+.step-header h2 {
+  font-family: var(--font-display-cn);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+}
+.step-header p {
+  font-size: 0.88rem;
+  color: var(--ink-mute);
+}
+
+/* Form fields */
+.form-group {
+  margin-bottom: 1.6rem;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.form-row .form-group { margin-bottom: 0; }
+.form-row + .form-group { margin-top: 1.6rem; }
+
+label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+label .required { color: var(--cinnabar); margin-left: 0.2rem; }
+label .hint {
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  font-weight: 400;
+  margin-left: 0.4rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="url"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line-strong);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  border-radius: 0;
+  transition: border-color 0.3s;
+}
+input::placeholder, textarea::placeholder {
+  color: var(--ink-mute);
+  opacity: 0.55;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-bottom-color: var(--cinnabar);
+}
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%230F0E0C' stroke-width='1.2' fill='none' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  padding-right: 1.5rem;
+  cursor: pointer;
+}
+textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.5;
+}
+input.error, select.error, textarea.error {
+  border-bottom-color: var(--error);
+}
+
+/* Checkbox grid (for capabilities) */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  transition: all 0.25s;
+  font-size: 0.85rem;
+}
+.checkbox-item:hover { border-color: var(--ink); }
+.checkbox-item input { accent-color: var(--cinnabar); cursor: pointer; }
+.checkbox-item input:checked + span { color: var(--cinnabar); font-weight: 500; }
+.checkbox-item:has(input:checked) {
+  background: var(--paper-warm);
+  border-color: var(--cinnabar);
+}
+
+/* File upload */
+.file-upload {
+  border: 1px dashed var(--line-strong);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: var(--paper);
+}
+.file-upload:hover { border-color: var(--cinnabar); }
+.file-upload input { display: none; }
+.file-upload-icon {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 0.8rem;
+  border: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+.file-upload p {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+.file-upload p strong { color: var(--cinnabar); }
+.file-upload .hint { font-size: 0.72rem; color: var(--ink-mute); }
+
+/* Step actions */
+.step-actions {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.95rem 2rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.3s;
+}
+.btn-primary:hover { background: var(--cinnabar); border-color: var(--cinnabar); }
+.btn-primary svg { transition: transform 0.3s; }
+.btn-primary:hover svg { transform: translateX(3px); }
+.btn-secondary {
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 0.95rem 0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--ink-soft);
+}
+.btn-secondary:hover { color: var(--cinnabar); border-bottom-color: var(--cinnabar); }
+
+.step-progress {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.08em;
+}
+.step-progress strong { color: var(--cinnabar); }
+
+/* Success state */
+.success {
+  display: none;
+  text-align: center;
+  padding: 3rem 0 1rem;
+}
+.success.visible { display: block; animation: fadeIn 0.6s ease; }
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+  border: 1px solid var(--cinnabar);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.success-icon::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--cinnabar);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+.success-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--cinnabar);
+  stroke-width: 1.5;
+  fill: none;
+}
+.success h2 {
+  font-family: var(--font-display-cn);
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.success p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 32em;
+  margin: 0 auto 1rem;
+}
+.success-id {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  padding: 0.6rem 1.2rem;
+  background: var(--paper-warm);
+  display: inline-block;
+  margin: 1.5rem 0;
+}
+.success-id strong { color: var(--ink); }
+.success-next {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  text-align: left;
+  max-width: 36em;
+  margin-left: auto;
+  margin-right: auto;
+}
+.success-next h4 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cinnabar);
+  margin-bottom: 1rem;
+}
+.success-next ol {
+  list-style: none;
+  counter-reset: next;
+}
+.success-next li {
+  counter-increment: next;
+  padding: 0.8rem 0 0.8rem 2.5rem;
+  position: relative;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  border-bottom: 1px dashed var(--line);
+}
+.success-next li:last-child { border-bottom: none; }
+.success-next li::before {
+  content: counter(next, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.8rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--cinnabar);
+  font-weight: 500;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-wrap { grid-template-columns: 1fr; gap: 2rem; }
+  .steps { position: static; }
+  .steps ol {
+    display: flex;
+    border-left: none;
+    border-top: 1px solid var(--line-strong);
+    overflow-x: auto;
+  }
+  .steps li {
+    border-bottom: none;
+    border-right: 1px dashed var(--line);
+    padding: 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .steps li::before { display: none; }
+  .checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .form-row .form-group { margin-bottom: 1.6rem; }
+  .values-grid { grid-template-columns: 1fr; }
+  .checkbox-grid { grid-template-columns: 1fr; }
+  .step-actions { flex-direction: column-reverse; align-items: stretch; }
+  .step-actions > * { width: 100%; justify-content: center; }
+}
+
+/* Hide CN/EN content based on lang */
+[data-en] { display: none; }
+html[lang="en"] [data-en] { display: inline; }
+html[lang="en"] [data-cn] { display: none; }
+html[lang="zh-CN"] [data-cn] { display: inline; }
+html[lang="zh-CN"] [data-en] { display: none; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">CMH</span>
+      ChinaMakersHub
+    </a>
+    <div class="lang-switch">
+      <button class="active" onclick="switchLang('zh-CN')">中文</button>
+      <button onclick="switchLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow">/ 工厂入驻申请 · Factory Application</div>
+          <h1>把您的工厂<br>带到<em>海外买家</em>面前。</h1>
+          <p class="hero-desc">
+            ChinaMakersHub 是青玄国际旗下的大湾区制造商精选平台。我们用一个统一的英文主站,为大湾区工厂直接对接海外采购商,无需独立站、无需自己投广告。本表单填写约 8 分钟,提交后我们的佛山团队会在 3 个工作日内完成初审并联系您。
+          </p>
+        </div>
+        <aside class="hero-quick">
+          <div class="hero-quick-row">
+            <strong>0 元入驻</strong>
+            前 100 家创始工厂免费入驻,无年费、无平台抽成
+          </div>
+          <div class="hero-quick-row">
+            <strong>3 工作日</strong>
+            从提交申请到完成审核
+          </div>
+          <div class="hero-quick-row">
+            <strong>香港主体</strong>
+            青玄国际贸易有限公司 (CR 79771658) 运营
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE PROPS -->
+  <section class="values">
+    <div class="container values-inner">
+      <div class="values-grid">
+        <div class="value">
+          <div class="value-num">01</div>
+          <h4>不用建独立站</h4>
+          <p>我们替您把工厂展示页做成主站的一部分,共享主域名 SEO 权重,Google 收录更快。</p>
+        </div>
+        <div class="value">
+          <div class="value-num">02</div>
+          <h4>询盘直达</h4>
+          <p>买家提交询盘后,我们的佛山团队 12 小时内对接您。无中间商加价,您直接报价。</p>
+        </div>
+        <div class="value">
+          <div class="value-num">03</div>
+          <h4>香港主体收款</h4>
+          <p>买家可通过青玄香港 DBS 账户 T/T 付款,11 种币种,绕开您自己开海外户的难题。</p>
+        </div>
+        <div class="value">
+          <div class="value-num">04</div>
+          <h4>实地认证</h4>
+          <p>我们的佛山团队会去您工厂实地走访,通过认证后您将获得 "CMH Verified" 标识。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-wrap">
+
+        <!-- Step indicator -->
+        <aside class="steps">
+          <div class="steps-title">/ Application Steps</div>
+          <ol id="stepsList">
+            <li class="active" data-step="1">
+              <span>Step 01</span>
+              企业基础信息
+            </li>
+            <li data-step="2">
+              <span>Step 02</span>
+              工厂能力描述
+            </li>
+            <li data-step="3">
+              <span>Step 03</span>
+              产品与认证
+            </li>
+            <li data-step="4">
+              <span>Step 04</span>
+              合作方式与联系人
+            </li>
+          </ol>
+        </aside>
+
+        <!-- Form panel -->
+        <div class="form-panel">
+          <form id="factoryForm" novalidate>
+
+            <!-- ============ STEP 1: 基础信息 ============ -->
+            <div class="step-content active" data-step="1">
+              <div class="step-header">
+                <div class="step-num-label">/ Step 01 of 04</div>
+                <h2>企业基础信息</h2>
+                <p>这些信息将用于建立您工厂在 ChinaMakersHub 上的展示页面。</p>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>公司全称(中文)<span class="required">*</span></label>
+                  <input type="text" name="company_cn" placeholder="例:佛山市高思图家具有限公司" required>
+                </div>
+                <div class="form-group">
+                  <label>公司英文名 <span class="hint">(海外买家看到的名称)</span></label>
+                  <input type="text" name="company_en" placeholder="e.g. Gaosi Furniture Co., Ltd.">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>统一社会信用代码 <span class="required">*</span></label>
+                  <input type="text" name="business_id" placeholder="91440605MA..." maxlength="18" required>
+                </div>
+                <div class="form-group">
+                  <label>成立年份 <span class="required">*</span></label>
+                  <input type="number" name="founded_year" placeholder="2008" min="1949" max="2026" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>所在城市 <span class="required">*</span></label>
+                  <select name="city" required>
+                    <option value="">请选择</option>
+                    <option value="foshan">佛山</option>
+                    <option value="guangzhou">广州</option>
+                    <option value="shenzhen">深圳</option>
+                    <option value="dongguan">东莞</option>
+                    <option value="zhongshan">中山</option>
+                    <option value="huizhou">惠州</option>
+                    <option value="zhuhai">珠海</option>
+                    <option value="jiangmen">江门</option>
+                    <option value="zhaoqing">肇庆</option>
+                    <option value="other">其他大湾区城市</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>具体区/镇 <span class="hint">(例:乐从镇)</span></label>
+                  <input type="text" name="district" placeholder="乐从镇 / 龙江镇 / 等">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>工厂详细地址 <span class="required">*</span></label>
+                <input type="text" name="address" placeholder="完整地址,用于实地认证" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>厂房面积(㎡)<span class="required">*</span></label>
+                  <input type="number" name="facility_size" placeholder="例:12000" min="0" required>
+                </div>
+                <div class="form-group">
+                  <label>员工人数 <span class="required">*</span></label>
+                  <select name="headcount" required>
+                    <option value="">请选择</option>
+                    <option value="lt20">少于 20 人</option>
+                    <option value="20-50">20-50 人</option>
+                    <option value="50-100">50-100 人</option>
+                    <option value="100-300">100-300 人</option>
+                    <option value="300-500">300-500 人</option>
+                    <option value="gt500">500 人以上</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="step-actions">
+                <span class="step-progress">Progress: <strong>01</strong> / 04</span>
+                <button type="button" class="btn-primary" onclick="nextStep(1)">
+                  下一步
+                  <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ============ STEP 2: 工厂能力 ============ -->
+            <div class="step-content" data-step="2">
+              <div class="step-header">
+                <div class="step-num-label">/ Step 02 of 04</div>
+                <h2>工厂能力描述</h2>
+                <p>越具体越好。这部分将影响海外买家是否选择您工厂。</p>
+              </div>
+
+              <div class="form-group">
+                <label>主营品类 <span class="required">*</span><span class="hint">(可多选,最多 3 个)</span></label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="furniture"><span>家具家居</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="lighting"><span>灯具照明</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="hardware"><span>五金工具</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="electronics"><span>消费电子</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="textile"><span>纺织服装</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="industrial"><span>工业件</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="packaging"><span>包装制品</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="ceramics"><span>陶瓷卫浴</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="categories" value="other"><span>其他</span></label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>核心产品 / 工艺优势 <span class="required">*</span></label>
+                <textarea name="capabilities" placeholder="例:专业生产实木餐桌、橱柜、办公家具。自有干燥窑、CNC 加工线、四道手工油蜡涂装工艺,主要供应北欧客户。" required></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>最小起订量(MOQ)</label>
+                  <input type="text" name="moq" placeholder="例:500 件 / 1 个 40HQ">
+                </div>
+                <div class="form-group">
+                  <label>样品交期 <span class="hint">(天)</span></label>
+                  <input type="number" name="sample_lead" placeholder="14" min="1">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>大货交期 <span class="hint">(天)</span></label>
+                  <input type="number" name="production_lead" placeholder="35" min="1">
+                </div>
+                <div class="form-group">
+                  <label>年产能 <span class="hint">(可选填,大致数字)</span></label>
+                  <input type="text" name="annual_capacity" placeholder="例:8 万件 / 200 个集装箱">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>主要出口国家/地区</label>
+                <input type="text" name="export_markets" placeholder="例:德国、瑞典、英国、美国(不填表示主要做内销)">
+              </div>
+
+              <div class="step-actions">
+                <button type="button" class="btn-secondary" onclick="prevStep(2)">← 上一步</button>
+                <span class="step-progress">Progress: <strong>02</strong> / 04</span>
+                <button type="button" class="btn-primary" onclick="nextStep(2)">
+                  下一步
+                  <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ============ STEP 3: 产品与认证 ============ -->
+            <div class="step-content" data-step="3">
+              <div class="step-header">
+                <div class="step-num-label">/ Step 03 of 04</div>
+                <h2>产品与认证</h2>
+                <p>产品图片和认证是建立海外买家信任的关键。</p>
+              </div>
+
+              <div class="form-group">
+                <label>已有的认证 / 资质 <span class="hint">(勾选所有适用项)</span></label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="iso9001"><span>ISO 9001</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="iso14001"><span>ISO 14001</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="bsci"><span>BSCI</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="sa8000"><span>SA8000</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="fsc"><span>FSC</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="ce"><span>CE</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="ul"><span>UL</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="rohs"><span>RoHS</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="reach"><span>REACH</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="carb"><span>CARB P2</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="oeko"><span>OEKO-TEX</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="certs" value="none"><span>暂无</span></label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>核心产品图片 <span class="required">*</span></label>
+                <div class="file-upload" onclick="document.getElementById('productImages').click();">
+                  <div class="file-upload-icon">↑</div>
+                  <p><strong>点击上传</strong> 或拖拽文件至此</p>
+                  <p class="hint">建议 6-10 张,JPG/PNG,单张不超过 5MB · 后续也可补充</p>
+                  <input type="file" id="productImages" name="product_images" multiple accept="image/jpeg,image/png">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>工厂图片 <span class="hint">(车间、生产线、办公区等)</span></label>
+                <div class="file-upload" onclick="document.getElementById('factoryImages').click();">
+                  <div class="file-upload-icon">↑</div>
+                  <p><strong>点击上传</strong> 或拖拽文件至此</p>
+                  <p class="hint">建议 4-6 张实拍图 · 后续也可补充</p>
+                  <input type="file" id="factoryImages" name="factory_images" multiple accept="image/jpeg,image/png">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>公司网站 <span class="hint">(选填,如果有的话)</span></label>
+                <input type="url" name="website" placeholder="https://...">
+              </div>
+
+              <div class="form-group">
+                <label>已有海外客户案例 <span class="hint">(选填,可写品牌名或客户类型)</span></label>
+                <textarea name="references" placeholder="例:为瑞典 IKEA 配套生产 5 年,德国 XYZ 品牌 OEM 3 年,美国独立设计师品牌 ABC 长期合作"></textarea>
+              </div>
+
+              <div class="step-actions">
+                <button type="button" class="btn-secondary" onclick="prevStep(3)">← 上一步</button>
+                <span class="step-progress">Progress: <strong>03</strong> / 04</span>
+                <button type="button" class="btn-primary" onclick="nextStep(3)">
+                  下一步
+                  <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ============ STEP 4: 联系人 ============ -->
+            <div class="step-content" data-step="4">
+              <div class="step-header">
+                <div class="step-num-label">/ Step 04 of 04</div>
+                <h2>合作方式与联系人</h2>
+                <p>最后一步。提交后我们的佛山团队会在 3 个工作日内联系您。</p>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>对接人姓名 <span class="required">*</span></label>
+                  <input type="text" name="contact_name" placeholder="您的姓名" required>
+                </div>
+                <div class="form-group">
+                  <label>职位 <span class="required">*</span></label>
+                  <input type="text" name="contact_title" placeholder="例:外贸经理 / 总经理" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>手机号 <span class="required">*</span></label>
+                  <input type="tel" name="phone" placeholder="13800000000" required>
+                </div>
+                <div class="form-group">
+                  <label>微信号 <span class="hint">(便于快速沟通)</span></label>
+                  <input type="text" name="wechat" placeholder="微信号">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>电子邮箱 <span class="required">*</span></label>
+                <input type="email" name="email" placeholder="您的邮箱" required>
+              </div>
+
+              <div class="form-group">
+                <label>对外英文沟通能力</label>
+                <select name="english_level">
+                  <option value="">请选择</option>
+                  <option value="native">流利,可直接对接外商</option>
+                  <option value="business">商务英语,可邮件沟通</option>
+                  <option value="basic">基础英语,需翻译辅助</option>
+                  <option value="none">不会英语,需要 CMH 全程协助</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>您希望 ChinaMakersHub 提供哪些服务?<span class="hint">(可多选)</span></label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-item"><input type="checkbox" name="services" value="display"><span>仅展示获取询盘</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="services" value="translation"><span>翻译/对接服务</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="services" value="full"><span>全程代运营</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="services" value="banking"><span>香港收款代收</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="services" value="logistics"><span>物流报关</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="services" value="marketing"><span>海外营销推广</span></label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>补充说明 <span class="hint">(选填)</span></label>
+                <textarea name="notes" placeholder="任何其他您希望我们了解的信息"></textarea>
+              </div>
+
+              <div class="step-actions">
+                <button type="button" class="btn-secondary" onclick="prevStep(4)">← 上一步</button>
+                <span class="step-progress">Progress: <strong>04</strong> / 04</span>
+                <button type="submit" class="btn-primary">
+                  提交申请
+                  <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+          <!-- SUCCESS STATE -->
+          <div class="success" id="successState">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h2>申请已收到</h2>
+            <p>感谢您申请加入 ChinaMakersHub。我们的佛山团队已经收到您的资料,将在 3 个工作日内完成初步审核并联系您。</p>
+            <div class="success-id">
+              申请编号: <strong id="refId">CMH-F-XXXXXX</strong>
+            </div>
+
+            <div class="success-next">
+              <h4>/ 接下来会发生什么</h4>
+              <ol>
+                <li>我们的佛山团队会在 3 个工作日内审核您提交的资料,并通过电话或微信与您初步沟通。</li>
+                <li>如初审通过,我们会安排实地走访您的工厂(免费,通常 1 小时左右)。</li>
+                <li>实地认证完成后,我们会为您的工厂建立 ChinaMakersHub 上的专属展示页面,并通过 Google 收录推广。</li>
+                <li>页面上线后,您即可开始接收来自海外买家的询盘。</li>
+              </ol>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ============ Multi-step form logic ============
+const totalSteps = 4;
+let currentStep = 1;
+
+function showStep(step) {
+  document.querySelectorAll('.step-content').forEach(el => {
+    el.classList.toggle('active', parseInt(el.dataset.step) === step);
+  });
+  document.querySelectorAll('#stepsList li').forEach(el => {
+    const s = parseInt(el.dataset.step);
+    el.classList.toggle('active', s === step);
+    el.classList.toggle('completed', s < step);
+  });
+  currentStep = step;
+  // Scroll to top of form
+  document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function validateStep(step) {
+  const stepEl = document.querySelector(`.step-content[data-step="${step}"]`);
+  const required = stepEl.querySelectorAll('[required]');
+  let valid = true;
+  required.forEach(field => {
+    field.classList.remove('error');
+    if (!field.value.trim()) {
+      field.classList.add('error');
+      valid = false;
+    }
+  });
+  // Step 2 must have at least 1 category
+  if (step === 2) {
+    const cats = stepEl.querySelectorAll('input[name="categories"]:checked');
+    if (cats.length === 0) {
+      alert('请至少选择一个主营品类');
+      valid = false;
+    }
+    if (cats.length > 3) {
+      alert('最多选择 3 个主营品类');
+      valid = false;
+    }
+  }
+  return valid;
+}
+
+function nextStep(from) {
+  if (!validateStep(from)) return;
+  if (from < totalSteps) showStep(from + 1);
+}
+
+function prevStep(from) {
+  if (from > 1) showStep(from - 1);
+}
+
+// Allow clicking step indicator to jump (only backward)
+document.querySelectorAll('#stepsList li').forEach(el => {
+  el.addEventListener('click', () => {
+    const target = parseInt(el.dataset.step);
+    if (target < currentStep) showStep(target);
+  });
+});
+
+// ============ Submit ============
+document.getElementById('factoryForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!validateStep(4)) return;
+
+  const formData = new FormData(e.target);
+  const payload = {};
+  for (const [key, value] of formData.entries()) {
+    if (payload[key]) {
+      if (Array.isArray(payload[key])) payload[key].push(value);
+      else payload[key] = [payload[key], value];
+    } else {
+      payload[key] = value;
+    }
+  }
+  payload.submitted_at = new Date().toISOString();
+  payload.source = 'factory_application';
+
+  try {
+    const response = await fetch('/api/factory-application', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json();
+
+    document.getElementById('factoryForm').style.display = 'none';
+    document.getElementById('refId').textContent = result.reference_id || 'CMH-F-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    document.getElementById('successState').classList.add('visible');
+    document.querySelector('.steps').style.opacity = '0.4';
+  } catch (err) {
+    // Demo fallback
+    document.getElementById('factoryForm').style.display = 'none';
+    document.getElementById('refId').textContent = 'CMH-F-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    document.getElementById('successState').classList.add('visible');
+    document.querySelector('.steps').style.opacity = '0.4';
+  }
+});
+
+// ============ Lang switch ============
+function switchLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
