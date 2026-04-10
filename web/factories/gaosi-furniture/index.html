@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaosi Furniture — Solid Wood Furniture Manufacturer in Foshan | ChinaMakersHub</title>
+<meta name="description" content="Gaosi Furniture: 12,000 m² solid wood furniture manufacturer in Foshan, China. OEM for Scandinavian brands. FSC certified. Verified by ChinaMakersHub.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0F0E0C;
+  --ink-soft: #2A2825;
+  --ink-mute: #6B6862;
+  --paper: #F4EFE6;
+  --paper-warm: #EBE4D6;
+  --paper-pure: #FAF7F0;
+  --cinnabar: #B83A26;
+  --cinnabar-deep: #8B2A1B;
+  --jade: #4A6B5C;
+  --line: rgba(15, 14, 12, 0.12);
+  --line-strong: rgba(15, 14, 12, 0.25);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter Tight', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.55;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+main, header, footer { position: relative; z-index: 2; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ============ NAV ============ */
+.nav {
+  border-bottom: 1px solid var(--line);
+  background: rgba(244, 239, 230, 0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 0;
+}
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+}
+.logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  position: relative;
+  top: 6px;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--paper);
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.nav-links a {
+  position: relative;
+  padding: 0.3rem 0;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--cinnabar);
+  transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.4rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--ink);
+  transition: all 0.3s;
+}
+.btn-primary:hover { background: var(--cinnabar); border-color: var(--cinnabar); }
+
+/* ============ BREADCRUMB ============ */
+.breadcrumb {
+  padding: 1.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+}
+.breadcrumb a:hover { color: var(--cinnabar); }
+.breadcrumb .sep { margin: 0 0.6rem; color: var(--line-strong); }
+.breadcrumb .current { color: var(--ink); }
+
+/* ============ FACTORY HEADER ============ */
+.f-header {
+  padding: 3rem 0 4rem;
+  border-bottom: 1px solid var(--line);
+}
+.f-header-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  align-items: end;
+}
+.f-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--cinnabar);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.f-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--cinnabar);
+}
+.f-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-mute);
+  letter-spacing: 0.08em;
+}
+.f-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.2rem;
+  font-variation-settings: "opsz" 144;
+}
+.f-tagline {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: var(--ink-soft);
+  line-height: 1.4;
+  max-width: 28em;
+  margin-bottom: 2rem;
+}
+.f-tagline::before {
+  content: '"';
+  color: var(--cinnabar);
+  font-size: 1.4em;
+  line-height: 0;
+  position: relative;
+  top: 0.15em;
+}
+.f-quick {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+}
+.f-quick-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.f-quick-item::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--cinnabar);
+  border-radius: 50%;
+}
+
+/* Right column: trust card */
+.trust-card {
+  border: 1px solid var(--ink);
+  background: var(--paper-pure);
+  padding: 0;
+}
+.trust-card-top {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.trust-card-top span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cinnabar);
+}
+.trust-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.trust-check svg { stroke: var(--cinnabar); }
+.trust-card-body {
+  padding: 1.6rem;
+}
+.trust-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.85rem;
+}
+.trust-row:last-child { border-bottom: none; }
+.trust-row span:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+}
+.trust-row span:last-child {
+  font-weight: 500;
+  color: var(--ink);
+}
+.trust-card-cta {
+  padding: 0 1.6rem 1.6rem;
+}
+.btn-block {
+  display: flex;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1rem 1.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid var(--ink);
+  transition: all 0.3s;
+  width: 100%;
+}
+.btn-block:hover { background: var(--cinnabar); border-color: var(--cinnabar); }
+.btn-block.outline {
+  background: transparent;
+  color: var(--ink);
+  margin-top: 0.6rem;
+}
+.btn-block.outline:hover { background: var(--ink); color: var(--paper); }
+
+/* ============ GALLERY STRIP ============ */
+.gallery {
+  padding: 0;
+  background: var(--ink);
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(244, 239, 230, 0.1);
+}
+.gallery-item {
+  background: var(--ink);
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+}
+.gallery-item:first-child { grid-row: span 2; aspect-ratio: auto; }
+.gallery-item svg { width: 100%; height: 100%; }
+.gallery-label {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--paper);
+  background: rgba(15, 14, 12, 0.7);
+  padding: 0.4rem 0.7rem;
+  backdrop-filter: blur(4px);
+}
+
+/* ============ SECTION SHARED ============ */
+.section {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+}
+.section-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: end;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--cinnabar);
+}
+.section-num strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  font-variation-settings: "opsz" 144;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-variation-settings: "opsz" 144;
+}
+.section-title em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--cinnabar);
+}
+
+/* ============ ABOUT SECTION ============ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+}
+.about-prose {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+.about-prose p { margin-bottom: 1.2rem; }
+.about-prose p:first-child::first-letter {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 400;
+  float: left;
+  line-height: 0.85;
+  margin: 0.4rem 0.5rem 0 0;
+  color: var(--cinnabar);
+  font-variation-settings: "opsz" 144;
+}
+.about-side {
+  border-left: 1px solid var(--line);
+  padding-left: 2rem;
+}
+.about-side h4 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cinnabar);
+  margin-bottom: 1rem;
+}
+.about-side ul {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+.about-side li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.88rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.about-side li:last-child { border-bottom: none; }
+.about-side li span:first-child { color: var(--ink-mute); font-size: 0.82rem; }
+.about-side li strong { color: var(--ink); font-weight: 500; }
+
+/* ============ CAPABILITIES ============ */
+.capabilities {
+  background: var(--paper-warm);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+.cap {
+  padding: 2rem 1.5rem;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--paper-warm);
+}
+.cap-num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--cinnabar);
+  margin-bottom: 0.6rem;
+}
+.cap h4 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.6rem;
+  font-variation-settings: "opsz" 72;
+}
+.cap p {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* ============ PRODUCTS ============ */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.product {
+  display: flex;
+  flex-direction: column;
+}
+.product-img {
+  aspect-ratio: 1;
+  background: var(--paper-warm);
+  margin-bottom: 1.2rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.product-img svg { width: 100%; height: 100%; }
+.product-num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--cinnabar);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+.product h4 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  font-variation-settings: "opsz" 72;
+}
+.product-meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  display: flex;
+  gap: 1.2rem;
+}
+.product-meta span::before {
+  content: '/ ';
+  color: var(--cinnabar);
+}
+
+/* ============ CERTIFICATIONS ============ */
+.certs {
+  background: var(--paper-pure);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+.cert-card {
+  padding: 1.8rem 1rem;
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  text-align: center;
+  background: var(--paper-pure);
+}
+.cert-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--ink);
+  margin-bottom: 0.8rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.cert-name {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  font-weight: 500;
+}
+.cert-desc {
+  font-size: 0.7rem;
+  color: var(--ink-mute);
+  margin-top: 0.3rem;
+}
+
+/* ============ TIMELINE ============ */
+.timeline {
+  background: var(--ink);
+  color: var(--paper);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.timeline .section-num strong { color: var(--paper); }
+.timeline .section-title { color: var(--paper); }
+.timeline .section-header { border-bottom-color: rgba(244, 239, 230, 0.15); }
+.timeline-list {
+  position: relative;
+  padding-left: 2rem;
+}
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: rgba(244, 239, 230, 0.2);
+}
+.timeline-item {
+  position: relative;
+  padding: 1.4rem 0;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 2rem;
+  border-bottom: 1px solid rgba(244, 239, 230, 0.1);
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 1.8rem;
+  width: 9px;
+  height: 9px;
+  background: var(--cinnabar);
+  border-radius: 50%;
+  margin-left: -4px;
+}
+.timeline-year {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--cinnabar);
+  font-variation-settings: "opsz" 144;
+}
+.timeline-content h4 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 72;
+}
+.timeline-content p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgba(244, 239, 230, 0.65);
+  max-width: 36em;
+}
+
+/* ============ INQUIRY CTA (sticky) ============ */
+.inquiry-cta {
+  background: var(--cinnabar);
+  color: var(--paper);
+  padding: clamp(4rem, 8vw, 6rem) 0;
+  text-align: center;
+  border-top: 1px solid var(--cinnabar);
+  position: relative;
+  overflow: hidden;
+}
+.inquiry-cta::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  left: -150px;
+  width: 400px;
+  height: 400px;
+  border: 1px solid rgba(244, 239, 230, 0.1);
+  border-radius: 50%;
+}
+.inquiry-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -150px;
+  right: -150px;
+  width: 400px;
+  height: 400px;
+  border: 1px solid rgba(244, 239, 230, 0.1);
+  border-radius: 50%;
+}
+.inquiry-cta-inner { position: relative; z-index: 2; }
+.inquiry-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  font-variation-settings: "opsz" 144;
+}
+.inquiry-cta h2 em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+}
+.inquiry-cta p {
+  font-size: 1rem;
+  max-width: 30em;
+  margin: 0 auto 2rem;
+  opacity: 0.85;
+}
+.inquiry-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.btn-light {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 1rem 1.8rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid var(--paper);
+  transition: all 0.3s;
+}
+.btn-light:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn-outline {
+  background: transparent;
+  color: var(--paper);
+  padding: 1rem 1.8rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(244, 239, 230, 0.4);
+  transition: all 0.3s;
+}
+.btn-outline:hover { background: var(--paper); color: var(--cinnabar); border-color: var(--paper); }
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4rem 0 2rem;
+}
+.footer-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: rgba(244, 239, 230, 0.5);
+  line-height: 1.7;
+}
+.footer-bottom strong {
+  display: block;
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+.footer-bank { text-align: right; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .f-header-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-item:first-child { grid-row: auto; aspect-ratio: 4/3; }
+  .gallery-item:last-child { display: none; }
+  .section-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .about-side { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 2rem; }
+  .cap-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .certs-grid { grid-template-columns: repeat(3, 1fr); }
+  .timeline-item { grid-template-columns: 80px 1fr; gap: 1.2rem; }
+}
+@media (max-width: 640px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .cap-grid { grid-template-columns: 1fr; }
+  .products-grid { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-bottom { grid-template-columns: 1fr; }
+  .footer-bank { text-align: left; }
+  .inquiry-buttons { flex-direction: column; align-items: stretch; }
+  .f-quick { gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">CMH</span>
+      ChinaMakersHub
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/categories">Categories</a></li>
+        <li><a href="/factories">Factories</a></li>
+        <li><a href="/how">How It Works</a></li>
+        <li><a href="/journal">Journal</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </nav>
+    <a href="#inquiry" class="btn-primary">
+      Request a Quote
+      <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span class="sep">/</span>
+      <a href="/categories">Categories</a>
+      <span class="sep">/</span>
+      <a href="/categories/furniture">Furniture & Home Living</a>
+      <span class="sep">/</span>
+      <span class="current">Gaosi Furniture</span>
+    </nav>
+  </div>
+
+  <!-- ============ FACTORY HEADER ============ -->
+  <section>
+    <div class="container">
+      <div class="f-header">
+        <div class="f-header-grid">
+          <div>
+            <div class="f-eyebrow">
+              / Verified Workshop
+              <span class="f-id">F-001</span>
+            </div>
+            <h1 class="f-title">Gaosi<br>Furniture</h1>
+            <p class="f-tagline">We are a small family workshop that grew up alongside Foshan's furniture cluster. Our finishing line is what Scandinavian buyers come back for.</p>
+            <div class="f-quick">
+              <span class="f-quick-item">Foshan, Guangdong</span>
+              <span class="f-quick-item">Established 2008</span>
+              <span class="f-quick-item">12,000 m² facility</span>
+              <span class="f-quick-item">180 staff</span>
+            </div>
+          </div>
+
+          <aside class="trust-card">
+            <div class="trust-card-top">
+              <span>Verification Status</span>
+              <span class="trust-check">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                Verified
+              </span>
+            </div>
+            <div class="trust-card-body">
+              <div class="trust-row">
+                <span>Last audit</span>
+                <span>March 2026</span>
+              </div>
+              <div class="trust-row">
+                <span>Auditor</span>
+                <span>CMH Foshan team</span>
+              </div>
+              <div class="trust-row">
+                <span>Years in network</span>
+                <span>2 years</span>
+              </div>
+              <div class="trust-row">
+                <span>Response time</span>
+                <span>~12 hours</span>
+              </div>
+              <div class="trust-row">
+                <span>Languages</span>
+                <span>EN · 中</span>
+              </div>
+            </div>
+            <div class="trust-card-cta">
+              <a href="#inquiry" class="btn-block">
+                Request a Quote
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+              </a>
+              <a href="#" class="btn-block outline">Download Catalog (PDF)</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="600" height="600" fill="#0F0E0C"/>
+          <g stroke="#F4EFE6" stroke-width="0.6" fill="none" opacity="0.4">
+            <rect x="80" y="200" width="440" height="220"/>
+            <line x1="80" y1="300" x2="520" y2="300"/>
+            <line x1="80" y1="380" x2="520" y2="380"/>
+            <line x1="200" y1="200" x2="200" y2="420"/>
+            <line x1="300" y1="200" x2="300" y2="420"/>
+            <line x1="400" y1="200" x2="400" y2="420"/>
+            <line x1="100" y1="420" x2="100" y2="500"/>
+            <line x1="500" y1="420" x2="500" y2="500"/>
+          </g>
+          <text x="300" y="160" font-family="Instrument Serif, serif" font-size="44" font-style="italic" text-anchor="middle" fill="#B83A26">workshop floor</text>
+          <text x="300" y="540" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" fill="#F4EFE6" letter-spacing="3">FOSHAN · GUANGDONG · CHINA</text>
+        </svg>
+        <span class="gallery-label">Workshop · 12,000 m²</span>
+      </div>
+      <div class="gallery-item">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#B83A26"/>
+          <g stroke="#F4EFE6" stroke-width="0.7" fill="none" opacity="0.65">
+            <circle cx="200" cy="150" r="80"/>
+            <circle cx="200" cy="150" r="50"/>
+            <line x1="120" y1="150" x2="280" y2="150"/>
+            <line x1="200" y1="70" x2="200" y2="230"/>
+          </g>
+          <text x="200" y="158" font-family="Fraunces, serif" font-size="22" font-style="italic" text-anchor="middle" fill="#F4EFE6">finishing</text>
+        </svg>
+        <span class="gallery-label">Finishing line</span>
+      </div>
+      <div class="gallery-item">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#EBE4D6"/>
+          <g stroke="#0F0E0C" stroke-width="0.5" fill="none" opacity="0.55">
+            <line x1="0" y1="100" x2="400" y2="100"/>
+            <line x1="0" y1="150" x2="400" y2="150"/>
+            <line x1="0" y1="200" x2="400" y2="200"/>
+            <line x1="100" y1="0" x2="100" y2="300"/>
+            <line x1="200" y1="0" x2="200" y2="300"/>
+            <line x1="300" y1="0" x2="300" y2="300"/>
+          </g>
+          <text x="200" y="160" font-family="Fraunces, serif" font-size="20" font-style="italic" text-anchor="middle" fill="#B83A26">drying kiln</text>
+        </svg>
+        <span class="gallery-label">In-house drying kiln</span>
+      </div>
+      <div class="gallery-item">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="300" fill="#0F0E0C"/>
+          <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.4">
+            <path d="M50 250 L100 100 L300 100 L350 250 Z"/>
+            <path d="M100 100 L200 50 L300 100"/>
+            <line x1="200" y1="50" x2="200" y2="250"/>
+          </g>
+          <text x="200" y="180" font-family="Instrument Serif, serif" font-size="20" font-style="italic" text-anchor="middle" fill="#B83A26">CNC line</text>
+        </svg>
+        <span class="gallery-label">CNC milling line</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">
+          <strong>01</strong>
+          About
+        </div>
+        <h2 class="section-title">A family workshop that <em>grew up</em> with Foshan's furniture cluster.</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-prose">
+          <p>Founded in 2008 by master craftsman Wang Jiamin, Gaosi Furniture began as a 400 m² workshop producing solid oak dining sets for the domestic Chinese market. Over the next 15 years, the workshop grew alongside the Lecong furniture cluster — Foshan's mid-to-high tier production heartland — eventually expanding to a 12,000 m² facility with full vertical integration from kiln-drying to finishing.</p>
+
+          <p>Today Gaosi specializes in solid wood and engineered furniture for European buyers, with a particular focus on Scandinavian-aesthetic case goods. The workshop holds OEM contracts with three Nordic furniture brands and supplies hospitality projects across Northern Europe.</p>
+
+          <p>What sets Gaosi apart from larger Foshan factories is its in-house finishing line — a four-stage hand-applied oil and wax process that produces the matte, natural look favored by European designers. This is the reason most clients return for repeat orders.</p>
+
+          <p>The workshop is BSCI audited and FSC certified for both FM and CoC. Sample lead time is typically 14 days; production runs of 500–1,000 units take 35–45 days; full container loads ship FOB Shenzhen via the workshop's regular weekly consolidation.</p>
+        </div>
+
+        <aside class="about-side">
+          <h4>At a glance</h4>
+          <ul>
+            <li><span>Founded</span><strong>2008</strong></li>
+            <li><span>Founder</span><strong>Wang Jiamin</strong></li>
+            <li><span>Location</span><strong>Foshan, Guangdong</strong></li>
+            <li><span>Facility size</span><strong>12,000 m²</strong></li>
+            <li><span>Headcount</span><strong>180</strong></li>
+            <li><span>Annual output</span><strong>~85,000 units</strong></li>
+            <li><span>Export ratio</span><strong>78%</strong></li>
+            <li><span>Main markets</span><strong>EU · UK · US</strong></li>
+            <li><span>FOB port</span><strong>Shenzhen</strong></li>
+          </ul>
+
+          <h4 style="margin-top: 2.5rem;">Trade terms</h4>
+          <ul>
+            <li><span>MOQ</span><strong>500 units</strong></li>
+            <li><span>Sample lead</span><strong>14 days</strong></li>
+            <li><span>Production lead</span><strong>35–45 days</strong></li>
+            <li><span>Payment</span><strong>30% TT + 70%</strong></li>
+            <li><span>Incoterms</span><strong>FOB · CIF · DDP</strong></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAPABILITIES ============ -->
+  <section class="section capabilities">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">
+          <strong>02</strong>
+          Capabilities
+        </div>
+        <h2 class="section-title">What we can <em>actually make</em> on the workshop floor.</h2>
+      </div>
+
+      <div class="cap-grid">
+        <div class="cap">
+          <div class="cap-num">/ 001</div>
+          <h4>Solid Wood</h4>
+          <p>Oak, walnut, ash, cherry, beech. Sourced from FSC-certified suppliers in North America and Northern Europe. In-house kiln drying.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-num">/ 002</div>
+          <h4>Engineered Wood</h4>
+          <p>Plywood, MDF, particle board with veneer overlay. CARB P2 and EPA TSCA Title VI compliant for US-bound shipments.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-num">/ 003</div>
+          <h4>Hand Finishing</h4>
+          <p>Four-stage oil and wax application by trained finishers. Natural matte look. No sprayed lacquer. The reason Scandinavian buyers come back.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-num">/ 004</div>
+          <h4>CNC Milling</h4>
+          <p>Six 5-axis CNC machines for complex curves and joinery. Tolerance ±0.1mm. Good for case goods, chair components, and custom panels.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-num">/ 005</div>
+          <h4>Sample Development</h4>
+          <p>14-day sample lead time from approved technical drawings. Iteration round included in quote. Drawings handled in mm or imperial units.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-num">/ 006</div>
+          <h4>Container Loading</h4>
+          <p>In-house QC inspection before loading. Loading photos provided. Weekly consolidation to Shenzhen Yantian and Shekou.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-num">/ 007</div>
+          <h4>Custom Hardware</h4>
+          <p>Brass, stainless, blackened steel hardware sourced from local Foshan suppliers. Custom branding (laser etch / debossing) available.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-num">/ 008</div>
+          <h4>Packaging</h4>
+          <p>Five-layer corrugated with foam corner protection as standard. Custom retail-ready packaging available with 1,000+ unit orders.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCTS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">
+          <strong>03</strong>
+          Selected Work
+        </div>
+        <h2 class="section-title">Recent pieces shipped to <em>European buyers.</em></h2>
+      </div>
+
+      <div class="products-grid">
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="400" fill="#EBE4D6"/>
+              <g stroke="#0F0E0C" stroke-width="0.6" fill="none" opacity="0.5">
+                <rect x="80" y="180" width="240" height="40"/>
+                <line x1="100" y1="220" x2="100" y2="320"/>
+                <line x1="300" y1="220" x2="300" y2="320"/>
+                <line x1="80" y1="180" x2="80" y2="160"/>
+                <line x1="320" y1="180" x2="320" y2="160"/>
+              </g>
+              <text x="200" y="370" font-family="Instrument Serif, serif" font-size="18" font-style="italic" text-anchor="middle" fill="#B83A26">oak dining table</text>
+            </svg>
+          </div>
+          <div class="product-num">/ P-001</div>
+          <h4>Bergen Dining Table</h4>
+          <div class="product-meta">
+            <span>solid oak</span>
+            <span>200×90cm</span>
+            <span>FOB $480</span>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="400" fill="#0F0E0C"/>
+              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.5">
+                <path d="M120 280 L120 180 L280 180 L280 280"/>
+                <line x1="120" y1="240" x2="280" y2="240"/>
+                <line x1="200" y1="180" x2="200" y2="280"/>
+                <line x1="120" y1="280" x2="100" y2="320"/>
+                <line x1="280" y1="280" x2="300" y2="320"/>
+              </g>
+              <text x="200" y="370" font-family="Instrument Serif, serif" font-size="18" font-style="italic" text-anchor="middle" fill="#B83A26">walnut sideboard</text>
+            </svg>
+          </div>
+          <div class="product-num">/ P-002</div>
+          <h4>Oslo Sideboard</h4>
+          <div class="product-meta">
+            <span>walnut</span>
+            <span>180×45cm</span>
+            <span>FOB $620</span>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="400" fill="#B83A26"/>
+              <g stroke="#F4EFE6" stroke-width="0.7" fill="none" opacity="0.65">
+                <path d="M150 280 L150 180 Q150 140 200 140 Q250 140 250 180 L250 280"/>
+                <line x1="150" y1="220" x2="250" y2="220"/>
+                <line x1="150" y1="280" x2="120" y2="340"/>
+                <line x1="250" y1="280" x2="280" y2="340"/>
+              </g>
+              <text x="200" y="370" font-family="Fraunces, serif" font-size="18" font-style="italic" text-anchor="middle" fill="#F4EFE6">ash chair</text>
+            </svg>
+          </div>
+          <div class="product-num">/ P-003</div>
+          <h4>Stockholm Chair</h4>
+          <div class="product-meta">
+            <span>ash</span>
+            <span>H 78cm</span>
+            <span>FOB $85</span>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="400" fill="#EBE4D6"/>
+              <g stroke="#0F0E0C" stroke-width="0.5" fill="none" opacity="0.5">
+                <rect x="100" y="100" width="200" height="200"/>
+                <line x1="100" y1="200" x2="300" y2="200"/>
+                <line x1="200" y1="100" x2="200" y2="300"/>
+              </g>
+              <text x="200" y="370" font-family="Fraunces, serif" font-size="18" font-style="italic" text-anchor="middle" fill="#B83A26">oak shelving</text>
+            </svg>
+          </div>
+          <div class="product-num">/ P-004</div>
+          <h4>Helsinki Shelf</h4>
+          <div class="product-meta">
+            <span>solid oak</span>
+            <span>180×80cm</span>
+            <span>FOB $290</span>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="400" fill="#0F0E0C"/>
+              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.5">
+                <rect x="80" y="220" width="240" height="100"/>
+                <line x1="80" y1="270" x2="320" y2="270"/>
+                <line x1="200" y1="220" x2="200" y2="320"/>
+                <line x1="100" y1="320" x2="100" y2="350"/>
+                <line x1="300" y1="320" x2="300" y2="350"/>
+              </g>
+              <text x="200" y="370" font-family="Instrument Serif, serif" font-size="18" font-style="italic" text-anchor="middle" fill="#B83A26">walnut bench</text>
+            </svg>
+          </div>
+          <div class="product-num">/ P-005</div>
+          <h4>Aarhus Bench</h4>
+          <div class="product-meta">
+            <span>walnut</span>
+            <span>140×40cm</span>
+            <span>FOB $210</span>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">
+            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="400" fill="#B83A26"/>
+              <g stroke="#F4EFE6" stroke-width="0.7" fill="none" opacity="0.65">
+                <rect x="120" y="140" width="160" height="180"/>
+                <line x1="120" y1="220" x2="280" y2="220"/>
+                <circle cx="200" cy="180" r="6"/>
+                <circle cx="200" cy="270" r="6"/>
+              </g>
+              <text x="200" y="370" font-family="Fraunces, serif" font-size="18" font-style="italic" text-anchor="middle" fill="#F4EFE6">cherry cabinet</text>
+            </svg>
+          </div>
+          <div class="product-num">/ P-006</div>
+          <h4>Lund Cabinet</h4>
+          <div class="product-meta">
+            <span>cherry</span>
+            <span>80×170cm</span>
+            <span>FOB $540</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section class="section certs">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">
+          <strong>04</strong>
+          Certifications
+        </div>
+        <h2 class="section-title">Certified by the bodies your <em>buyers will check.</em></h2>
+      </div>
+
+      <div class="certs-grid">
+        <div class="cert-card">
+          <div class="cert-mark">FSC</div>
+          <div class="cert-name">FSC</div>
+          <div class="cert-desc">Chain of Custody</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-mark">BSCI</div>
+          <div class="cert-name">BSCI</div>
+          <div class="cert-desc">Social audit · Grade A</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-mark">P2</div>
+          <div class="cert-name">CARB P2</div>
+          <div class="cert-desc">Formaldehyde · US</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-mark">VI</div>
+          <div class="cert-name">EPA TSCA VI</div>
+          <div class="cert-desc">Composite wood · US</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-mark">ISO</div>
+          <div class="cert-name">ISO 9001</div>
+          <div class="cert-desc">Quality management</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-mark">SGS</div>
+          <div class="cert-name">SGS Audit</div>
+          <div class="cert-desc">Annual factory audit</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="section timeline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-num">
+          <strong>05</strong>
+          Story
+        </div>
+        <h2 class="section-title">Eighteen years on the <em>workshop floor.</em></h2>
+      </div>
+
+      <div class="timeline-list">
+        <div class="timeline-item">
+          <div class="timeline-year">2008</div>
+          <div class="timeline-content">
+            <h4>Workshop founded</h4>
+            <p>Wang Jiamin opens a 400 m² workshop in Lecong, Foshan, producing solid oak dining sets for the domestic Chinese market.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2013</div>
+          <div class="timeline-content">
+            <h4>First export order</h4>
+            <p>First container of dining tables ships to a German importer. Workshop begins building dedicated export production line.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2017</div>
+          <div class="timeline-content">
+            <h4>FSC certification</h4>
+            <p>Achieves FSC Chain of Custody certification, opens path to large European retailers and hospitality projects.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-content">
+            <h4>Facility expansion</h4>
+            <p>Moves to current 12,000 m² facility with in-house kiln drying, CNC line, and dedicated finishing department.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2022</div>
+          <div class="timeline-content">
+            <h4>Scandinavian OEM partnerships</h4>
+            <p>Signs OEM agreements with two Nordic furniture brands, establishing dedicated production cell for Scandinavian-spec products.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-content">
+            <h4>Joins ChinaMakersHub network</h4>
+            <p>Onboards as a CMH verified workshop, expanding direct buyer access through the platform's curated network.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INQUIRY CTA ============ -->
+  <section class="inquiry-cta" id="inquiry">
+    <div class="container inquiry-cta-inner">
+      <h2>Talk to <em>Gaosi</em> directly.</h2>
+      <p>Submit an inquiry and our Foshan team will route it to Gaosi within 12 hours. No middlemen markup, no obligation.</p>
+      <div class="inquiry-buttons">
+        <a href="/inquiry?factory=F-001" class="btn-light">
+          Request a Quote
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+        </a>
+        <a href="#" class="btn-outline">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <div>
+        <strong>Qingxuan International Trading Limited</strong>
+        Hong Kong CR No. 79771658<br>
+        Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong<br>
+        © 2026 ChinaMakersHub. All rights reserved.
+      </div>
+      <div class="footer-bank">
+        <strong>Banking Partner</strong>
+        DBS Bank (Hong Kong) Limited · SWIFT: DHBKHKHH<br>
+        Multi-currency T/T accepted<br>
+        info@chinamakershub.com
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

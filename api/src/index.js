@@ -1,0 +1,592 @@
+/**
+ * ChinaMakersHub - Unified API Worker
+ *
+ * 扩展自 cmh-inquiry-api,新增工厂申请功能
+ * 部署: 替换原 src/index.js,执行 wrangler deploy
+ *
+ * Endpoints:
+ *   POST /api/inquiry              买家询盘
+ *   POST /api/factory-application  工厂入驻申请
+ *   GET  /api/inquiry/:id          查询询盘 (admin)
+ *   GET  /api/factory/:id          查询工厂申请 (admin)
+ *   GET  /api/health               健康检查
+ */
+
+// ============ CONFIG ============
+const CONFIG = {
+  FEISHU_WEBHOOK: 'https://open.feishu.cn/open-apis/bot/v2/hook/8dddb2cb-a95a-47cf-8a00-d1c235988d95',
+  WECOM_WEBHOOK: 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=50497df9-0602-486b-938f-1a6641bcd4fc',
+  ADMIN_EMAIL: 'info@chinamakershub.com',
+  ALLOWED_ORIGINS: [
+    'https://chinamakershub.com',
+    'https://www.chinamakershub.com',
+    'http://localhost:8788',
+  ],
+  RATE_LIMIT_PER_HOUR: 5,
+  MIN_INQUIRY_LENGTH: 20,
+};
+
+// ============ MAIN HANDLER ============
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const origin = request.headers.get('Origin') || '';
+
+    if (request.method === 'OPTIONS') return handleCORS(origin);
+
+    // Routes
+    if (url.pathname === '/api/inquiry' && request.method === 'POST') {
+      return handleInquiry(request, env, ctx, origin);
+    }
+    if (url.pathname === '/api/factory-application' && request.method === 'POST') {
+      return handleFactoryApplication(request, env, ctx, origin);
+    }
+    if (url.pathname.startsWith('/api/inquiry/') && request.method === 'GET') {
+      return handleGetInquiry(request, env, url, origin);
+    }
+    if (url.pathname.startsWith('/api/factory/') && request.method === 'GET') {
+      return handleGetFactory(request, env, url, origin);
+    }
+    if (url.pathname === '/api/health') {
+      return jsonResponse({ status: 'ok', service: 'cmh-api', version: '0.2' }, 200, origin);
+    }
+
+    return jsonResponse({ error: 'Not found' }, 404, origin);
+  },
+};
+
+// ============ INQUIRY (买家询盘) ============
+async function handleInquiry(request, env, ctx, origin) {
+  try {
+    let body;
+    try { body = await request.json(); }
+    catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400, origin); }
+
+    const validation = validateInquiry(body);
+    if (!validation.valid) return jsonResponse({ error: validation.error }, 400, origin);
+
+    const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+    if (!await checkRateLimit(env, clientIP, 'inquiries')) {
+      return jsonResponse({ error: 'Too many requests. Please try again later.' }, 429, origin);
+    }
+
+    if (isSpam(body.inquiry) || isSpam(body.name) || isSpam(body.company)) {
+      return jsonResponse({ success: true, reference_id: 'CMH-XXXXXX' }, 200, origin);
+    }
+
+    const referenceId = generateReferenceId('CMH-');
+    const cfCountry = request.headers.get('CF-IPCountry') || 'unknown';
+    const cfCity = request.headers.get('CF-IPCity') || '';
+
+    const inquiryRecord = {
+      reference_id: referenceId,
+      name: sanitize(body.name),
+      company: sanitize(body.company),
+      email: sanitize(body.email).toLowerCase(),
+      country: body.country || cfCountry,
+      phone_code: body.phone_code || '',
+      whatsapp: sanitize(body.whatsapp || ''),
+      category: body.category || '',
+      quantity: body.quantity || '',
+      timeline: body.timeline || '',
+      inquiry: sanitize(body.inquiry),
+      utm_source: body.tracking?.utm_source || 'direct',
+      utm_medium: body.tracking?.utm_medium || '',
+      utm_campaign: body.tracking?.utm_campaign || '',
+      utm_term: body.tracking?.utm_term || '',
+      utm_content: body.tracking?.utm_content || '',
+      referrer: body.tracking?.referrer || '',
+      landing_page: body.tracking?.landing_page || '',
+      user_agent: body.tracking?.user_agent || '',
+      language: body.tracking?.language || '',
+      timezone: body.tracking?.timezone || '',
+      ip_address: clientIP,
+      ip_country: cfCountry,
+      ip_city: cfCity,
+      status: 'new',
+      created_at: new Date().toISOString(),
+    };
+
+    await env.DB.prepare(`
+      INSERT INTO inquiries (
+        reference_id, name, company, email, country,
+        phone_code, whatsapp, category, quantity, timeline, inquiry,
+        utm_source, utm_medium, utm_campaign, utm_term, utm_content,
+        referrer, landing_page, user_agent, language, timezone,
+        ip_address, ip_country, ip_city, status, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      inquiryRecord.reference_id, inquiryRecord.name, inquiryRecord.company,
+      inquiryRecord.email, inquiryRecord.country, inquiryRecord.phone_code,
+      inquiryRecord.whatsapp, inquiryRecord.category, inquiryRecord.quantity,
+      inquiryRecord.timeline, inquiryRecord.inquiry,
+      inquiryRecord.utm_source, inquiryRecord.utm_medium, inquiryRecord.utm_campaign,
+      inquiryRecord.utm_term, inquiryRecord.utm_content,
+      inquiryRecord.referrer, inquiryRecord.landing_page, inquiryRecord.user_agent,
+      inquiryRecord.language, inquiryRecord.timezone,
+      inquiryRecord.ip_address, inquiryRecord.ip_country, inquiryRecord.ip_city,
+      inquiryRecord.status, inquiryRecord.created_at
+    ).run();
+
+    ctx.waitUntil(Promise.all([
+      sendInquiryFeishu(inquiryRecord),
+      sendInquiryWecom(inquiryRecord),
+    ]).catch(err => console.error('Notification error:', err)));
+
+    return jsonResponse({
+      success: true,
+      reference_id: referenceId,
+      message: 'Inquiry received. We will respond within 48 hours.'
+    }, 200, origin);
+
+  } catch (err) {
+    console.error('handleInquiry error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ FACTORY APPLICATION (工厂入驻) ============
+async function handleFactoryApplication(request, env, ctx, origin) {
+  try {
+    let body;
+    try { body = await request.json(); }
+    catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400, origin); }
+
+    // Validate required fields
+    const required = ['company_cn', 'business_id', 'contact_name', 'phone', 'email'];
+    for (const f of required) {
+      if (!body[f] || !String(body[f]).trim()) {
+        return jsonResponse({ error: `Missing required field: ${f}` }, 400, origin);
+      }
+    }
+    if (!isValidEmail(body.email)) {
+      return jsonResponse({ error: 'Invalid email' }, 400, origin);
+    }
+    // 统一社会信用代码 18 位校验
+    if (!/^[0-9A-HJ-NPQRTUWXY]{18}$/.test(body.business_id)) {
+      return jsonResponse({ error: '统一社会信用代码格式不正确' }, 400, origin);
+    }
+
+    const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+    if (!await checkRateLimit(env, clientIP, 'factory_applications')) {
+      return jsonResponse({ error: 'Too many requests. Please try again later.' }, 429, origin);
+    }
+
+    // Check duplicate by business_id
+    const existing = await env.DB.prepare(
+      'SELECT reference_id, status FROM factory_applications WHERE business_id = ?'
+    ).bind(body.business_id).first();
+    if (existing) {
+      return jsonResponse({
+        error: '该统一社会信用代码已提交过申请',
+        reference_id: existing.reference_id,
+        status: existing.status
+      }, 409, origin);
+    }
+
+    const referenceId = generateReferenceId('CMH-F-');
+    const now = new Date().toISOString();
+
+    // Normalize array fields (multi-checkbox can come as array or string)
+    const normalizeArray = v => {
+      if (!v) return '[]';
+      if (Array.isArray(v)) return JSON.stringify(v);
+      return JSON.stringify([v]);
+    };
+
+    const record = {
+      reference_id: referenceId,
+      company_cn: sanitize(body.company_cn),
+      company_en: sanitize(body.company_en || ''),
+      business_id: sanitize(body.business_id),
+      founded_year: parseInt(body.founded_year) || null,
+      city: sanitize(body.city || ''),
+      district: sanitize(body.district || ''),
+      address: sanitize(body.address || ''),
+      facility_size: parseInt(body.facility_size) || null,
+      headcount: sanitize(body.headcount || ''),
+      categories: normalizeArray(body.categories),
+      capabilities: sanitize(body.capabilities || ''),
+      moq: sanitize(body.moq || ''),
+      sample_lead: parseInt(body.sample_lead) || null,
+      production_lead: parseInt(body.production_lead) || null,
+      annual_capacity: sanitize(body.annual_capacity || ''),
+      export_markets: sanitize(body.export_markets || ''),
+      certs: normalizeArray(body.certs),
+      product_images: '[]',
+      factory_images: '[]',
+      website: sanitize(body.website || ''),
+      references_text: sanitize(body.references || ''),
+      contact_name: sanitize(body.contact_name),
+      contact_title: sanitize(body.contact_title || ''),
+      phone: sanitize(body.phone),
+      wechat: sanitize(body.wechat || ''),
+      email: sanitize(body.email).toLowerCase(),
+      english_level: sanitize(body.english_level || ''),
+      services: normalizeArray(body.services),
+      notes: sanitize(body.notes || ''),
+      status: 'submitted',
+      ip_address: clientIP,
+      user_agent: request.headers.get('User-Agent') || '',
+      created_at: now,
+      updated_at: now,
+    };
+
+    await env.DB.prepare(`
+      INSERT INTO factory_applications (
+        reference_id, company_cn, company_en, business_id, founded_year,
+        city, district, address, facility_size, headcount,
+        categories, capabilities, moq, sample_lead, production_lead, annual_capacity, export_markets,
+        certs, product_images, factory_images, website, references_text,
+        contact_name, contact_title, phone, wechat, email, english_level, services, notes,
+        status, ip_address, user_agent, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      record.reference_id, record.company_cn, record.company_en, record.business_id, record.founded_year,
+      record.city, record.district, record.address, record.facility_size, record.headcount,
+      record.categories, record.capabilities, record.moq, record.sample_lead, record.production_lead, record.annual_capacity, record.export_markets,
+      record.certs, record.product_images, record.factory_images, record.website, record.references_text,
+      record.contact_name, record.contact_title, record.phone, record.wechat, record.email, record.english_level, record.services, record.notes,
+      record.status, record.ip_address, record.user_agent, record.created_at, record.updated_at
+    ).run();
+
+    ctx.waitUntil(Promise.all([
+      sendFactoryFeishu(record),
+      sendFactoryWecom(record),
+    ]).catch(err => console.error('Notification error:', err)));
+
+    return jsonResponse({
+      success: true,
+      reference_id: referenceId,
+      message: '申请已收到。我们的佛山团队会在 3 个工作日内完成审核并联系您。'
+    }, 200, origin);
+
+  } catch (err) {
+    console.error('handleFactoryApplication error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ FEISHU NOTIFICATIONS ============
+async function sendInquiryFeishu(inquiry) {
+  const card = {
+    msg_type: 'interactive',
+    card: {
+      config: { wide_screen_mode: true },
+      header: {
+        title: { tag: 'plain_text', content: `🎯 新询盘 ${inquiry.reference_id}` },
+        template: 'red'
+      },
+      elements: [
+        {
+          tag: 'div',
+          fields: [
+            { is_short: true, text: { tag: 'lark_md', content: `**👤 姓名**\n${inquiry.name}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**🏢 公司**\n${inquiry.company}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**📧 邮箱**\n${inquiry.email}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**🌍 国家**\n${inquiry.country} (IP: ${inquiry.ip_country})` } },
+          ]
+        },
+        { tag: 'hr' },
+        {
+          tag: 'div',
+          fields: [
+            { is_short: true, text: { tag: 'lark_md', content: `**📱 WhatsApp**\n${inquiry.phone_code} ${inquiry.whatsapp || '未填'}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**📦 品类**\n${inquiry.category || '未指定'}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**🔢 数量**\n${inquiry.quantity || '未指定'}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**⏰ 时间**\n${inquiry.timeline || '未指定'}` } },
+          ]
+        },
+        { tag: 'hr' },
+        { tag: 'div', text: { tag: 'lark_md', content: `**📝 询盘内容:**\n${inquiry.inquiry}` } },
+        { tag: 'hr' },
+        {
+          tag: 'note',
+          elements: [
+            { tag: 'plain_text', content: `来源: ${inquiry.utm_source} / ${inquiry.utm_medium || 'organic'} · ${inquiry.created_at}` }
+          ]
+        },
+        {
+          tag: 'action',
+          actions: [
+            {
+              tag: 'button',
+              text: { tag: 'plain_text', content: '📧 回复邮件' },
+              url: `mailto:${inquiry.email}?subject=Re:%20Your%20inquiry%20to%20ChinaMakersHub%20[${inquiry.reference_id}]`,
+              type: 'primary'
+            },
+            ...(inquiry.whatsapp ? [{
+              tag: 'button',
+              text: { tag: 'plain_text', content: '💬 WhatsApp' },
+              url: `https://wa.me/${(inquiry.phone_code + inquiry.whatsapp).replace(/[^0-9]/g, '')}`,
+              type: 'default'
+            }] : [])
+          ]
+        }
+      ]
+    }
+  };
+  return postWebhook(CONFIG.FEISHU_WEBHOOK, card);
+}
+
+async function sendFactoryFeishu(record) {
+  const categories = JSON.parse(record.categories || '[]').join('、');
+  const certs = JSON.parse(record.certs || '[]').join('、') || '无';
+  const services = JSON.parse(record.services || '[]').join('、') || '无';
+
+  const card = {
+    msg_type: 'interactive',
+    card: {
+      config: { wide_screen_mode: true },
+      header: {
+        title: { tag: 'plain_text', content: `🏭 新工厂入驻申请 ${record.reference_id}` },
+        template: 'green'
+      },
+      elements: [
+        {
+          tag: 'div',
+          text: { tag: 'lark_md', content: `**${record.company_cn}**\n${record.company_en || ''}` }
+        },
+        { tag: 'hr' },
+        {
+          tag: 'div',
+          fields: [
+            { is_short: true, text: { tag: 'lark_md', content: `**📍 城市**\n${record.city} ${record.district}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**📅 成立**\n${record.founded_year || '未填'} 年` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**🏗️ 厂房**\n${record.facility_size || '?'} ㎡` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**👥 人员**\n${record.headcount || '未填'}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**📦 品类**\n${categories || '未填'}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**🏅 认证**\n${certs}` } },
+          ]
+        },
+        { tag: 'hr' },
+        {
+          tag: 'div',
+          text: { tag: 'lark_md', content: `**🛠️ 工厂能力:**\n${record.capabilities || '未填'}` }
+        },
+        { tag: 'hr' },
+        {
+          tag: 'div',
+          fields: [
+            { is_short: true, text: { tag: 'lark_md', content: `**👤 联系人**\n${record.contact_name} (${record.contact_title})` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**📞 电话**\n${record.phone}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**💬 微信**\n${record.wechat || '未填'}` } },
+            { is_short: true, text: { tag: 'lark_md', content: `**📧 邮箱**\n${record.email}` } },
+          ]
+        },
+        { tag: 'hr' },
+        {
+          tag: 'div',
+          text: { tag: 'lark_md', content: `**🤝 期望服务:** ${services}\n**🌐 英语能力:** ${record.english_level || '未填'}` }
+        },
+        ...(record.notes ? [
+          { tag: 'hr' },
+          { tag: 'div', text: { tag: 'lark_md', content: `**📝 备注:**\n${record.notes}` } }
+        ] : []),
+        { tag: 'hr' },
+        {
+          tag: 'note',
+          elements: [
+            { tag: 'plain_text', content: `统一社会信用代码: ${record.business_id} · ${record.created_at}` }
+          ]
+        },
+        {
+          tag: 'action',
+          actions: [
+            {
+              tag: 'button',
+              text: { tag: 'plain_text', content: '📞 立即拨打' },
+              url: `tel:${record.phone}`,
+              type: 'primary'
+            },
+            {
+              tag: 'button',
+              text: { tag: 'plain_text', content: '📧 发邮件' },
+              url: `mailto:${record.email}?subject=Re:%20您的%20ChinaMakersHub%20入驻申请%20[${record.reference_id}]`,
+              type: 'default'
+            }
+          ]
+        }
+      ]
+    }
+  };
+  return postWebhook(CONFIG.FEISHU_WEBHOOK, card);
+}
+
+// ============ WECOM NOTIFICATIONS ============
+async function sendInquiryWecom(inquiry) {
+  const content = `## 🎯 新询盘 ${inquiry.reference_id}
+
+**联系人**: ${inquiry.name} / ${inquiry.company}
+**邮箱**: ${inquiry.email}
+**WhatsApp**: ${inquiry.phone_code} ${inquiry.whatsapp || '未填'}
+**国家**: ${inquiry.country}
+
+**品类**: ${inquiry.category || '未指定'}
+**数量**: ${inquiry.quantity || '未指定'}
+**时间**: ${inquiry.timeline || '未指定'}
+
+**询盘内容**:
+> ${inquiry.inquiry.replace(/\n/g, '\n> ')}
+
+**来源**: ${inquiry.utm_source} / ${inquiry.utm_medium || 'organic'}
+**时间**: ${inquiry.created_at}`;
+  return postWebhook(CONFIG.WECOM_WEBHOOK, {
+    msgtype: 'markdown',
+    markdown: { content }
+  });
+}
+
+async function sendFactoryWecom(record) {
+  const categories = JSON.parse(record.categories || '[]').join('、');
+  const certs = JSON.parse(record.certs || '[]').join('、') || '无';
+  const services = JSON.parse(record.services || '[]').join('、') || '无';
+
+  const content = `## 🏭 新工厂入驻申请 ${record.reference_id}
+
+**${record.company_cn}**
+${record.company_en || ''}
+
+**城市**: ${record.city} ${record.district}
+**成立**: ${record.founded_year || '未填'} 年
+**厂房**: ${record.facility_size || '?'} ㎡ · ${record.headcount || '未填'}
+**品类**: ${categories || '未填'}
+**认证**: ${certs}
+
+**工厂能力**:
+> ${(record.capabilities || '未填').replace(/\n/g, '\n> ')}
+
+**联系人**: ${record.contact_name} (${record.contact_title})
+**电话**: ${record.phone}
+**微信**: ${record.wechat || '未填'}
+**邮箱**: ${record.email}
+
+**期望服务**: ${services}
+**英语能力**: ${record.english_level || '未填'}
+
+${record.notes ? `**备注**: ${record.notes}\n` : ''}
+统一社会信用代码: ${record.business_id}
+${record.created_at}`;
+
+  return postWebhook(CONFIG.WECOM_WEBHOOK, {
+    msgtype: 'markdown',
+    markdown: { content }
+  });
+}
+
+async function postWebhook(url, payload) {
+  try {
+    await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch (e) {
+    console.error('Webhook failed:', url, e);
+  }
+}
+
+// ============ ADMIN GET ============
+async function handleGetInquiry(request, env, url, origin) {
+  const auth = request.headers.get('Authorization');
+  if (!auth || auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: 'Unauthorized' }, 401, origin);
+  }
+  const id = url.pathname.split('/').pop();
+  const inquiry = await env.DB.prepare(
+    'SELECT * FROM inquiries WHERE reference_id = ?'
+  ).bind(id).first();
+  if (!inquiry) return jsonResponse({ error: 'Not found' }, 404, origin);
+  return jsonResponse(inquiry, 200, origin);
+}
+
+async function handleGetFactory(request, env, url, origin) {
+  const auth = request.headers.get('Authorization');
+  if (!auth || auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: 'Unauthorized' }, 401, origin);
+  }
+  const id = url.pathname.split('/').pop();
+  const factory = await env.DB.prepare(
+    'SELECT * FROM factory_applications WHERE reference_id = ?'
+  ).bind(id).first();
+  if (!factory) return jsonResponse({ error: 'Not found' }, 404, origin);
+  return jsonResponse(factory, 200, origin);
+}
+
+// ============ VALIDATION HELPERS ============
+function validateInquiry(body) {
+  if (!body.name || body.name.trim().length < 2) return { valid: false, error: 'Name is required' };
+  if (!body.company || body.company.trim().length < 2) return { valid: false, error: 'Company is required' };
+  if (!body.email || !isValidEmail(body.email)) return { valid: false, error: 'Valid email is required' };
+  if (!body.country) return { valid: false, error: 'Country is required' };
+  if (!body.inquiry || body.inquiry.trim().length < CONFIG.MIN_INQUIRY_LENGTH) {
+    return { valid: false, error: `Inquiry must be at least ${CONFIG.MIN_INQUIRY_LENGTH} characters` };
+  }
+  if (body.inquiry.length > 5000) return { valid: false, error: 'Inquiry too long' };
+  return { valid: true };
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isSpam(text) {
+  if (!text) return false;
+  const spamPatterns = [
+    /\b(seo services|backlinks|cheap viagra|crypto|forex|casino)\b/i,
+    /(.)\1{10,}/,
+    /[А-я]{20,}/,
+  ];
+  const urlCount = (text.match(/(http|https):\/\//gi) || []).length;
+  if (urlCount > 2) return true;
+  return spamPatterns.some(p => p.test(text));
+}
+
+function sanitize(str) {
+  if (!str) return '';
+  return String(str).trim().slice(0, 5000).replace(/[\x00-\x1F\x7F]/g, '');
+}
+
+async function checkRateLimit(env, ip, table) {
+  if (!ip || ip === 'unknown') return true;
+  try {
+    const since = new Date(Date.now() - 3600 * 1000).toISOString();
+    const result = await env.DB.prepare(
+      `SELECT COUNT(*) as count FROM ${table} WHERE ip_address = ? AND created_at > ?`
+    ).bind(ip, since).first();
+    return (result?.count || 0) < CONFIG.RATE_LIMIT_PER_HOUR;
+  } catch (e) {
+    console.error('Rate limit check failed:', e);
+    return true;
+  }
+}
+
+function generateReferenceId(prefix = 'CMH-') {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let id = prefix;
+  for (let i = 0; i < 6; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
+}
+
+function jsonResponse(data, status = 200, origin = '') {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) }
+  });
+}
+
+function corsHeaders(origin) {
+  const allowed = CONFIG.ALLOWED_ORIGINS.includes(origin) ? origin : CONFIG.ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowed,
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Max-Age': '86400',
+  };
+}
+
+function handleCORS(origin) {
+  return new Response(null, { status: 204, headers: corsHeaders(origin) });
+}
