@@ -932,6 +932,11 @@ footer {
   .nav-actions { gap: 0.8rem; }
   .nav-lang { display: none; }
 }
+
+/* Link override for clickable cards (Phase 2 patch) */
+a.cat, a.factory { display: block; color: inherit; text-decoration: none; }
+a.cat:hover, a.factory:hover { cursor: pointer; }
+.factory-cta { color: var(--cinnabar); font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; }
 </style>
 </head>
 <body>
@@ -963,16 +968,16 @@ footer {
     </a>
     <nav>
       <ul class="nav-links">
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#factories">Factories</a></li>
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#journal">Journal</a></li>
-        <li><a href="#about">About</a></li>
+        <li><a href="/categories/furniture/">Categories</a></li>
+        <li><a href="/categories/furniture/">Factories</a></li>
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#journal">Journal</a></li>
+        <li><a href="/#about">About</a></li>
       </ul>
     </nav>
     <div class="nav-actions">
       <span class="nav-lang">EN / 中</span>
-      <a href="#contact" class="btn-primary">
+      <a href="/inquiry" class="btn-primary">
         Request a Quote
         <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </a>
@@ -1004,7 +1009,7 @@ footer {
           ChinaMakersHub connects global buyers with verified manufacturers across the Greater Bay Area — Shenzhen, Foshan, Dongguan, Guangzhou. No middlemen layers. No hidden markups. Just direct conversation with the workshops actually making your product.
         </p>
         <div class="hero-actions reveal reveal-4">
-          <a href="#categories" class="btn-primary">
+          <a href="/categories/furniture/" class="btn-primary">
             Browse Factories
             <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
           </a>
@@ -1072,54 +1077,54 @@ footer {
     </div>
 
     <div class="cat-grid">
-      <div class="cat">
+      <a href="/categories/furniture/" class="cat">
         <div class="cat-num">/ 001</div>
         <h3 class="cat-name">Furniture<br>& Home Living</h3>
         <div class="cat-meta">
           <span>32 factories</span>
           <span class="cat-arrow">→</span>
         </div>
-      </div>
-      <div class="cat">
+      </a>
+      <a href="/categories/furniture/" class="cat">
         <div class="cat-num">/ 002</div>
         <h3 class="cat-name">Lighting<br>& Fixtures</h3>
         <div class="cat-meta">
           <span>18 factories</span>
           <span class="cat-arrow">→</span>
         </div>
-      </div>
-      <div class="cat">
+      </a>
+      <a href="/categories/furniture/" class="cat">
         <div class="cat-num">/ 003</div>
         <h3 class="cat-name">Hardware<br>& Tools</h3>
         <div class="cat-meta">
           <span>24 factories</span>
           <span class="cat-arrow">→</span>
         </div>
-      </div>
-      <div class="cat">
+      </a>
+      <a href="/categories/furniture/" class="cat">
         <div class="cat-num">/ 004</div>
         <h3 class="cat-name">Consumer<br>Electronics</h3>
         <div class="cat-meta">
           <span>15 factories</span>
           <span class="cat-arrow">→</span>
         </div>
-      </div>
-      <div class="cat">
+      </a>
+      <a href="/categories/furniture/" class="cat">
         <div class="cat-num">/ 005</div>
         <h3 class="cat-name">Textile<br>& Apparel</h3>
         <div class="cat-meta">
           <span>21 factories</span>
           <span class="cat-arrow">→</span>
         </div>
-      </div>
-      <div class="cat">
+      </a>
+      <a href="/categories/furniture/" class="cat">
         <div class="cat-num">/ 006</div>
         <h3 class="cat-name">Industrial<br>Components</h3>
         <div class="cat-meta">
           <span>14 factories</span>
           <span class="cat-arrow">→</span>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -1138,7 +1143,7 @@ footer {
     </div>
 
     <div class="factories-list">
-      <div class="factory">
+      <a href="/factories/gaosi-furniture/" class="factory">
         <div class="factory-num">F-001</div>
         <div class="factory-name">
           Gaosi Furniture
@@ -1150,10 +1155,10 @@ footer {
           <span class="tag">FSC</span>
           <span class="tag">BSCI</span>
         </div>
-        <a href="#" class="factory-cta">View Profile</a>
-      </div>
+        <span class="factory-cta">View Profile →</span>
+      </a>
 
-      <div class="factory">
+      <a href="/inquiry?factory=F-002" class="factory">
         <div class="factory-num">F-002</div>
         <div class="factory-name">
           Huihe Semiconductor
@@ -1165,10 +1170,10 @@ footer {
           <span class="tag">ISO 9001</span>
           <span class="tag">ROHS</span>
         </div>
-        <a href="#" class="factory-cta">View Profile</a>
-      </div>
+        <span class="factory-cta">View Profile →</span>
+      </a>
 
-      <div class="factory">
+      <a href="/inquiry?factory=F-003" class="factory">
         <div class="factory-num">F-003</div>
         <div class="factory-name">
           Zhongshan Lumière
@@ -1180,10 +1185,10 @@ footer {
           <span class="tag">CE</span>
           <span class="tag">UL</span>
         </div>
-        <a href="#" class="factory-cta">View Profile</a>
-      </div>
+        <span class="factory-cta">View Profile →</span>
+      </a>
 
-      <div class="factory">
+      <a href="/inquiry?factory=F-004" class="factory">
         <div class="factory-num">F-004</div>
         <div class="factory-name">
           Dongguan Precision Hardware
@@ -1195,10 +1200,10 @@ footer {
           <span class="tag">IATF</span>
           <span class="tag">RoHS</span>
         </div>
-        <a href="#" class="factory-cta">View Profile</a>
-      </div>
+        <span class="factory-cta">View Profile →</span>
+      </a>
 
-      <div class="factory">
+      <a href="/inquiry?factory=F-005" class="factory">
         <div class="factory-num">F-005</div>
         <div class="factory-name">
           Guangzhou Linen Atelier
@@ -1210,12 +1215,12 @@ footer {
           <span class="tag">OEKO-TEX</span>
           <span class="tag">GOTS</span>
         </div>
-        <a href="#" class="factory-cta">View Profile</a>
-      </div>
+        <span class="factory-cta">View Profile →</span>
+      </a>
     </div>
 
     <div class="view-all">
-      <a href="#" class="btn-ghost">View all 100+ verified factories →</a>
+      <a href="/categories/furniture/" class="btn-ghost">View all verified factories →</a>
     </div>
   </div>
 </section>
@@ -1393,11 +1398,11 @@ footer {
       We'll <em>find</em> the right workshop.
     </h2>
     <div class="cta-buttons">
-      <a href="#" class="btn-light">
+      <a href="/inquiry" class="btn-light">
         Submit an Inquiry
         <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </a>
-      <a href="#" class="btn-outline">Talk on WhatsApp</a>
+      <a href="https://wa.me/85212345678" class="btn-outline" target="_blank" rel="noopener">Talk on WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1419,32 +1424,32 @@ footer {
       <div class="footer-col">
         <h5>Platform</h5>
         <ul>
-          <li><a href="#">Browse Categories</a></li>
-          <li><a href="#">Featured Factories</a></li>
-          <li><a href="#">How It Works</a></li>
-          <li><a href="#">CMH Journal</a></li>
-          <li><a href="#">Sourcing Reports</a></li>
+          <li><a href="/categories/furniture/">Browse Categories</a></li>
+          <li><a href="/categories/furniture/">Featured Factories</a></li>
+          <li><a href="/#how">How It Works</a></li>
+          <li><a href="/#journal">Journal</a></li>
+          <li><a href="/#journal">Sourcing Reports</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h5>For Factories</h5>
         <ul>
-          <li><a href="#">Apply to Join</a></li>
-          <li><a href="#">Verification Process</a></li>
-          <li><a href="#">Member Benefits</a></li>
-          <li><a href="#">Success Stories</a></li>
+          <li><a href="/factory-apply">Apply to Join</a></li>
+          <li><a href="/factory-apply">Verification Process</a></li>
+          <li><a href="/factory-apply">Member Benefits</a></li>
+          <li><a href="/#journal">Success Stories</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h5>Company</h5>
         <ul>
-          <li><a href="#">About CMH</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="/#about">About CMH</a></li>
+          <li><a href="mailto:info@chinamakershub.com">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/privacy">Cookie Policy</a></li>
         </ul>
       </div>
     </div>
@@ -1462,4 +1467,11 @@ footer {
         DBS Bank (Hong Kong) Limited<br>
         SWIFT: DHBKHKHH<br>
         Multi-currency T/T accepted<br>
-        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95fcfbf3fad
+        info@chinamakershub.com
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
