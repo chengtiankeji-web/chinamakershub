@@ -108,29 +108,6 @@ a { color: inherit; text-decoration: none; }
   inset: 3px;
   border: 1px solid var(--paper);
 }
-.lang-switch {
-  display: flex;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  border: 1px solid var(--line-strong);
-}
-.lang-switch button {
-  background: transparent;
-  border: none;
-  padding: 0.5rem 0.9rem;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: inherit;
-  color: var(--ink-mute);
-  border-right: 1px solid var(--line-strong);
-}
-.lang-switch button:last-child { border-right: none; }
-.lang-switch button.active {
-  background: var(--ink);
-  color: var(--paper);
-}
-
 /* ============ HERO ============ */
 .hero {
   padding: clamp(3rem, 6vw, 5rem) 0 clamp(3rem, 6vw, 4rem);
@@ -671,12 +648,7 @@ input.error, select.error, textarea.error {
   .step-actions > * { width: 100%; justify-content: center; }
 }
 
-/* Hide CN/EN content based on lang */
-[data-en] { display: none; }
-html[lang="en"] [data-en] { display: inline; }
-html[lang="en"] [data-cn] { display: none; }
-html[lang="zh-CN"] [data-cn] { display: inline; }
-html[lang="zh-CN"] [data-en] { display: none; }
+
 </style>
 </head>
 <body>
@@ -687,10 +659,6 @@ html[lang="zh-CN"] [data-en] { display: none; }
       <span class="logo-mark">CMH</span>
       ChinaMakersHub
     </a>
-    <div class="lang-switch">
-      <button class="active" onclick="switchLang('zh-CN')">中文</button>
-      <button onclick="switchLang('en')">EN</button>
-    </div>
   </div>
 </header>
 
@@ -1206,12 +1174,6 @@ document.getElementById('factoryForm').addEventListener('submit', async (e) => {
   }
 });
 
-// ============ Lang switch ============
-function switchLang(lang) {
-  document.documentElement.lang = lang;
-  document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-}
 </script>
 
 </body>

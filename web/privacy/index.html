@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — ChinaMakersHub</title>
+<meta name="description" content="ChinaMakersHub privacy policy. How we collect, use, and protect your data. GDPR and CCPA compliant.">
+<meta name="robots" content="index,follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0F0E0C;
+  --ink-soft: #2A2825;
+  --ink-mute: #6B6862;
+  --paper: #F4EFE6;
+  --paper-warm: #EBE4D6;
+  --paper-pure: #FAF7F0;
+  --cinnabar: #B83A26;
+  --jade: #4A6B5C;
+  --line: rgba(15, 14, 12, 0.12);
+  --line-strong: rgba(15, 14, 12, 0.25);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter Tight', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.65;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+main, header, footer { position: relative; z-index: 2; }
+a { color: inherit; }
+a:hover { color: var(--cinnabar); }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Nav */
+.nav {
+  border-bottom: 1px solid var(--line);
+  background: rgba(244, 239, 230, 0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 0;
+}
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  position: relative;
+  top: 6px;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--paper);
+}
+.nav-back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* Hero */
+.hero {
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--cinnabar);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--cinnabar);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 144;
+  margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--cinnabar);
+}
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.05em;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+}
+.hero-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+/* Content */
+.content {
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.toc {
+  position: sticky;
+  top: 100px;
+}
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cinnabar);
+  margin-bottom: 1.2rem;
+}
+.toc ol {
+  list-style: none;
+  counter-reset: toc;
+  border-left: 1px solid var(--line-strong);
+}
+.toc li {
+  counter-increment: toc;
+  padding: 0.5rem 0 0.5rem 1.2rem;
+  position: relative;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.toc li::before {
+  content: counter(toc, decimal-leading-zero);
+  position: absolute;
+  left: 1.2rem;
+  top: 0.5rem;
+  display: none;
+}
+.toc a {
+  text-decoration: none;
+  color: var(--ink-mute);
+  transition: color 0.3s;
+}
+.toc a:hover { color: var(--cinnabar); }
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
+  font-variation-settings: "opsz" 144;
+  line-height: 1.2;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.prose h2:first-child { margin-top: 0; }
+.prose h2::before {
+  content: attr(data-num);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--cinnabar);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  flex-shrink: 0;
+  min-width: 2.5rem;
+}
+.prose h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.prose p {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.prose ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.prose ul li {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  padding-left: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+.prose ul li::marker {
+  color: var(--cinnabar);
+}
+.prose strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.prose .callout {
+  background: var(--paper-warm);
+  border-left: 2px solid var(--cinnabar);
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* Footer */
+footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3rem 0 2rem;
+  margin-top: 4rem;
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: rgba(244, 239, 230, 0.5);
+  line-height: 1.7;
+}
+.footer-inner strong {
+  display: block;
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+.footer-inner a { text-decoration: none; }
+.footer-inner a:hover { color: var(--cinnabar); }
+.footer-bank { text-align: right; }
+
+@media (max-width: 1024px) {
+  .content { grid-template-columns: 1fr; gap: 2rem; }
+  .toc { position: static; }
+  .toc ol { display: flex; flex-wrap: wrap; gap: 0.5rem; border-left: none; border-top: 1px solid var(--line-strong); padding-top: 1rem; }
+  .toc li { padding: 0.3rem 0.8rem; border: 1px solid var(--line); }
+}
+@media (max-width: 640px) {
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-bank { text-align: left; }
+  .hero-meta { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">CMH</span>
+      ChinaMakersHub
+    </a>
+    <a href="/" class="nav-back">← Back to home</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">/ Legal · Privacy</div>
+      <h1>Privacy <em>Policy</em></h1>
+      <div class="hero-meta">
+        <span>Effective: <strong>April 11, 2026</strong></span>
+        <span>Last updated: <strong>April 11, 2026</strong></span>
+        <span>Version: <strong>1.0</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="container content">
+    <aside class="toc">
+      <div class="toc-title">/ Contents</div>
+      <ol>
+        <li><a href="#who">Who we are</a></li>
+        <li><a href="#what">What we collect</a></li>
+        <li><a href="#why">Why we collect it</a></li>
+        <li><a href="#share">Who we share it with</a></li>
+        <li><a href="#retention">How long we keep it</a></li>
+        <li><a href="#rights">Your rights</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#transfers">International transfers</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#children">Children</a></li>
+        <li><a href="#changes">Changes to this policy</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ol>
+    </aside>
+
+    <article class="prose">
+
+      <p>This Privacy Policy explains how ChinaMakersHub collects, uses, and protects your information when you use our website and services. We have written it to be short, clear, and honest. If anything is unclear, please email us at <a href="mailto:info@chinamakershub.com">info@chinamakershub.com</a>.</p>
+
+      <div class="callout">
+        In short: we collect the minimum information needed to connect global buyers with Chinese manufacturers. We never sell your data. We never share it beyond the partners required to fulfill your inquiry. You can request deletion at any time.
+      </div>
+
+      <h2 id="who" data-num="/ 01">Who we are</h2>
+      <p>ChinaMakersHub is a curated B2B sourcing platform operated by <strong>Qingxuan International Trading Limited</strong>, a company registered in Hong Kong SAR (Company Registration No. 79771658). Our registered office is Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong.</p>
+      <p>For the purposes of the EU General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA), Qingxuan International Trading Limited is the data controller.</p>
+
+      <h2 id="what" data-num="/ 02">What we collect</h2>
+      <p>We collect three categories of information:</p>
+
+      <h3>Information you give us</h3>
+      <ul>
+        <li><strong>Inquiry form submissions</strong>: your name, company, business email, country, WhatsApp number (optional), product category, estimated quantity, target timeline, and the content of your inquiry.</li>
+        <li><strong>Factory application submissions</strong>: company information, business registration number, facility details, product capabilities, certifications, contact person details, and any supporting documents or images you upload.</li>
+        <li><strong>Communications</strong>: emails, WhatsApp messages, and other correspondence you send us.</li>
+      </ul>
+
+      <h3>Information collected automatically</h3>
+      <ul>
+        <li><strong>Technical data</strong>: IP address, approximate geographic location (country and city), browser type and version, device type, operating system, and timezone.</li>
+        <li><strong>Usage data</strong>: pages visited, time spent on pages, referral source, and UTM parameters from marketing campaigns.</li>
+        <li><strong>Cookies and similar technologies</strong>: see Section 07 for details.</li>
+      </ul>
+
+      <h3>Information from third parties</h3>
+      <ul>
+        <li><strong>Advertising platforms</strong>: if you arrive via a Google Ads or similar campaign, we receive the click identifier and campaign attribution data.</li>
+        <li><strong>Service providers</strong>: we may receive email delivery status from Resend (our SMTP provider) and similar operational data from Cloudflare (our infrastructure provider).</li>
+      </ul>
+
+      <h2 id="why" data-num="/ 03">Why we collect it</h2>
+      <p>We only process your data for the purposes below, each supported by a lawful basis under GDPR:</p>
+      <ul>
+        <li><strong>To respond to your inquiry</strong> and connect you with suitable manufacturers — based on your consent and our legitimate interest in operating the platform.</li>
+        <li><strong>To review factory applications</strong>, conduct verification, and build factory profiles — based on the contractual relationship with the applicant factory.</li>
+        <li><strong>To improve our services</strong> — based on our legitimate interest in understanding how the platform is used, always in aggregated or anonymized form where possible.</li>
+        <li><strong>To prevent fraud and abuse</strong> — based on our legitimate interest in maintaining platform integrity (rate limiting, spam detection, etc.).</li>
+        <li><strong>To comply with legal obligations</strong> — tax records, anti-money-laundering, export control, and similar regulations.</li>
+      </ul>
+
+      <h2 id="share" data-num="/ 04">Who we share it with</h2>
+      <p>We share the minimum data necessary with the following categories of recipients:</p>
+
+      <ul>
+        <li><strong>Matched manufacturers in our network</strong>: when you submit a buyer inquiry, we may forward the relevant parts of your inquiry (product requirements, quantity, timeline, and your contact details) to up to three verified factories best suited to fulfill your request. We tell you which factories received your inquiry upon request.</li>
+        <li><strong>Service providers who operate our infrastructure</strong>, all under strict data processing agreements:
+          <ul>
+            <li><strong>Cloudflare, Inc.</strong> — website hosting, CDN, DNS, email routing, database (D1), and security.</li>
+            <li><strong>Resend</strong> — transactional email delivery.</li>
+            <li><strong>Google LLC</strong> — email storage (Gmail) and optional analytics (if enabled).</li>
+            <li><strong>Feishu (Lark) / WeCom</strong> — internal team notifications of new inquiries.</li>
+          </ul>
+        </li>
+        <li><strong>Legal authorities</strong>: only when required by applicable law, court order, or legitimate government request.</li>
+      </ul>
+
+      <p>We <strong>do not</strong> sell, rent, or trade your personal data to anyone. Ever.</p>
+
+      <h2 id="retention" data-num="/ 05">How long we keep it</h2>
+      <ul>
+        <li><strong>Inquiry data</strong>: kept for 24 months after last communication, then anonymized or deleted.</li>
+        <li><strong>Factory application data</strong>: kept for the duration of the partnership plus 7 years after termination (to meet Hong Kong commercial record-keeping requirements).</li>
+        <li><strong>Technical logs</strong>: kept for 90 days for security and debugging purposes.</li>
+        <li><strong>Email communications</strong>: kept for 36 months.</li>
+      </ul>
+
+      <h2 id="rights" data-num="/ 06">Your rights</h2>
+      <p>Depending on your location, you may have the following rights over your personal data:</p>
+
+      <ul>
+        <li><strong>Right of access</strong>: request a copy of what we hold about you.</li>
+        <li><strong>Right to rectification</strong>: ask us to correct inaccurate information.</li>
+        <li><strong>Right to erasure</strong> ("right to be forgotten"): request deletion of your data, subject to our legal retention obligations.</li>
+        <li><strong>Right to restrict processing</strong>: ask us to pause processing while a concern is investigated.</li>
+        <li><strong>Right to data portability</strong>: receive your data in a common, machine-readable format.</li>
+        <li><strong>Right to object</strong>: stop us from processing your data for marketing or other legitimate-interest purposes.</li>
+        <li><strong>Right to withdraw consent</strong>: at any time, where processing is based on consent.</li>
+        <li><strong>Right to lodge a complaint</strong> with your local data protection authority.</li>
+      </ul>
+
+      <p>To exercise any of these rights, email us at <a href="mailto:info@chinamakershub.com">info@chinamakershub.com</a> with the subject "Privacy request". We will respond within 30 days.</p>
+
+      <p><strong>For California residents (CCPA/CPRA)</strong>: you have the right to know what personal information we collect, to delete it, to correct it, to opt out of "sale" or "sharing" (we do neither), and to non-discrimination for exercising these rights.</p>
+
+      <h2 id="cookies" data-num="/ 07">Cookies</h2>
+      <p>We use cookies and similar technologies sparingly. Specifically:</p>
+
+      <ul>
+        <li><strong>Essential cookies</strong>: required for the site to function (e.g., CSRF protection on form submissions). No consent needed.</li>
+        <li><strong>Analytics cookies</strong>: we may use Cloudflare Web Analytics, which is privacy-first and does not require cookies or personal identifiers. If we later add Google Analytics or similar, we will ask for your consent first.</li>
+        <li><strong>Advertising cookies</strong>: if we run Google Ads campaigns, Google may set its own cookies for conversion tracking. You can opt out via Google's <a href="https://adssettings.google.com" target="_blank" rel="noopener">Ads Settings</a>.</li>
+      </ul>
+
+      <p>You can always disable cookies in your browser settings. Doing so may limit some site functionality but will not prevent you from submitting inquiries.</p>
+
+      <h2 id="transfers" data-num="/ 08">International transfers</h2>
+      <p>Your data may be processed in jurisdictions outside your country of residence, including:</p>
+
+      <ul>
+        <li><strong>Hong Kong SAR</strong> — where our business operates.</li>
+        <li><strong>Mainland China</strong> — where our Foshan operations team reviews factory applications and handles buyer inquiries.</li>
+        <li><strong>United States</strong> — where some of our service providers (Cloudflare, Resend, Google) process data.</li>
+      </ul>
+
+      <p>For transfers of personal data originating in the European Economic Area, the United Kingdom, or Switzerland, we rely on Standard Contractual Clauses (SCCs) and appropriate technical and organizational safeguards with our service providers.</p>
+
+      <h2 id="security" data-num="/ 09">Security</h2>
+      <p>We take security seriously. Specific measures include:</p>
+
+      <ul>
+        <li>All traffic encrypted via HTTPS/TLS 1.3.</li>
+        <li>Inquiry data stored in Cloudflare D1 with encryption at rest.</li>
+        <li>Emails sent with SPF, DKIM, and DMARC authentication.</li>
+        <li>Rate limiting, honeypot fields, and content filtering to prevent abuse.</li>
+        <li>Access to production data limited to authorized team members only.</li>
+        <li>Regular review of our security posture.</li>
+      </ul>
+
+      <p>No system is perfectly secure. If we become aware of a breach that affects your personal data, we will notify you and the relevant authorities within the timeframes required by applicable law.</p>
+
+      <h2 id="children" data-num="/ 10">Children</h2>
+      <p>ChinaMakersHub is a B2B platform intended for adult business users. We do not knowingly collect information from anyone under 16 years of age. If you believe we have inadvertently collected data from a minor, please contact us and we will delete it.</p>
+
+      <h2 id="changes" data-num="/ 11">Changes to this policy</h2>
+      <p>We may update this Privacy Policy from time to time. When we do, we will revise the "Last updated" date at the top and, for material changes, notify you by email (if we have your address on file) or by a prominent notice on the website at least 15 days before changes take effect.</p>
+
+      <h2 id="contact" data-num="/ 12">Contact us</h2>
+      <p>Questions, requests, or concerns about your privacy?</p>
+
+      <ul>
+        <li>Email: <a href="mailto:info@chinamakershub.com">info@chinamakershub.com</a></li>
+        <li>Subject line: start with "Privacy request" for fastest routing</li>
+        <li>Postal: Qingxuan International Trading Limited, Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong</li>
+      </ul>
+
+      <p>We aim to respond within 7 business days and resolve all requests within 30 days.</p>
+
+    </article>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>
+      <strong>Qingxuan International Trading Limited</strong>
+      Hong Kong CR No. 79771658<br>
+      Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong<br>
+      © 2026 ChinaMakersHub. All rights reserved.<br>
+      <a href="/">Home</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
+    </div>
+    <div class="footer-bank">
+      <strong>Banking Partner</strong>
+      DBS Bank (Hong Kong) Limited · SWIFT: DHBKHKHH<br>
+      Multi-currency T/T accepted<br>
+      <a href="mailto:info@chinamakershub.com">info@chinamakershub.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

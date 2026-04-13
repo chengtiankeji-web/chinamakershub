@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — ChinaMakersHub</title>
+<meta name="description" content="Terms of Service for the ChinaMakersHub B2B sourcing platform. What we provide, what we require from users, and what we do not guarantee.">
+<meta name="robots" content="index,follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0F0E0C;
+  --ink-soft: #2A2825;
+  --ink-mute: #6B6862;
+  --paper: #F4EFE6;
+  --paper-warm: #EBE4D6;
+  --paper-pure: #FAF7F0;
+  --cinnabar: #B83A26;
+  --jade: #4A6B5C;
+  --line: rgba(15, 14, 12, 0.12);
+  --line-strong: rgba(15, 14, 12, 0.25);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter Tight', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.65; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E"); opacity: 0.05; pointer-events: none; z-index: 1; mix-blend-mode: multiply; }
+main, header, footer { position: relative; z-index: 2; }
+a { color: inherit; }
+a:hover { color: var(--cinnabar); }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--gutter); }
+
+.nav { border-bottom: 1px solid var(--line); background: rgba(244, 239, 230, 0.92); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 100; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 0; }
+.logo { display: flex; align-items: baseline; gap: 0.6rem; font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; letter-spacing: -0.02em; text-decoration: none; }
+.logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--ink); color: var(--paper); font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; position: relative; top: 6px; }
+.logo-mark::after { content: ''; position: absolute; inset: 3px; border: 1px solid var(--paper); }
+.nav-back { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+
+.hero { padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem); border-bottom: 1px solid var(--line); }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--cinnabar); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--cinnabar); }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 300; line-height: 1; letter-spacing: -0.035em; font-variation-settings: "opsz" 144; margin-bottom: 1.5rem; }
+.hero h1 em { font-family: var(--font-editorial); font-style: italic; color: var(--cinnabar); }
+.hero-meta { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-mute); letter-spacing: 0.05em; display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--line); margin-top: 2rem; }
+.hero-meta strong { color: var(--ink); font-weight: 500; margin-left: 0.5rem; }
+
+.content { padding: clamp(3rem, 6vw, 5rem) 0; display: grid; grid-template-columns: 220px 1fr; gap: 4rem; align-items: start; }
+.toc { position: sticky; top: 100px; }
+.toc-title { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--cinnabar); margin-bottom: 1.2rem; }
+.toc ol { list-style: none; border-left: 1px solid var(--line-strong); }
+.toc li { padding: 0.5rem 0 0.5rem 1.2rem; position: relative; font-size: 0.85rem; line-height: 1.4; }
+.toc a { text-decoration: none; color: var(--ink-mute); transition: color 0.3s; }
+.toc a:hover { color: var(--cinnabar); }
+
+.prose h2 { font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 1.8rem); font-weight: 500; letter-spacing: -0.02em; margin-top: 3.5rem; margin-bottom: 1rem; font-variation-settings: "opsz" 144; line-height: 1.2; display: flex; align-items: baseline; gap: 1rem; }
+.prose h2:first-child { margin-top: 0; }
+.prose h2::before { content: attr(data-num); font-family: var(--font-mono); font-size: 0.7rem; color: var(--cinnabar); letter-spacing: 0.1em; font-weight: 500; flex-shrink: 0; min-width: 2.5rem; }
+.prose h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin-top: 2rem; margin-bottom: 0.8rem; letter-spacing: -0.01em; }
+.prose p { font-size: 0.95rem; line-height: 1.75; color: var(--ink-soft); margin-bottom: 1rem; }
+.prose ul { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+.prose ul li { font-size: 0.92rem; line-height: 1.7; color: var(--ink-soft); padding-left: 0.4rem; margin-bottom: 0.4rem; }
+.prose ul li::marker { color: var(--cinnabar); }
+.prose strong { color: var(--ink); font-weight: 500; }
+.prose .callout { background: var(--paper-warm); border-left: 2px solid var(--cinnabar); padding: 1.2rem 1.5rem; margin: 1.5rem 0; font-size: 0.9rem; line-height: 1.65; font-family: var(--font-editorial); font-style: italic; color: var(--ink-soft); }
+.prose .warning { background: rgba(184, 58, 38, 0.06); border-left: 2px solid var(--cinnabar); padding: 1.2rem 1.5rem; margin: 1.5rem 0; font-size: 0.9rem; line-height: 1.7; }
+.prose .warning strong { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--cinnabar); display: block; margin-bottom: 0.5rem; font-family: var(--font-mono); font-weight: 500; }
+
+footer { background: var(--ink); color: var(--paper); padding: 3rem 0 2rem; margin-top: 4rem; }
+.footer-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; color: rgba(244, 239, 230, 0.5); line-height: 1.7; }
+.footer-inner strong { display: block; color: var(--paper); margin-bottom: 0.5rem; text-transform: uppercase; }
+.footer-inner a { text-decoration: none; }
+.footer-inner a:hover { color: var(--cinnabar); }
+.footer-bank { text-align: right; }
+
+@media (max-width: 1024px) {
+  .content { grid-template-columns: 1fr; gap: 2rem; }
+  .toc { position: static; }
+  .toc ol { display: flex; flex-wrap: wrap; gap: 0.5rem; border-left: none; border-top: 1px solid var(--line-strong); padding-top: 1rem; }
+  .toc li { padding: 0.3rem 0.8rem; border: 1px solid var(--line); }
+}
+@media (max-width: 640px) {
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-bank { text-align: left; }
+  .hero-meta { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">CMH</span>
+      ChinaMakersHub
+    </a>
+    <a href="/" class="nav-back">← Back to home</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">/ Legal · Terms</div>
+      <h1>Terms of <em>Service</em></h1>
+      <div class="hero-meta">
+        <span>Effective: <strong>April 11, 2026</strong></span>
+        <span>Last updated: <strong>April 11, 2026</strong></span>
+        <span>Version: <strong>1.0</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="container content">
+    <aside class="toc">
+      <div class="toc-title">/ Contents</div>
+      <ol>
+        <li><a href="#agreement">Agreement</a></li>
+        <li><a href="#who">Who we are</a></li>
+        <li><a href="#service">What we provide</a></li>
+        <li><a href="#not">What we don't do</a></li>
+        <li><a href="#eligibility">Eligibility</a></li>
+        <li><a href="#accuracy">Accuracy of information</a></li>
+        <li><a href="#conduct">Acceptable use</a></li>
+        <li><a href="#ip">Intellectual property</a></li>
+        <li><a href="#disclaimers">Disclaimers</a></li>
+        <li><a href="#liability">Limitation of liability</a></li>
+        <li><a href="#indemnity">Indemnification</a></li>
+        <li><a href="#termination">Termination</a></li>
+        <li><a href="#law">Governing law</a></li>
+        <li><a href="#changes">Changes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </aside>
+
+    <article class="prose">
+
+      <p>These Terms of Service ("Terms") govern your access to and use of the ChinaMakersHub website and related services. By using our platform, you agree to these Terms. Please read them carefully.</p>
+
+      <div class="callout">
+        In short: ChinaMakersHub is a sourcing facilitation platform. We verify factories and route buyer inquiries, but we are not a party to the commercial contracts between buyers and manufacturers. Your business agreement is with the factory, not with us.
+      </div>
+
+      <h2 id="agreement" data-num="/ 01">Agreement</h2>
+      <p>By accessing or using ChinaMakersHub ("Platform", "Service"), you confirm that you have read, understood, and agreed to be bound by these Terms and by our <a href="/privacy">Privacy Policy</a>. If you do not agree, please do not use the Platform.</p>
+      <p>If you are using the Platform on behalf of a company or organization, you represent that you have the authority to bind that entity to these Terms, and "you" refers to both you personally and that entity.</p>
+
+      <h2 id="who" data-num="/ 02">Who we are</h2>
+      <p>The Platform is operated by <strong>Qingxuan International Trading Limited</strong>, a company registered in Hong Kong SAR (Company Registration No. 79771658), with its registered office at Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong ("ChinaMakersHub", "we", "us", "our").</p>
+
+      <h2 id="service" data-num="/ 03">What we provide</h2>
+      <p>ChinaMakersHub provides the following services:</p>
+
+      <ul>
+        <li><strong>A curated directory</strong> of Chinese manufacturers verified by our Foshan-based operations team.</li>
+        <li><strong>Inquiry routing</strong>: we forward qualified buyer inquiries to suitable factories within our network.</li>
+        <li><strong>Optional facilitation services</strong>, including (where requested) translation assistance, communication support, payment settlement via our Hong Kong banking partner, and logistics coordination.</li>
+        <li><strong>Factory onboarding</strong>: a verification process for manufacturers seeking to be listed on the Platform.</li>
+      </ul>
+
+      <p>All Platform services are offered on an "as available" basis. We may add, modify, or discontinue features at our discretion.</p>
+
+      <h2 id="not" data-num="/ 04">What we don't do</h2>
+      <p>To set expectations clearly, we want to be explicit about what ChinaMakersHub <strong>does not</strong> do:</p>
+
+      <ul>
+        <li>We are <strong>not a party</strong> to any sales contract between a buyer and a manufacturer. Those commercial terms are agreed between you and the factory directly.</li>
+        <li>We do <strong>not guarantee</strong> product quality, delivery schedules, pricing, or any other aspect of the transaction between buyer and factory. Our verification covers factory existence, registration, and production capacity — not product-level QC of individual shipments.</li>
+        <li>We do <strong>not hold or escrow</strong> funds between parties, unless an explicit separate service agreement states otherwise.</li>
+        <li>We do <strong>not act as an agent</strong> for either buyer or manufacturer unless we have signed a specific agency agreement to that effect.</li>
+        <li>We do <strong>not charge buyers</strong> any fees for using the core sourcing service.</li>
+      </ul>
+
+      <h2 id="eligibility" data-num="/ 05">Eligibility</h2>
+      <p>You may use ChinaMakersHub only if:</p>
+
+      <ul>
+        <li>You are at least 18 years of age and legally capable of entering into binding contracts.</li>
+        <li>You are using the Platform for legitimate business purposes.</li>
+        <li>You are not located in, or a resident of, any country subject to comprehensive sanctions administered by the United Nations, the United States, the European Union, the United Kingdom, or Hong Kong SAR, and you are not on any restricted-party list maintained by those jurisdictions.</li>
+        <li>Your intended use of our services does not involve goods or technologies restricted under applicable export-control regulations.</li>
+      </ul>
+
+      <h2 id="accuracy" data-num="/ 06">Accuracy of information</h2>
+      <p>When you submit information to the Platform (inquiry forms, factory applications, or otherwise), you agree to provide information that is accurate, current, and complete.</p>
+      <p>Factories applying to be listed on the Platform represent and warrant that all information and documentation submitted (including business registration details, certifications, and production capabilities) is truthful. Misrepresentation may result in removal from the Platform and, where warranted, legal action.</p>
+
+      <h2 id="conduct" data-num="/ 07">Acceptable use</h2>
+      <p>You agree <strong>not</strong> to:</p>
+
+      <ul>
+        <li>Submit false, misleading, or fraudulent inquiries or applications.</li>
+        <li>Use the Platform to send spam, phishing messages, or solicit anything unrelated to legitimate manufacturing inquiries.</li>
+        <li>Scrape, crawl, or systematically harvest data from the Platform without our prior written permission.</li>
+        <li>Attempt to gain unauthorized access to the Platform, its databases, or any accounts.</li>
+        <li>Interfere with or disrupt the integrity or performance of the Platform.</li>
+        <li>Use the Platform in violation of any applicable local, national, or international law.</li>
+        <li>Misrepresent your affiliation with any person or entity.</li>
+        <li>Source, offer to purchase, or facilitate trade in goods that are prohibited under applicable export-control, sanctions, anti-corruption, or intellectual-property laws.</li>
+      </ul>
+
+      <h2 id="ip" data-num="/ 08">Intellectual property</h2>
+
+      <h3>Our content</h3>
+      <p>All content on the Platform (text, graphics, logos, icons, images, design, code) is the property of Qingxuan International Trading Limited or its licensors, protected by copyright, trademark, and other intellectual property laws. You may view and use the Platform for its intended purposes, but you may not copy, modify, distribute, or create derivative works without our written permission.</p>
+
+      <h3>Factory content</h3>
+      <p>Factories listed on the Platform grant us a non-exclusive, royalty-free license to display their submitted information (company details, product images, certifications) on the Platform and in our marketing materials, for the purpose of promoting their business to potential buyers.</p>
+
+      <h3>Your submissions</h3>
+      <p>When you submit an inquiry or other content to us, you grant us a license to use that content for the purposes of operating the Platform and fulfilling your request (including forwarding relevant parts to matched factories).</p>
+
+      <h2 id="disclaimers" data-num="/ 09">Disclaimers</h2>
+
+      <div class="warning">
+        <strong>Important Legal Notice</strong>
+        THE PLATFORM IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, WE DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+      </div>
+
+      <p>We do not warrant that:</p>
+
+      <ul>
+        <li>The Platform will always be available or uninterrupted.</li>
+        <li>Any specific factory we introduce will accept your inquiry or enter into a contract with you.</li>
+        <li>Products or services delivered by any factory will meet your expectations, specifications, or applicable standards.</li>
+        <li>The information submitted by factories is always complete or error-free (we verify to the best of our ability, but we cannot guarantee everything).</li>
+      </ul>
+
+      <h2 id="liability" data-num="/ 10">Limitation of liability</h2>
+      <p>To the maximum extent permitted by applicable law:</p>
+
+      <ul>
+        <li>ChinaMakersHub, its officers, directors, employees, and agents shall <strong>not be liable</strong> for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Platform, including but not limited to loss of profits, data, business opportunities, or goodwill.</li>
+        <li>Our aggregate liability arising out of or relating to these Terms, whether in contract, tort, or otherwise, shall <strong>not exceed</strong> the amount paid by you to us in the 12 months preceding the claim, or USD 100, whichever is greater. For buyers using our core free sourcing service, this amount is USD 100.</li>
+      </ul>
+
+      <p>Nothing in these Terms excludes liability that cannot be excluded under applicable law (for example, liability for death or personal injury caused by negligence, or for fraud).</p>
+
+      <h2 id="indemnity" data-num="/ 11">Indemnification</h2>
+      <p>You agree to defend, indemnify, and hold harmless ChinaMakersHub and its affiliates, officers, directors, employees, and agents from any claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising from:</p>
+
+      <ul>
+        <li>Your use of the Platform.</li>
+        <li>Your violation of these Terms.</li>
+        <li>Your violation of any third-party right, including intellectual property or privacy rights.</li>
+        <li>Any commercial dispute between you and any factory or buyer introduced via the Platform.</li>
+      </ul>
+
+      <h2 id="termination" data-num="/ 12">Termination</h2>
+      <p>We may suspend or terminate your access to the Platform, with or without notice, if we reasonably believe you have violated these Terms, engaged in fraudulent or harmful conduct, or if continued access would violate applicable law.</p>
+      <p>You may stop using the Platform at any time. Sections that by their nature should survive termination (including Intellectual Property, Disclaimers, Limitation of Liability, Indemnification, and Governing Law) will continue to apply.</p>
+
+      <h2 id="law" data-num="/ 13">Governing law and dispute resolution</h2>
+      <p>These Terms are governed by the laws of the Hong Kong Special Administrative Region, without regard to its conflict-of-laws principles.</p>
+      <p>Any dispute arising from or relating to these Terms shall first be addressed through good-faith negotiation. If not resolved within 30 days, the dispute shall be submitted to arbitration administered by the Hong Kong International Arbitration Centre (HKIAC) in accordance with its rules then in force, conducted in English, with the seat of arbitration in Hong Kong. The arbitration award shall be final and binding.</p>
+
+      <h2 id="changes" data-num="/ 14">Changes</h2>
+      <p>We may update these Terms from time to time. When we make material changes, we will update the "Last updated" date above and, for significant changes, notify users by email (if we have their address on file) or by a prominent notice on the Platform. Continued use of the Platform after the effective date constitutes acceptance of the updated Terms.</p>
+
+      <h2 id="contact" data-num="/ 15">Contact</h2>
+      <p>Questions about these Terms?</p>
+
+      <ul>
+        <li>Email: <a href="mailto:info@chinamakershub.com">info@chinamakershub.com</a></li>
+        <li>Subject line: start with "Terms inquiry" for fastest routing</li>
+        <li>Postal: Qingxuan International Trading Limited, Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong</li>
+      </ul>
+
+    </article>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>
+      <strong>Qingxuan International Trading Limited</strong>
+      Hong Kong CR No. 79771658<br>
+      Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong<br>
+      © 2026 ChinaMakersHub. All rights reserved.<br>
+      <a href="/">Home</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
+    </div>
+    <div class="footer-bank">
+      <strong>Banking Partner</strong>
+      DBS Bank (Hong Kong) Limited · SWIFT: DHBKHKHH<br>
+      Multi-currency T/T accepted<br>
+      <a href="mailto:info@chinamakershub.com">info@chinamakershub.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
