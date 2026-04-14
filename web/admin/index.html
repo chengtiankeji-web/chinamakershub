@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMH Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3250;
+      --text: #e8eaf0;
+      --muted: #7c82a0;
+      --accent: #4f7cff;
+      --accent-hover: #6b93ff;
+      --green: #2ecc71;
+      --yellow: #f1c40f;
+      --orange: #e67e22;
+      --red: #e74c3c;
+      --radius: 8px;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      min-height: 100vh;
+    }
+
+    /* ---- Layout ---- */
+    .shell { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 200px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-logo {
+      padding: 0 20px 24px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent);
+      letter-spacing: .5px;
+    }
+    .sidebar-logo span { color: var(--muted); font-weight: 400; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      color: var(--muted);
+      border-left: 3px solid transparent;
+      transition: all .15s;
+      user-select: none;
+    }
+    .nav-item:hover { color: var(--text); background: var(--surface2); }
+    .nav-item.active { color: var(--text); border-left-color: var(--accent); background: var(--surface2); }
+    .nav-icon { font-size: 16px; }
+
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar h1 { font-size: 16px; font-weight: 600; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 13px; }
+
+    .content { flex: 1; padding: 24px 28px; overflow-y: auto; }
+
+    /* ---- Filters ---- */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-bar input, .filter-bar select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      outline: none;
+      transition: border .15s;
+    }
+    .filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent); }
+    .filter-bar input { width: 220px; }
+    .filter-bar select option { background: var(--surface2); }
+
+    .btn {
+      padding: 7px 14px;
+      border-radius: var(--radius);
+      border: none;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .15s;
+      font-family: var(--font);
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+    /* ---- Table ---- */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: var(--surface2);
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: .6px;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    td { padding: 11px 14px; border-top: 1px solid var(--border); vertical-align: middle; }
+    tr:hover td { background: var(--surface2); }
+    .ref-id { font-family: monospace; font-size: 12px; color: var(--muted); }
+
+    /* ---- Status badges ---- */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .badge-new       { background: rgba(79,124,255,.2); color: #7ea8ff; }
+    .badge-read      { background: rgba(46,204,113,.15); color: var(--green); }
+    .badge-following { background: rgba(241,196,15,.15); color: var(--yellow); }
+    .badge-closed    { background: rgba(126,130,160,.15); color: var(--muted); }
+    .badge-submitted { background: rgba(79,124,255,.2); color: #7ea8ff; }
+    .badge-reviewing { background: rgba(241,196,15,.15); color: var(--yellow); }
+    .badge-approved  { background: rgba(46,204,113,.15); color: var(--green); }
+    .badge-rejected  { background: rgba(231,76,60,.15); color: var(--red); }
+
+    /* ---- Status select inline ---- */
+    .status-select {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 4px;
+      padding: 3px 6px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+    }
+    .status-select:focus { border-color: var(--accent); }
+    .status-select option { background: var(--surface2); }
+
+    /* ---- Pagination ---- */
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      justify-content: flex-end;
+    }
+    .pagination span { color: var(--muted); font-size: 13px; }
+
+    /* ---- Detail drawer ---- */
+    .drawer-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 100;
+      display: none;
+    }
+    .drawer-overlay.open { display: block; }
+    .drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: 480px;
+      height: 100%;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform .25s ease;
+      overflow-y: auto;
+      padding: 28px;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-close {
+      position: absolute; top: 20px; right: 20px;
+      background: none; border: none; color: var(--muted);
+      font-size: 20px; cursor: pointer;
+    }
+    .drawer-close:hover { color: var(--text); }
+    .drawer h2 { font-size: 16px; margin-bottom: 20px; }
+    .field-group { margin-bottom: 16px; }
+    .field-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .field-value { color: var(--text); line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .drawer hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+    .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* ---- Empty / loading ---- */
+    .state-box {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .state-box .icon { font-size: 36px; margin-bottom: 12px; }
+
+    /* ---- Toast ---- */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      font-size: 13px;
+      z-index: 200;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all .2s;
+      pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { border-color: var(--green); color: var(--green); }
+    #toast.error   { border-color: var(--red); color: var(--red); }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">CMH <span>Admin</span></div>
+    <div class="nav-item active" data-tab="inquiries">
+      <span class="nav-icon">📥</span> 询盘
+    </div>
+    <div class="nav-item" data-tab="factories">
+      <span class="nav-icon">🏭</span> 工厂申请
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <h1 id="page-title">询盘管理</h1>
+      <div class="topbar-right">
+        <span id="user-email"></span>
+        <button class="btn btn-ghost btn-sm" id="export-btn">⬇ 导出 CSV</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <input type="text" id="search-q" placeholder="搜索姓名 / 公司 / 邮箱…" />
+        <select id="filter-status">
+          <option value="">全部状态</option>
+        </select>
+        <select id="filter-country" style="display:none">
+          <option value="">全部国家</option>
+        </select>
+        <button class="btn btn-primary" id="search-btn">搜索</button>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table>
+          <thead id="table-head"></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+
+      <div id="empty-state" class="state-box" style="display:none">
+        <div class="icon">📭</div>
+        <div>暂无数据</div>
+      </div>
+      <div id="loading-state" class="state-box">
+        <div class="icon">⏳</div>
+        <div>加载中…</div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Drawer -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" id="drawer-close">✕</button>
+  <div id="drawer-content"></div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ============ CONFIG ============
+// Worker 的 URL — Pages 和 Worker 同域时用相对路径即可；
+// 如果 Worker 是独立子域，改成完整 URL。
+const API_BASE = '/api';
+
+// ============ STATE ============
+let state = {
+  tab: 'inquiries',
+  page: 1,
+  q: '',
+  status: '',
+  country: '',
+  total: 0,
+  totalPages: 1,
+};
+
+// ============ TAB CONFIG ============
+const TABS = {
+  inquiries: {
+    title: '询盘管理',
+    statusOptions: [
+      { value: 'new',       label: '新建' },
+      { value: 'read',      label: '已读' },
+      { value: 'following', label: '跟进中' },
+      { value: 'closed',    label: '已关闭' },
+    ],
+    columns: [
+      { key: 'reference_id', label: 'ID' },
+      { key: 'name',         label: '姓名' },
+      { key: 'company',      label: '公司' },
+      { key: 'email',        label: '邮箱' },
+      { key: 'country',      label: '国家' },
+      { key: 'category',     label: '品类' },
+      { key: 'status',       label: '状态' },
+      { key: 'created_at',   label: '时间' },
+      { key: '_action',      label: '' },
+    ],
+    showCountryFilter: true,
+    endpoint: () => `${API_BASE}/admin/inquiries`,
+    exportEndpoint: () => `${API_BASE}/admin/inquiries/export`,
+    patchEndpoint: (id) => `${API_BASE}/admin/inquiries/${id}`,
+    statusClass: (s) => `badge badge-${s}`,
+    statusLabel: (s) => ({ new:'新建', read:'已读', following:'跟进中', closed:'已关闭' }[s] || s),
+  },
+  factories: {
+    title: '工厂申请',
+    statusOptions: [
+      { value: 'submitted', label: '待审核' },
+      { value: 'reviewing', label: '审核中' },
+      { value: 'approved',  label: '已通过' },
+      { value: 'rejected',  label: '已拒绝' },
+    ],
+    columns: [
+      { key: 'reference_id', label: 'ID' },
+      { key: 'company_cn',   label: '公司名称' },
+      { key: 'city',         label: '城市' },
+      { key: 'contact_name', label: '联系人' },
+      { key: 'email',        label: '邮箱' },
+      { key: 'status',       label: '状态' },
+      { key: 'created_at',   label: '时间' },
+      { key: '_action',      label: '' },
+    ],
+    showCountryFilter: false,
+    endpoint: () => `${API_BASE}/admin/factories`,
+    exportEndpoint: null,
+    patchEndpoint: (id) => `${API_BASE}/admin/factories/${id}`,
+    statusClass: (s) => `badge badge-${s}`,
+    statusLabel: (s) => ({ submitted:'待审核', reviewing:'审核中', approved:'已通过', rejected:'已拒绝' }[s] || s),
+  },
+};
+
+// ============ INIT ============
+document.querySelectorAll('.nav-item').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    switchTab(el.dataset.tab);
+  });
+});
+document.getElementById('search-btn').addEventListener('click', doSearch);
+document.getElementById('search-q').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+document.getElementById('filter-status').addEventListener('change', doSearch);
+document.getElementById('filter-country').addEventListener('change', doSearch);
+document.getElementById('export-btn').addEventListener('click', doExport);
+document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+document.getElementById('drawer-overlay').addEventListener('click', closeDrawer);
+
+switchTab('inquiries');
+
+// ============ TAB SWITCH ============
+function switchTab(tab) {
+  state.tab = tab;
+  state.page = 1;
+  state.q = '';
+  state.status = '';
+  state.country = '';
+  document.getElementById('search-q').value = '';
+
+  const cfg = TABS[tab];
+  document.getElementById('page-title').textContent = cfg.title;
+  document.getElementById('export-btn').style.display = cfg.exportEndpoint ? '' : 'none';
+
+  // Status options
+  const statusSel = document.getElementById('filter-status');
+  statusSel.innerHTML = '<option value="">全部状态</option>';
+  cfg.statusOptions.forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.value; opt.textContent = o.label;
+    statusSel.appendChild(opt);
+  });
+
+  // Country filter
+  document.getElementById('filter-country').style.display = cfg.showCountryFilter ? '' : 'none';
+
+  // Table head
+  document.getElementById('table-head').innerHTML =
+    '<tr>' + cfg.columns.map(c => `<th>${c.label}</th>`).join('') + '</tr>';
+
+  loadData();
+}
+
+// ============ SEARCH ============
+function doSearch() {
+  state.page = 1;
+  state.q = document.getElementById('search-q').value.trim();
+  state.status = document.getElementById('filter-status').value;
+  state.country = document.getElementById('filter-country').value;
+  loadData();
+}
+
+// ============ LOAD DATA ============
+async function loadData() {
+  const cfg = TABS[state.tab];
+  showLoading(true);
+
+  const params = new URLSearchParams({ page: state.page });
+  if (state.q)       params.set('q', state.q);
+  if (state.status)  params.set('status', state.status);
+  if (state.country) params.set('country', state.country);
+
+  try {
+    const res = await fetch(`${cfg.endpoint()}?${params}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    state.total = json.total;
+    state.totalPages = json.total_pages;
+    renderTable(json.data, cfg);
+    renderPagination();
+  } catch (err) {
+    showToast('加载失败: ' + err.message, 'error');
+    renderEmpty();
+  } finally {
+    showLoading(false);
+  }
+}
+
+// ============ RENDER TABLE ============
+function renderTable(rows, cfg) {
+  const tbody = document.getElementById('table-body');
+  const empty = document.getElementById('empty-state');
+
+  if (!rows || rows.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = rows.map(row => {
+    return '<tr>' + cfg.columns.map(col => {
+      if (col.key === '_action') {
+        return `<td><button class="btn btn-ghost btn-sm" onclick="openDetail('${row.reference_id}')">详情</button></td>`;
+      }
+      if (col.key === 'status') {
+        const opts = cfg.statusOptions.map(o =>
+          `<option value="${o.value}"${row.status === o.value ? ' selected' : ''}>${o.label}</option>`
+        ).join('');
+        return `<td><select class="status-select" onchange="updateStatus('${row.reference_id}', this.value)">${opts}</select></td>`;
+      }
+      if (col.key === 'reference_id') {
+        return `<td><span class="ref-id">${row[col.key] || ''}</span></td>`;
+      }
+      if (col.key === 'created_at') {
+        return `<td style="color:var(--muted);font-size:12px">${formatDate(row[col.key])}</td>`;
+      }
+      const v = row[col.key];
+      return `<td>${v != null ? escHtml(String(v)) : '<span style="color:var(--muted)">—</span>'}</td>`;
+    }).join('') + '</tr>';
+  }).join('');
+}
+
+// ============ UPDATE STATUS ============
+async function updateStatus(id, newStatus) {
+  const cfg = TABS[state.tab];
+  try {
+    const res = await fetch(cfg.patchEndpoint(id), {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    showToast('状态已更新', 'success');
+  } catch (err) {
+    showToast('更新失败: ' + err.message, 'error');
+  }
+}
+
+// ============ PAGINATION ============
+function renderPagination() {
+  const el = document.getElementById('pagination');
+  if (state.totalPages <= 1) { el.innerHTML = ''; return; }
+
+  el.innerHTML = `
+    <button class="btn btn-ghost btn-sm" ${state.page <= 1 ? 'disabled' : ''} onclick="goPage(${state.page - 1})">‹ 上一页</button>
+    <span>第 ${state.page} / ${state.totalPages} 页 · 共 ${state.total} 条</span>
+    <button class="btn btn-ghost btn-sm" ${state.page >= state.totalPages ? 'disabled' : ''} onclick="goPage(${state.page + 1})">下一页 ›</button>
+  `;
+}
+
+function goPage(p) {
+  state.page = p;
+  loadData();
+}
+
+// ============ EXPORT CSV ============
+async function doExport() {
+  const cfg = TABS[state.tab];
+  if (!cfg.exportEndpoint) return;
+
+  const params = new URLSearchParams();
+  if (state.status)  params.set('status', state.status);
+  if (state.country) params.set('country', state.country);
+
+  const url = `${cfg.exportEndpoint()}?${params}`;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+// ============ DETAIL DRAWER ============
+async function openDetail(id) {
+  const cfg = TABS[state.tab];
+  const isInquiry = state.tab === 'inquiries';
+
+  // Fetch full record via legacy single-record endpoints
+  // (these still require ADMIN_TOKEN — we'll use the Access-protected route instead)
+  // We request the detail from the admin list and re-use the row data stored in DOM,
+  // but for simplicity let's just refetch from admin list filtered by reference_id.
+  // Simpler: open drawer and show what we can from the table row, then lazy-load.
+
+  const drawerContent = document.getElementById('drawer-content');
+  drawerContent.innerHTML = '<div class="state-box"><div class="icon">⏳</div><div>加载中…</div></div>';
+  openDrawerUI();
+
+  try {
+    // Re-use admin list endpoint with q filter to get all fields visible in list
+    const endpoint = isInquiry
+      ? `${API_BASE}/admin/inquiries?q=${encodeURIComponent(id)}&page=1`
+      : `${API_BASE}/admin/factories?q=${encodeURIComponent(id)}&page=1`;
+
+    const res = await fetch(endpoint);
+    const json = await res.json();
+    const row = json.data?.find(r => r.reference_id === id);
+
+    if (!row) {
+      drawerContent.innerHTML = '<div class="state-box"><div>未找到记录</div></div>';
+      return;
+    }
+
+    if (isInquiry) {
+      renderInquiryDetail(row);
+    } else {
+      renderFactoryDetail(row);
+    }
+  } catch (err) {
+    drawerContent.innerHTML = `<div class="state-box"><div>加载失败: ${err.message}</div></div>`;
+  }
+}
+
+function renderInquiryDetail(r) {
+  const cfg = TABS['inquiries'];
+  const statusOpts = cfg.statusOptions.map(o =>
+    `<option value="${o.value}"${r.status === o.value ? ' selected' : ''}>${o.label}</option>`
+  ).join('');
+
+  document.getElementById('drawer-content').innerHTML = `
+    <h2>询盘详情</h2>
+    <div class="fields-grid">
+      ${field('Reference ID', r.reference_id)}
+      ${field('状态', `<select class="status-select" onchange="updateStatus('${r.reference_id}', this.value)">${statusOpts}</select>`)}
+      ${field('姓名', r.name)}
+      ${field('公司', r.company)}
+      ${field('邮箱', `<a href="mailto:${r.email}" style="color:var(--accent)">${r.email}</a>`)}
+      ${field('国家', r.country)}
+      ${field('品类', r.category || '—')}
+      ${field('数量', r.quantity || '—')}
+      ${field('时间线', r.timeline || '—')}
+      ${field('来源', r.utm_source || '—')}
+      ${field('创建时间', formatDate(r.created_at))}
+    </div>
+    <hr/>
+    <div class="field-group">
+      <div class="field-label">询盘内容</div>
+      <div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px">${escHtml(r.inquiry || '')}</div>
+    </div>
+    <hr/>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <a href="mailto:${r.email}?subject=Re: Your inquiry to ChinaMakersHub [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
+    </div>
+  `;
+}
+
+function renderFactoryDetail(r) {
+  const cfg = TABS['factories'];
+  const statusOpts = cfg.statusOptions.map(o =>
+    `<option value="${o.value}"${r.status === o.value ? ' selected' : ''}>${o.label}</option>`
+  ).join('');
+
+  let cats = '—';
+  try { cats = JSON.parse(r.categories || '[]').join('、') || '—'; } catch(e) {}
+
+  document.getElementById('drawer-content').innerHTML = `
+    <h2>工厂申请详情</h2>
+    <div class="fields-grid">
+      ${field('Reference ID', r.reference_id)}
+      ${field('状态', `<select class="status-select" onchange="updateStatus('${r.reference_id}', this.value)">${statusOpts}</select>`)}
+      ${field('公司（中文）', r.company_cn)}
+      ${field('公司（英文）', r.company_en || '—')}
+      ${field('城市', r.city || '—')}
+      ${field('品类', cats)}
+      ${field('联系人', r.contact_name || '—')}
+      ${field('电话', r.phone || '—')}
+      ${field('邮箱', `<a href="mailto:${r.email}" style="color:var(--accent)">${r.email}</a>`)}
+      ${field('创建时间', formatDate(r.created_at))}
+    </div>
+    <hr/>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <a href="mailto:${r.email}?subject=Re: 您的 ChinaMakersHub 入驻申请 [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
+      ${r.phone ? `<a href="tel:${r.phone}" class="btn btn-ghost" style="text-decoration:none">📞 拨打电话</a>` : ''}
+    </div>
+  `;
+}
+
+function field(label, value) {
+  return `<div class="field-group">
+    <div class="field-label">${label}</div>
+    <div class="field-value">${value}</div>
+  </div>`;
+}
+
+function openDrawerUI() {
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+// ============ UTILS ============
+function showLoading(v) {
+  document.getElementById('loading-state').style.display = v ? '' : 'none';
+  if (v) document.getElementById('empty-state').style.display = 'none';
+}
+function renderEmpty() {
+  document.getElementById('table-body').innerHTML = '';
+  document.getElementById('empty-state').style.display = '';
+}
+
+let toastTimer;
+function showToast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = ''; }, 2800);
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('zh-CN') + ' ' + d.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

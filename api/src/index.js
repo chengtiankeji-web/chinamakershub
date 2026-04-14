@@ -10,6 +10,13 @@
  *   GET  /api/inquiry/:id          查询询盘 (admin)
  *   GET  /api/factory/:id          查询工厂申请 (admin)
  *   GET  /api/health               健康检查
+ *
+ *   --- Admin (受 Cloudflare Access 保护) ---
+ *   GET   /api/admin/inquiries          询盘列表（分页+筛选）
+ *   PATCH /api/admin/inquiries/:id      更新询盘状态
+ *   GET   /api/admin/inquiries/export   导出 CSV
+ *   GET   /api/admin/factories          工厂申请列表（分页+筛选）
+ *   PATCH /api/admin/factories/:id      更新工厂申请状态
  */
 
 // ============ CONFIG ============
@@ -21,9 +28,11 @@ const CONFIG = {
     'https://chinamakershub.com',
     'https://www.chinamakershub.com',
     'http://localhost:8788',
+    'http://localhost:8000',
   ],
   RATE_LIMIT_PER_HOUR: 5,
   MIN_INQUIRY_LENGTH: 20,
+  ADMIN_PAGE_SIZE: 20,
 };
 
 // ============ MAIN HANDLER ============
@@ -34,7 +43,7 @@ export default {
 
     if (request.method === 'OPTIONS') return handleCORS(origin);
 
-    // Routes
+    // ---- Public routes ----
     if (url.pathname === '/api/inquiry' && request.method === 'POST') {
       return handleInquiry(request, env, ctx, origin);
     }
@@ -48,12 +57,243 @@ export default {
       return handleGetFactory(request, env, url, origin);
     }
     if (url.pathname === '/api/health') {
-      return jsonResponse({ status: 'ok', service: 'cmh-api', version: '0.2' }, 200, origin);
+      return jsonResponse({ status: 'ok', service: 'cmh-api', version: '0.3' }, 200, origin);
+    }
+
+    // ---- Admin routes（由 Cloudflare Access 在边缘鉴权，Worker 只做身份确认） ----
+    if (url.pathname.startsWith('/api/admin/')) {
+      return handleAdmin(request, env, url, origin);
     }
 
     return jsonResponse({ error: 'Not found' }, 404, origin);
   },
 };
+
+// ============ ADMIN ROUTER ============
+async function handleAdmin(request, env, url, origin) {
+  // Cloudflare Access 验证通过后会注入 Cf-Access-Authenticated-User-Email header
+  // 本地开发时可在 wrangler.toml 里设置 [vars] SKIP_ACCESS_CHECK = "true"
+  const userEmail = request.headers.get('Cf-Access-Authenticated-User-Email');
+  if (!userEmail && env.SKIP_ACCESS_CHECK !== 'true') {
+    return jsonResponse({ error: 'Forbidden: Cloudflare Access required' }, 403, origin);
+  }
+
+  const path = url.pathname;
+  const method = request.method;
+
+  // GET /api/admin/inquiries/export  （必须在 /api/admin/inquiries/:id 之前匹配）
+  if (path === '/api/admin/inquiries/export' && method === 'GET') {
+    return handleAdminExportInquiries(request, env, url);
+  }
+  // GET /api/admin/inquiries
+  if (path === '/api/admin/inquiries' && method === 'GET') {
+    return handleAdminListInquiries(request, env, url, origin);
+  }
+  // PATCH /api/admin/inquiries/:id
+  if (path.startsWith('/api/admin/inquiries/') && method === 'PATCH') {
+    return handleAdminUpdateInquiry(request, env, url, origin);
+  }
+  // GET /api/admin/factories
+  if (path === '/api/admin/factories' && method === 'GET') {
+    return handleAdminListFactories(request, env, url, origin);
+  }
+  // PATCH /api/admin/factories/:id
+  if (path.startsWith('/api/admin/factories/') && method === 'PATCH') {
+    return handleAdminUpdateFactory(request, env, url, origin);
+  }
+
+  return jsonResponse({ error: 'Admin route not found' }, 404, origin);
+}
+
+// ============ ADMIN: 询盘列表 ============
+async function handleAdminListInquiries(request, env, url, origin) {
+  try {
+    const params = url.searchParams;
+    const page   = Math.max(1, parseInt(params.get('page') || '1'));
+    const size   = CONFIG.ADMIN_PAGE_SIZE;
+    const offset = (page - 1) * size;
+    const status  = params.get('status') || '';   // new | read | following | closed
+    const country = params.get('country') || '';
+    const q       = params.get('q') || '';         // 关键词搜索 name/company/email
+
+    let where = '1=1';
+    const binds = [];
+    if (status)  { where += ' AND status = ?';  binds.push(status); }
+    if (country) { where += ' AND country = ?'; binds.push(country); }
+    if (q) {
+      where += ' AND (name LIKE ? OR company LIKE ? OR email LIKE ?)';
+      const like = `%${q}%`;
+      binds.push(like, like, like);
+    }
+
+    const countRow = await env.DB.prepare(
+      `SELECT COUNT(*) as total FROM inquiries WHERE ${where}`
+    ).bind(...binds).first();
+
+    const rows = await env.DB.prepare(
+      `SELECT reference_id, name, company, email, country, category,
+              quantity, timeline, status, created_at, utm_source
+       FROM inquiries WHERE ${where}
+       ORDER BY created_at DESC LIMIT ? OFFSET ?`
+    ).bind(...binds, size, offset).all();
+
+    return jsonResponse({
+      data: rows.results,
+      total: countRow.total,
+      page,
+      page_size: size,
+      total_pages: Math.ceil(countRow.total / size),
+    }, 200, origin);
+  } catch (err) {
+    console.error('handleAdminListInquiries error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ ADMIN: 更新询盘状态 ============
+async function handleAdminUpdateInquiry(request, env, url, origin) {
+  try {
+    const id = url.pathname.split('/').pop();
+    let body;
+    try { body = await request.json(); }
+    catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400, origin); }
+
+    const VALID_STATUSES = ['new', 'read', 'following', 'closed'];
+    if (!body.status || !VALID_STATUSES.includes(body.status)) {
+      return jsonResponse({ error: `status must be one of: ${VALID_STATUSES.join(', ')}` }, 400, origin);
+    }
+
+    const result = await env.DB.prepare(
+      `UPDATE inquiries SET status = ? WHERE reference_id = ?`
+    ).bind(body.status, id).run();
+
+    if (result.meta.changes === 0) {
+      return jsonResponse({ error: 'Not found' }, 404, origin);
+    }
+    return jsonResponse({ success: true, reference_id: id, status: body.status }, 200, origin);
+  } catch (err) {
+    console.error('handleAdminUpdateInquiry error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ ADMIN: 导出询盘 CSV ============
+async function handleAdminExportInquiries(request, env, url) {
+  try {
+    const params = url.searchParams;
+    const status  = params.get('status') || '';
+    const country = params.get('country') || '';
+
+    let where = '1=1';
+    const binds = [];
+    if (status)  { where += ' AND status = ?';  binds.push(status); }
+    if (country) { where += ' AND country = ?'; binds.push(country); }
+
+    const rows = await env.DB.prepare(
+      `SELECT reference_id, name, company, email, country, category,
+              quantity, timeline, whatsapp, phone_code, inquiry, status,
+              utm_source, utm_medium, created_at
+       FROM inquiries WHERE ${where}
+       ORDER BY created_at DESC LIMIT 5000`
+    ).bind(...binds).all();
+
+    const headers = [
+      'reference_id','name','company','email','country','category',
+      'quantity','timeline','whatsapp','phone_code','inquiry','status',
+      'utm_source','utm_medium','created_at'
+    ];
+    const escape = v => {
+      if (v == null) return '';
+      const s = String(v).replace(/"/g, '""');
+      return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s}"` : s;
+    };
+    const csv = [
+      headers.join(','),
+      ...rows.results.map(r => headers.map(h => escape(r[h])).join(','))
+    ].join('\r\n');
+
+    return new Response(csv, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv; charset=utf-8',
+        'Content-Disposition': `attachment; filename="inquiries-${new Date().toISOString().slice(0,10)}.csv"`,
+      }
+    });
+  } catch (err) {
+    console.error('handleAdminExportInquiries error:', err);
+    return new Response('Export failed', { status: 500 });
+  }
+}
+
+// ============ ADMIN: 工厂申请列表 ============
+async function handleAdminListFactories(request, env, url, origin) {
+  try {
+    const params = url.searchParams;
+    const page   = Math.max(1, parseInt(params.get('page') || '1'));
+    const size   = CONFIG.ADMIN_PAGE_SIZE;
+    const offset = (page - 1) * size;
+    const status = params.get('status') || '';  // submitted | reviewing | approved | rejected
+    const q      = params.get('q') || '';
+
+    let where = '1=1';
+    const binds = [];
+    if (status) { where += ' AND status = ?'; binds.push(status); }
+    if (q) {
+      where += ' AND (company_cn LIKE ? OR company_en LIKE ? OR contact_name LIKE ? OR email LIKE ?)';
+      const like = `%${q}%`;
+      binds.push(like, like, like, like);
+    }
+
+    const countRow = await env.DB.prepare(
+      `SELECT COUNT(*) as total FROM factory_applications WHERE ${where}`
+    ).bind(...binds).first();
+
+    const rows = await env.DB.prepare(
+      `SELECT reference_id, company_cn, company_en, city, categories,
+              contact_name, phone, email, status, created_at
+       FROM factory_applications WHERE ${where}
+       ORDER BY created_at DESC LIMIT ? OFFSET ?`
+    ).bind(...binds, size, offset).all();
+
+    return jsonResponse({
+      data: rows.results,
+      total: countRow.total,
+      page,
+      page_size: size,
+      total_pages: Math.ceil(countRow.total / size),
+    }, 200, origin);
+  } catch (err) {
+    console.error('handleAdminListFactories error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ ADMIN: 更新工厂申请状态 ============
+async function handleAdminUpdateFactory(request, env, url, origin) {
+  try {
+    const id = url.pathname.split('/').pop();
+    let body;
+    try { body = await request.json(); }
+    catch (e) { return jsonResponse({ error: 'Invalid JSON' }, 400, origin); }
+
+    const VALID_STATUSES = ['submitted', 'reviewing', 'approved', 'rejected'];
+    if (!body.status || !VALID_STATUSES.includes(body.status)) {
+      return jsonResponse({ error: `status must be one of: ${VALID_STATUSES.join(', ')}` }, 400, origin);
+    }
+
+    const result = await env.DB.prepare(
+      `UPDATE factory_applications SET status = ?, updated_at = ? WHERE reference_id = ?`
+    ).bind(body.status, new Date().toISOString(), id).run();
+
+    if (result.meta.changes === 0) {
+      return jsonResponse({ error: 'Not found' }, 404, origin);
+    }
+    return jsonResponse({ success: true, reference_id: id, status: body.status }, 200, origin);
+  } catch (err) {
+    console.error('handleAdminUpdateFactory error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
 
 // ============ INQUIRY (买家询盘) ============
 async function handleInquiry(request, env, ctx, origin) {
@@ -486,7 +726,7 @@ async function postWebhook(url, payload) {
   }
 }
 
-// ============ ADMIN GET ============
+// ============ ADMIN GET (legacy single-record endpoints) ============
 async function handleGetInquiry(request, env, url, origin) {
   const auth = request.headers.get('Authorization');
   if (!auth || auth !== `Bearer ${env.ADMIN_TOKEN}`) {
@@ -581,7 +821,7 @@ function corsHeaders(origin) {
   const allowed = CONFIG.ALLOWED_ORIGINS.includes(origin) ? origin : CONFIG.ALLOWED_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin': allowed,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Max-Age': '86400',
   };
