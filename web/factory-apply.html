@@ -649,7 +649,6 @@ input.error, select.error, textarea.error {
 }
 
 
-
   .form-group input.error,
   .form-group select.error,
   .form-group textarea.error {
@@ -792,85 +791,8 @@ input.error, select.error, textarea.error {
                 </div>
                 <div class="form-group">
                   <label>成立年份 <span class="required">*</span></label>
-                  <select name="founded_year" required>
+                  <select name="founded_year" id="foundedYearSelect" required>
                     <option value="">请选择</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>
-                    <option value="2015">2015</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
-                    <option value="2010">2010</option>
-                    <option value="2009">2009</option>
-                    <option value="2008">2008</option>
-                    <option value="2007">2007</option>
-                    <option value="2006">2006</option>
-                    <option value="2005">2005</option>
-                    <option value="2004">2004</option>
-                    <option value="2003">2003</option>
-                    <option value="2002">2002</option>
-                    <option value="2001">2001</option>
-                    <option value="2000">2000</option>
-                    <option value="1999">1999</option>
-                    <option value="1998">1998</option>
-                    <option value="1997">1997</option>
-                    <option value="1996">1996</option>
-                    <option value="1995">1995</option>
-                    <option value="1994">1994</option>
-                    <option value="1993">1993</option>
-                    <option value="1992">1992</option>
-                    <option value="1991">1991</option>
-                    <option value="1990">1990</option>
-                    <option value="1989">1989</option>
-                    <option value="1988">1988</option>
-                    <option value="1987">1987</option>
-                    <option value="1986">1986</option>
-                    <option value="1985">1985</option>
-                    <option value="1984">1984</option>
-                    <option value="1983">1983</option>
-                    <option value="1982">1982</option>
-                    <option value="1981">1981</option>
-                    <option value="1980">1980</option>
-                    <option value="1979">1979</option>
-                    <option value="1978">1978</option>
-                    <option value="1977">1977</option>
-                    <option value="1976">1976</option>
-                    <option value="1975">1975</option>
-                    <option value="1974">1974</option>
-                    <option value="1973">1973</option>
-                    <option value="1972">1972</option>
-                    <option value="1971">1971</option>
-                    <option value="1970">1970</option>
-                    <option value="1969">1969</option>
-                    <option value="1968">1968</option>
-                    <option value="1967">1967</option>
-                    <option value="1966">1966</option>
-                    <option value="1965">1965</option>
-                    <option value="1964">1964</option>
-                    <option value="1963">1963</option>
-                    <option value="1962">1962</option>
-                    <option value="1961">1961</option>
-                    <option value="1960">1960</option>
-                    <option value="1959">1959</option>
-                    <option value="1958">1958</option>
-                    <option value="1957">1957</option>
-                    <option value="1956">1956</option>
-                    <option value="1955">1955</option>
-                    <option value="1954">1954</option>
-                    <option value="1953">1953</option>
-                    <option value="1952">1952</option>
-                    <option value="1951">1951</option>
-                    <option value="1950">1950</option>
-                    <option value="1949">1949</option>
                   </select>
                 </div>
               </div>
@@ -1044,7 +966,7 @@ input.error, select.error, textarea.error {
 
               <div class="form-group">
                 <label>公司网站 <span class="hint">(选填,如果有的话)</span></label>
-                <input type="url" name="website" placeholder="https://www.yourfactory.com" pattern="https?://.+">
+                <input type="url" name="website" placeholder="https://www.yourfactory.com">
               </div>
 
               <div class="form-group">
@@ -1084,7 +1006,7 @@ input.error, select.error, textarea.error {
               <div class="form-row">
                 <div class="form-group">
                   <label>手机号 <span class="required">*</span></label>
-                  <input type="tel" name="phone" placeholder="13800000000" required maxlength="11" pattern="[0-9]{11}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                  <input type="tel" name="phone" placeholder="13800000000" required maxlength="11" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                 </div>
                 <div class="form-group">
                   <label>微信号 <span class="hint">(便于快速沟通)</span></label>
@@ -1194,23 +1116,18 @@ function showFieldError(field, msg) {
   tip.textContent = msg;
   field.parentNode.appendChild(tip);
 }
-
 function clearFieldError(field) {
   field.classList.remove('error');
   const old = field.parentNode.querySelector('.field-error-msg');
   if (old) old.remove();
 }
-
 document.addEventListener('input', e => { if (e.target.classList.contains('error')) clearFieldError(e.target); });
 document.addEventListener('change', e => { if (e.target.classList.contains('error')) clearFieldError(e.target); });
 
 function validateStep(step) {
   const stepEl = document.querySelector(`.step-content[data-step="${step}"]`);
-  let valid = true;
-  let firstError = null;
-
+  let valid = true, firstError = null;
   stepEl.querySelectorAll('.error').forEach(f => clearFieldError(f));
-
   stepEl.querySelectorAll('[required]').forEach(field => {
     if (!field.value.trim()) {
       showFieldError(field, '此项为必填');
@@ -1218,50 +1135,40 @@ function validateStep(step) {
       if (!firstError) firstError = field;
     }
   });
-
   const bizId = stepEl.querySelector('[name="business_id"]');
   if (bizId && bizId.value && !/^[0-9A-HJ-NPQRTUWXY]{18}$/.test(bizId.value)) {
     showFieldError(bizId, '请输入正确的18位统一社会信用代码');
-    valid = false;
-    if (!firstError) firstError = bizId;
+    valid = false; if (!firstError) firstError = bizId;
   }
-
   const phone = stepEl.querySelector('[name="phone"]');
   if (phone && phone.value && !/^1[3-9][0-9]{9}$/.test(phone.value)) {
     showFieldError(phone, '请输入正确的11位手机号（1开头）');
-    valid = false;
-    if (!firstError) firstError = phone;
+    valid = false; if (!firstError) firstError = phone;
   }
-
   const email = stepEl.querySelector('[name="email"]');
   if (email && email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
     showFieldError(email, '请输入正确的邮箱地址');
-    valid = false;
-    if (!firstError) firstError = email;
+    valid = false; if (!firstError) firstError = email;
   }
-
   if (step === 2) {
     const cats = stepEl.querySelectorAll('input[name="categories"]:checked');
     const grid = stepEl.querySelector('input[name="categories"]').closest('.checkbox-grid');
+    grid.style.outline = '';
     const oldTip = grid.parentNode.querySelector('.field-error-msg');
     if (oldTip) oldTip.remove();
-    grid.style.outline = '';
     if (cats.length === 0) {
       grid.style.outline = '2px solid var(--cinnabar)';
       const tip = document.createElement('div');
       tip.className = 'field-error-msg';
       tip.textContent = '请至少选择一个主营品类';
       grid.parentNode.appendChild(tip);
-      valid = false;
-      if (!firstError) firstError = grid;
+      valid = false; if (!firstError) firstError = grid;
     }
   }
-
   if (firstError) {
     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     if (firstError.focus) setTimeout(() => firstError.focus(), 300);
   }
-
   return valid;
 }
 function nextStep(from) {
@@ -1302,7 +1209,6 @@ document.getElementById('factoryForm').addEventListener('submit', async (e) => {
   const submitBtn = document.querySelector('#factoryForm button[type="submit"]');
   submitBtn.disabled = true;
   submitBtn.textContent = '提交中…';
-
   try {
     const response = await fetch('/api/factory-application', {
       method: 'POST',
@@ -1310,42 +1216,44 @@ document.getElementById('factoryForm').addEventListener('submit', async (e) => {
       body: JSON.stringify(payload)
     });
     const result = await response.json();
-
     if (!response.ok) {
       alert('提交失败：' + (result.error || '请稍后重试'));
-      submitBtn.disabled = false;
-      submitBtn.textContent = '提交申请';
-      return;
+      submitBtn.disabled = false; submitBtn.textContent = '提交申请'; return;
     }
-
     document.getElementById('factoryForm').style.display = 'none';
     document.getElementById('refId').textContent = result.reference_id;
     document.getElementById('successState').classList.add('visible');
     document.querySelector('.steps').style.opacity = '0.4';
   } catch (err) {
     alert('网络错误，请检查连接后重试。');
-    submitBtn.disabled = false;
-    submitBtn.textContent = '提交申请';
+    submitBtn.disabled = false; submitBtn.textContent = '提交申请';
   }
 });
 
-// ============ 多选限制（categories 最多3个，certs/services 最多5个）============
+// 多选限制
 function attachCheckboxLimit(name, max) {
-  const group = document.querySelectorAll('input[name="' + name + '"]');
+  const group = [...document.querySelectorAll('input[name="' + name + '"]')];
   group.forEach(cb => {
     cb.addEventListener('change', () => {
-      const checked = [...group].filter(c => c.checked);
-      if (checked.length > max) {
-        // 取消最早选的那个
-        checked[0].checked = false;
-        checked[0].closest('.checkbox-item').classList.remove('checked');
-      }
+      const checked = group.filter(c => c.checked);
+      if (checked.length > max) { checked[0].checked = false; }
     });
   });
 }
 attachCheckboxLimit('categories', 3);
 attachCheckboxLimit('services', 3);
 
+// 年份下拉
+(function() {
+  const sel = document.getElementById('foundedYearSelect');
+  if (!sel) return;
+  const cur = new Date().getFullYear();
+  for (let y = cur; y >= 1949; y--) {
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    sel.appendChild(opt);
+  }
+})();
 
 </script>
 
