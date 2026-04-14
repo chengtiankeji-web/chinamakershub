@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal — Sourcing Insights from the Greater Bay Area | ChinaMakersHub</title>
+<meta name="description" content="Expert guides on sourcing from China's Greater Bay Area. Factory audits, OEM manufacturing, supply chain strategy, and verified manufacturer insights.">
+<link rel="canonical" href="https://chinamakershub.com/journal/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0F0E0C; --ink-soft: #2A2825; --ink-mute: #6B6862;
+  --paper: #F4EFE6; --paper-warm: #EBE4D6; --paper-pure: #FAF7F0;
+  --cinnabar: #B83A26; --cinnabar-deep: #8B2A1B; --jade: #4A6B5C;
+  --line: rgba(15,14,12,0.12); --line-strong: rgba(15,14,12,0.25);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter Tight', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+  --section: clamp(5rem, 10vw, 9rem);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.55;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");opacity:0.05;pointer-events:none;z-index:1;mix-blend-mode:multiply;}
+main,header,footer{position:relative;z-index:2;}
+a{color:inherit;text-decoration:none;}
+.container{max-width:1440px;margin:0 auto;padding:0 var(--gutter);}
+
+/* MARQUEE */
+.marquee{background:var(--ink);color:var(--paper);padding:0.6rem 0;font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;overflow:hidden;border-bottom:1px solid var(--ink);}
+.marquee-track{display:flex;white-space:nowrap;animation:scroll 40s linear infinite;}
+.marquee-track span{padding:0 2rem;display:flex;align-items:center;gap:2rem;}
+.marquee-track span::after{content:'◆';font-size:0.5rem;opacity:0.5;}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+.nav{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:0.6rem;font-family:var(--font-display);font-size:1.1rem;font-weight:500;letter-spacing:-0.01em;}
+.logo-mark{background:var(--ink);color:var(--paper);padding:0.15em 0.4em;font-size:0.75rem;font-family:var(--font-mono);letter-spacing:0.05em;}
+.nav-links{display:flex;list-style:none;gap:2rem;}
+.nav-links a{font-size:0.875rem;font-weight:500;letter-spacing:0.01em;color:var(--ink-mute);transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);}
+.btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:var(--ink);color:var(--paper);padding:0.6rem 1.25rem;font-size:0.8rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;}
+.btn-primary:hover{background:var(--cinnabar);}
+
+/* PAGE HEADER */
+.page-header{padding:clamp(4rem,8vw,7rem) 0 clamp(3rem,5vw,5rem);border-bottom:1px solid var(--line);}
+.page-eyebrow{font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--cinnabar);margin-bottom:1.5rem;}
+.page-title{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,5rem);font-weight:500;letter-spacing:-0.03em;line-height:1.05;margin-bottom:1.5rem;font-variation-settings:"opsz" 72;}
+.page-desc{font-size:1.05rem;color:var(--ink-soft);max-width:560px;line-height:1.65;}
+
+/* FILTER */
+.filter-bar{display:flex;gap:0.5rem;padding:2rem 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.filter-btn{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;padding:0.45rem 1rem;border:1px solid var(--line-strong);background:transparent;cursor:pointer;color:var(--ink-mute);transition:all .2s;}
+.filter-btn:hover,.filter-btn.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+
+/* GRID */
+.journal-section{padding:var(--section) 0;}
+.journal-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:2.5rem;margin-bottom:4rem;}
+.journal-card{display:flex;flex-direction:column;cursor:pointer;}
+.journal-card a{display:flex;flex-direction:column;height:100%;}
+.journal-img{aspect-ratio:4/3;background:var(--paper-warm);margin-bottom:1.5rem;position:relative;overflow:hidden;border:1px solid var(--line);}
+.journal-card.featured .journal-img{aspect-ratio:4/3.2;}
+.journal-img svg{width:100%;height:100%;display:block;}
+.journal-meta{display:flex;gap:1rem;font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cinnabar);margin-bottom:0.8rem;}
+.journal-meta span:not(:last-child)::after{content:'·';margin-left:1rem;color:var(--ink-mute);}
+.journal-title{font-family:var(--font-display);font-size:1.4rem;font-weight:500;letter-spacing:-0.015em;line-height:1.2;margin-bottom:0.8rem;font-variation-settings:"opsz" 72;transition:color .3s;}
+.journal-card.featured .journal-title{font-size:1.85rem;}
+.journal-card:hover .journal-title{color:var(--cinnabar);}
+.journal-excerpt{font-size:0.9rem;color:var(--ink-soft);line-height:1.55;}
+.journal-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;}
+
+/* FOOTER */
+footer{background:var(--ink);color:var(--paper);padding:clamp(3rem,6vw,5rem) 0 2rem;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(244,239,230,0.12);}
+.footer-brand p{font-size:0.875rem;color:rgba(244,239,230,0.55);line-height:1.65;margin-top:1rem;}
+.footer-col h5{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(244,239,230,0.4);margin-bottom:1.25rem;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:0.6rem;}
+.footer-col a{font-size:0.875rem;color:rgba(244,239,230,0.65);transition:color .2s;}
+.footer-col a:hover{color:var(--paper);}
+.footer-bottom{display:grid;grid-template-columns:1fr 1fr;gap:2rem;font-size:0.8rem;color:rgba(244,239,230,0.4);}
+.footer-legal strong,.footer-bank strong{display:block;color:rgba(244,239,230,0.7);margin-bottom:0.3rem;}
+
+@media(max-width:900px){.journal-grid{grid-template-columns:1fr 1fr;}.journal-row{grid-template-columns:1fr 1fr;}.footer-top{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.journal-grid,.journal-row{grid-template-columns:1fr;}.nav-links{display:none;}.footer-top,.footer-bottom{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>From the Workshop Floor</span><span>Greater Bay Area</span><span>Verified Manufacturers</span><span>OEM Sourcing Guides</span><span>Supply Chain Insights</span><span>Direct from the Factory</span>
+    <span>From the Workshop Floor</span><span>Greater Bay Area</span><span>Verified Manufacturers</span><span>OEM Sourcing Guides</span><span>Supply Chain Insights</span><span>Direct from the Factory</span>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo"><span class="logo-mark">CMH</span>ChinaMakersHub</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/categories/furniture/">Categories</a></li>
+        <li><a href="/categories/furniture/">Factories</a></li>
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/journal/" class="active">Journal</a></li>
+        <li><a href="/#about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a href="/inquiry" class="btn-primary">Request a Quote <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="page-header">
+  <div class="container">
+    <div class="page-eyebrow">Sourcing Intelligence</div>
+    <h1 class="page-title">The CMH Journal</h1>
+    <p class="page-desc">Practical guides, factory profiles, and supply chain intelligence for buyers sourcing from China's Greater Bay Area.</p>
+  </div>
+</section>
+
+<section class="journal-section">
+  <div class="container">
+
+    <!-- Featured + 2 -->
+    <div class="journal-grid">
+      <div class="journal-card featured">
+        <a href="/journal/how-to-find-verified-manufacturers-greater-bay-area/">
+          <div class="journal-img">
+            <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="450" fill="#EBE4D6"/>
+              <rect x="60" y="80" width="480" height="290" fill="none" stroke="#B83A26" stroke-width="1" opacity="0.3"/>
+              <line x1="60" y1="200" x2="540" y2="200" stroke="#0F0E0C" stroke-width="0.5" opacity="0.15"/>
+              <line x1="60" y1="280" x2="540" y2="280" stroke="#0F0E0C" stroke-width="0.5" opacity="0.15"/>
+              <rect x="120" y="130" width="80" height="110" fill="#B83A26" opacity="0.15"/>
+              <rect x="240" y="155" width="80" height="85" fill="#B83A26" opacity="0.2"/>
+              <rect x="360" y="110" width="80" height="130" fill="#B83A26" opacity="0.25"/>
+              <text x="300" y="420" font-family="serif" font-size="11" fill="#6B6862" text-anchor="middle" letter-spacing="3">VERIFIED MANUFACTURER GUIDE</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Sourcing Guide</span><span>8 min read</span></div>
+          <h2 class="journal-title">How to Find Verified Manufacturers in China's Greater Bay Area</h2>
+          <p class="journal-excerpt">A step-by-step framework for identifying, vetting, and engaging legitimate OEM factories in Shenzhen, Foshan, Dongguan and Guangzhou — without flying there first.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/oem-vs-odm-manufacturing-china-explained/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <circle cx="140" cy="150" r="80" fill="none" stroke="#B83A26" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="260" cy="150" r="80" fill="none" stroke="#0F0E0C" stroke-width="1.5" opacity="0.3"/>
+              <text x="100" y="155" font-family="serif" font-size="22" fill="#B83A26" opacity="0.7" text-anchor="middle">OEM</text>
+              <text x="300" y="155" font-family="serif" font-size="22" fill="#0F0E0C" opacity="0.5" text-anchor="middle">ODM</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Manufacturing 101</span><span>6 min read</span></div>
+          <h2 class="journal-title">OEM vs ODM: Which Manufacturing Model Is Right for You?</h2>
+          <p class="journal-excerpt">Understanding the difference before you approach a factory can save months of misaligned negotiation.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/china-factory-audit-checklist/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <rect x="80" y="60" width="240" height="180" fill="none" stroke="#0F0E0C" stroke-width="1" opacity="0.2"/>
+              <line x1="100" y1="110" x2="300" y2="110" stroke="#0F0E0C" opacity="0.15" stroke-width="0.8"/>
+              <line x1="100" y1="145" x2="300" y2="145" stroke="#0F0E0C" opacity="0.15" stroke-width="0.8"/>
+              <line x1="100" y1="180" x2="300" y2="180" stroke="#0F0E0C" opacity="0.15" stroke-width="0.8"/>
+              <line x1="100" y1="215" x2="220" y2="215" stroke="#0F0E0C" opacity="0.15" stroke-width="0.8"/>
+              <text x="108" y="107" font-family="serif" font-size="9" fill="#B83A26" opacity="0.8">✓</text>
+              <text x="108" y="142" font-family="serif" font-size="9" fill="#B83A26" opacity="0.8">✓</text>
+              <text x="108" y="177" font-family="serif" font-size="9" fill="#6B6862" opacity="0.6">○</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Due Diligence</span><span>10 min read</span></div>
+          <h2 class="journal-title">The 27-Point China Factory Audit Checklist</h2>
+          <p class="journal-excerpt">What to verify before placing your first production order — from business license checks to production capacity validation.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="journal-row">
+      <div class="journal-card">
+        <a href="/journal/minimum-order-quantity-negotiation-china/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <text x="200" y="170" font-family="serif" font-size="72" fill="#B83A26" opacity="0.12" text-anchor="middle" font-weight="700">MOQ</text>
+              <line x1="80" y1="220" x2="320" y2="220" stroke="#0F0E0C" stroke-width="1" opacity="0.2"/>
+              <polyline points="80,200 140,180 200,160 260,140 320,110" fill="none" stroke="#B83A26" stroke-width="1.5" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Negotiation</span><span>7 min read</span></div>
+          <h2 class="journal-title">How to Negotiate MOQ with Chinese Factories</h2>
+          <p class="journal-excerpt">Minimum order quantities are rarely fixed. Here's how experienced buyers negotiate lower MOQs without sacrificing unit price.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/foshan-furniture-manufacturing-hub-guide/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <rect x="60" y="150" width="60" height="100" fill="#0F0E0C" opacity="0.08"/>
+              <rect x="140" y="120" width="60" height="130" fill="#0F0E0C" opacity="0.1"/>
+              <rect x="220" y="100" width="60" height="150" fill="#0F0E0C" opacity="0.12"/>
+              <rect x="300" y="130" width="60" height="120" fill="#0F0E0C" opacity="0.09"/>
+              <text x="200" y="60" font-family="serif" font-size="13" fill="#B83A26" opacity="0.6" text-anchor="middle" letter-spacing="3">FOSHAN</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>City Guide</span><span>9 min read</span></div>
+          <h2 class="journal-title">Foshan Furniture Manufacturing: The Complete Buyer's Guide</h2>
+          <p class="journal-excerpt">Foshan produces 30% of China's furniture exports. Here's how to navigate its districts, trade shows, and factory tiers.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/china-sourcing-agent-vs-direct-factory/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <circle cx="130" cy="150" r="45" fill="none" stroke="#6B6862" stroke-width="1" opacity="0.4"/>
+              <circle cx="270" cy="150" r="45" fill="none" stroke="#B83A26" stroke-width="1" opacity="0.4"/>
+              <line x1="175" y1="150" x2="225" y2="150" stroke="#0F0E0C" stroke-width="1" opacity="0.2" stroke-dasharray="4,3"/>
+              <text x="130" y="155" font-family="serif" font-size="10" fill="#6B6862" text-anchor="middle">AGENT</text>
+              <text x="270" y="155" font-family="serif" font-size="10" fill="#B83A26" text-anchor="middle">DIRECT</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Strategy</span><span>6 min read</span></div>
+          <h2 class="journal-title">Sourcing Agent vs Direct Factory: A Cost-Benefit Analysis</h2>
+          <p class="journal-excerpt">When does using an agent make sense — and when are you just paying for a middleman? The honest breakdown.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="journal-row" style="margin-top:2.5rem">
+      <div class="journal-card">
+        <a href="/journal/iso-certifications-china-manufacturers-explained/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <circle cx="200" cy="150" r="90" fill="none" stroke="#B83A26" stroke-width="1" opacity="0.25"/>
+              <circle cx="200" cy="150" r="65" fill="none" stroke="#B83A26" stroke-width="1.5" opacity="0.35"/>
+              <text x="200" y="160" font-family="serif" font-size="28" fill="#0F0E0C" opacity="0.35" text-anchor="middle" font-weight="600">ISO</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Compliance</span><span>7 min read</span></div>
+          <h2 class="journal-title">ISO Certifications for China Manufacturers: What They Actually Mean</h2>
+          <p class="journal-excerpt">ISO 9001, ISO 14001, BSCI — decoded for buyers who want to know what a certificate actually guarantees.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/payment-terms-china-factory-tt-lc-guide/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <rect x="80" y="100" width="240" height="100" rx="4" fill="none" stroke="#0F0E0C" stroke-width="1" opacity="0.2"/>
+              <line x1="80" y1="130" x2="320" y2="130" stroke="#0F0E0C" opacity="0.1" stroke-width="0.8"/>
+              <text x="200" y="122" font-family="serif" font-size="9" fill="#6B6862" text-anchor="middle" letter-spacing="2">T/T  ·  L/C  ·  DP  ·  DA</text>
+              <text x="200" y="165" font-family="serif" font-size="18" fill="#B83A26" opacity="0.4" text-anchor="middle">PAYMENT</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Finance</span><span>8 min read</span></div>
+          <h2 class="journal-title">Payment Terms with Chinese Factories: T/T, L/C, and What to Avoid</h2>
+          <p class="journal-excerpt">30% deposit, 70% before shipment is the default — but it's not always your best option. Here's the full picture.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/product-inspection-china-before-shipment/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <circle cx="185" cy="145" r="70" fill="none" stroke="#0F0E0C" stroke-width="1" opacity="0.2"/>
+              <line x1="240" y1="200" x2="310" y2="260" stroke="#0F0E0C" stroke-width="5" stroke-linecap="round" opacity="0.15"/>
+              <circle cx="185" cy="145" r="45" fill="none" stroke="#B83A26" stroke-width="1" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Quality Control</span><span>8 min read</span></div>
+          <h2 class="journal-title">Pre-Shipment Inspection in China: A First-Timer's Complete Guide</h2>
+          <p class="journal-excerpt">How to arrange a third-party inspection, what AQL sampling means, and how to handle a failed inspection report.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="journal-row" style="margin-top:2.5rem">
+      <div class="journal-card">
+        <a href="/journal/incoterms-explained-fob-cif-exw-china/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <path d="M60 200 Q200 100 340 200" fill="none" stroke="#0F0E0C" stroke-width="1" opacity="0.2"/>
+              <text x="80" y="220" font-family="serif" font-size="11" fill="#B83A26" opacity="0.6">EXW</text>
+              <text x="170" y="160" font-family="serif" font-size="11" fill="#B83A26" opacity="0.7">FOB</text>
+              <text x="270" y="175" font-family="serif" font-size="11" fill="#B83A26" opacity="0.8">CIF</text>
+              <text x="315" y="220" font-family="serif" font-size="11" fill="#B83A26" opacity="0.6">DDP</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Logistics</span><span>6 min read</span></div>
+          <h2 class="journal-title">Incoterms Explained: FOB, CIF, EXW and DDP for China Shipments</h2>
+          <p class="journal-excerpt">Which Incoterm protects you most — and which one most factories prefer. The practical guide, not the legal textbook.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/shenzhen-electronics-manufacturing-sourcing-guide/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <rect x="80" y="80" width="240" height="140" rx="2" fill="none" stroke="#0F0E0C" stroke-width="1" opacity="0.2"/>
+              <rect x="100" y="100" width="60" height="40" rx="1" fill="#B83A26" opacity="0.1"/>
+              <rect x="175" y="100" width="60" height="40" rx="1" fill="#B83A26" opacity="0.12"/>
+              <rect x="250" y="100" width="50" height="40" rx="1" fill="#B83A26" opacity="0.08"/>
+              <line x1="100" y1="165" x2="300" y2="165" stroke="#0F0E0C" opacity="0.1" stroke-width="0.8"/>
+              <line x1="100" y1="185" x2="260" y2="185" stroke="#0F0E0C" opacity="0.1" stroke-width="0.8"/>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>City Guide</span><span>9 min read</span></div>
+          <h2 class="journal-title">Shenzhen Electronics Manufacturing: Sourcing PCBs, Components and Assemblies</h2>
+          <p class="journal-excerpt">From Huaqiangbei to large-scale PCB assembly plants — how to navigate Shenzhen's electronics ecosystem as a foreign buyer.</p>
+        </a>
+      </div>
+
+      <div class="journal-card">
+        <a href="/journal/sample-order-china-factory-process/">
+          <div class="journal-img">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <rect x="140" y="80" width="120" height="140" rx="2" fill="none" stroke="#B83A26" stroke-width="1.5" opacity="0.35"/>
+              <rect x="155" y="100" width="90" height="8" rx="1" fill="#0F0E0C" opacity="0.1"/>
+              <rect x="155" y="118" width="70" height="8" rx="1" fill="#0F0E0C" opacity="0.08"/>
+              <rect x="155" y="175" width="90" height="20" rx="1" fill="#B83A26" opacity="0.12"/>
+              <text x="200" y="190" font-family="serif" font-size="9" fill="#B83A26" text-anchor="middle">SAMPLE REQUEST</text>
+            </svg>
+          </div>
+          <div class="journal-meta"><span>Process</span><span>5 min read</span></div>
+          <h2 class="journal-title">How to Request a Sample from a Chinese Factory (Without Getting Burned)</h2>
+          <p class="journal-excerpt">Sample fees, lead times, spec sheets and golden samples — everything you need to get a production-accurate prototype.</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo" style="color:var(--paper)"><span class="logo-mark" style="background:var(--paper);color:var(--ink)">CMH</span>ChinaMakersHub</div>
+        <p>A curated B2B sourcing platform connecting global buyers with verified manufacturers across China's Greater Bay Area.</p>
+      </div>
+      <div class="footer-col"><h5>Platform</h5><ul>
+        <li><a href="/categories/furniture/">Browse Categories</a></li>
+        <li><a href="/categories/furniture/">Featured Factories</a></li>
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/journal/">Journal</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>For Factories</h5><ul>
+        <li><a href="/factory-apply">Apply to Join</a></li>
+        <li><a href="/factory-apply">Verification Process</a></li>
+        <li><a href="/factory-apply">Member Benefits</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Company</h5><ul>
+        <li><a href="/#about">About CMH</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal"><strong>Qingxuan International Trading Limited</strong>Hong Kong CR No. 79771658<br>Unit 1618A, 16/F, Pioneer Centre, 750 Nathan Road, Mong Kok, Hong Kong<br>© 2026 ChinaMakersHub. All rights reserved.</div>
+      <div class="footer-bank"><strong>Banking Partner</strong>DBS Bank (Hong Kong) Limited<br>SWIFT: DHBKHKHH<br>Multi-currency T/T accepted</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

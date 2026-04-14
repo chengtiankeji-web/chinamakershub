@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Shipment Inspection in China: A First-Timer's Complete Guide | ChinaMakersHub Journal</title>
+<meta name="description" content="Pre-shipment inspection in China explained. Learn how to arrange third-party QC inspections, understand AQL sampling, and handle inspection failures.">
+<link rel="canonical" href="https://chinamakershub.com/journal/product-inspection-china-before-shipment/">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F0E0C;--ink-soft:#2A2825;--ink-mute:#6B6862;--paper:#F4EFE6;--paper-warm:#EBE4D6;--paper-pure:#FAF7F0;--cinnabar:#B83A26;--cinnabar-deep:#8B2A1B;--jade:#4A6B5C;--line:rgba(15,14,12,0.12);--line-strong:rgba(15,14,12,0.25);--font-display:'Fraunces',Georgia,serif;--font-editorial:'Instrument Serif',Georgia,serif;--font-body:'Inter Tight',-apple-system,sans-serif;--font-mono:'JetBrains Mono',monospace;--gutter:clamp(1.5rem,4vw,4rem);--section:clamp(5rem,10vw,9rem);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.55;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");opacity:0.05;pointer-events:none;z-index:1;mix-blend-mode:multiply;}
+main,header,footer{position:relative;z-index:2;}
+a{color:inherit;text-decoration:none;}
+.container{max-width:1440px;margin:0 auto;padding:0 var(--gutter);}
+.marquee{background:var(--ink);color:var(--paper);padding:0.6rem 0;font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;overflow:hidden;}
+.marquee-track{display:flex;white-space:nowrap;animation:scroll 40s linear infinite;}
+.marquee-track span{padding:0 2rem;display:flex;align-items:center;gap:2rem;}
+.marquee-track span::after{content:'◆';font-size:0.5rem;opacity:0.5;}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.nav{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:0.6rem;font-family:var(--font-display);font-size:1.1rem;font-weight:500;letter-spacing:-0.01em;}
+.logo-mark{background:var(--ink);color:var(--paper);padding:0.15em 0.4em;font-size:0.75rem;font-family:var(--font-mono);letter-spacing:0.05em;}
+.nav-links{display:flex;list-style:none;gap:2rem;}
+.nav-links a{font-size:0.875rem;font-weight:500;color:var(--ink-mute);transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);}
+.btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:var(--ink);color:var(--paper);padding:0.6rem 1.25rem;font-size:0.8rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;transition:background .2s;}
+.btn-primary:hover{background:var(--cinnabar);}
+/* Article layout */
+.article-header{padding:clamp(4rem,8vw,7rem) 0 clamp(3rem,5vw,4rem);border-bottom:1px solid var(--line);}
+.article-wrap{display:grid;grid-template-columns:1fr 320px;gap:5rem;padding:clamp(3rem,6vw,5rem) 0;}
+.article-eyebrow{font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--cinnabar);margin-bottom:1.25rem;display:flex;gap:1rem;align-items:center;}
+.article-eyebrow span:not(:last-child)::after{content:'·';margin-left:1rem;color:var(--ink-mute);}
+.article-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.75rem);font-weight:500;letter-spacing:-0.03em;line-height:1.05;margin-bottom:1.5rem;font-variation-settings:"opsz" 72;}
+.article-subtitle{font-size:1.1rem;color:var(--ink-soft);line-height:1.65;max-width:640px;}
+.article-hero{background:var(--paper-warm);border:1px solid var(--line);margin:3rem 0;aspect-ratio:16/7;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.article-hero svg{width:100%;height:100%;}
+.article-body h2{font-family:var(--font-display);font-size:1.75rem;font-weight:500;letter-spacing:-0.02em;margin:3rem 0 1rem;font-variation-settings:"opsz" 72;}
+.article-body h3{font-family:var(--font-display);font-size:1.2rem;font-weight:500;margin:2rem 0 0.75rem;}
+.article-body p{margin-bottom:1.35rem;font-size:1rem;line-height:1.75;color:var(--ink-soft);}
+.article-body ul,.article-body ol{margin:0 0 1.5rem 1.5rem;color:var(--ink-soft);}
+.article-body li{margin-bottom:0.5rem;line-height:1.65;font-size:1rem;}
+.article-body strong{color:var(--ink);font-weight:600;}
+.callout{background:var(--paper-warm);border-left:3px solid var(--cinnabar);padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.95rem;color:var(--ink-soft);line-height:1.65;}
+.callout strong{color:var(--cinnabar);display:block;margin-bottom:0.3rem;font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;}
+.sidebar{position:sticky;top:80px;height:fit-content;}
+.sidebar-card{background:var(--paper-warm);border:1px solid var(--line);padding:1.5rem;margin-bottom:1.5rem;}
+.sidebar-card h4{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cinnabar);margin-bottom:1rem;}
+.sidebar-card p{font-size:0.875rem;color:var(--ink-soft);line-height:1.6;margin-bottom:1rem;}
+.sidebar-card a.btn-primary{width:100%;justify-content:center;display:flex;}
+.related-articles{padding:var(--section) 0;border-top:1px solid var(--line);}
+.related-articles h3{font-family:var(--font-display);font-size:1.75rem;font-weight:500;margin-bottom:2rem;font-variation-settings:"opsz" 72;}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.related-card{border-top:2px solid var(--line);padding-top:1.25rem;}
+.related-card .tag{font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cinnabar);margin-bottom:0.5rem;}
+.related-card h4{font-family:var(--font-display);font-size:1.1rem;font-weight:500;line-height:1.3;transition:color .2s;font-variation-settings:"opsz" 72;}
+.related-card:hover h4{color:var(--cinnabar);}
+footer{background:var(--ink);color:var(--paper);padding:clamp(3rem,6vw,5rem) 0 2rem;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(244,239,230,0.12);}
+.footer-brand p{font-size:0.875rem;color:rgba(244,239,230,0.55);line-height:1.65;margin-top:1rem;}
+.footer-col h5{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(244,239,230,0.4);margin-bottom:1.25rem;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:0.6rem;}
+.footer-col a{font-size:0.875rem;color:rgba(244,239,230,0.65);transition:color .2s;}
+.footer-col a:hover{color:var(--paper);}
+.footer-bottom{display:grid;grid-template-columns:1fr 1fr;gap:2rem;font-size:0.8rem;color:rgba(244,239,230,0.4);}
+.footer-legal strong,.footer-bank strong{display:block;color:rgba(244,239,230,0.7);margin-bottom:0.3rem;}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;}.related-grid{grid-template-columns:1fr 1fr;}.footer-top{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.nav-links{display:none;}.related-grid{grid-template-columns:1fr;}.footer-top,.footer-bottom{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="marquee"><div class="marquee-track"><span>From the Workshop Floor</span><span>Greater Bay Area</span><span>Verified Manufacturers</span><span>OEM Sourcing Guides</span><span>Supply Chain Insights</span><span>Direct from the Factory</span><span>From the Workshop Floor</span><span>Greater Bay Area</span><span>Verified Manufacturers</span><span>OEM Sourcing Guides</span><span>Supply Chain Insights</span><span>Direct from the Factory</span></div></div>
+<header class="nav"><div class="container nav-inner"><a href="/" class="logo"><span class="logo-mark">CMH</span>ChinaMakersHub</a><nav><ul class="nav-links"><li><a href="/categories/furniture/">Categories</a></li><li><a href="/categories/furniture/">Factories</a></li><li><a href="/#how">How It Works</a></li><li><a href="/journal/" class="active">Journal</a></li><li><a href="/#about">About</a></li></ul></nav><div class="nav-actions"><a href="/inquiry" class="btn-primary">Request a Quote <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a></div></div></header>
+<main>
+<section class="article-header">
+  <div class="container">
+    <div class="article-eyebrow"><span>Quality Control</span><span>8 min read</span><span>January 2026</span></div>
+    <h1 class="article-title">Pre-Shipment Inspection in China: A First-Timer's Complete Guide</h1>
+    <p class="article-subtitle">How to arrange a third-party inspection, what AQL sampling means, and how to handle a failed inspection report.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="article-wrap">
+    <article class="article-body">
+      
+<p>A pre-shipment inspection (PSI) is one of the most effective risk management tools available to buyers sourcing from China. For $250–400, you can have a qualified inspector spend a day at your factory checking a statistically valid sample of your production run before it ships.</p>
+<p>This guide covers how to arrange an inspection, what inspectors check, and how to interpret the results.</p>
+
+<h2>Why Pre-Shipment Inspection Matters</h2>
+<p>The alternative to a PSI is discovering quality problems after your goods have cleared Chinese customs — at which point your options are expensive and time-consuming. Rework in China, return shipment, or accepting and selling defective goods.</p>
+<p>A PSI catches problems while they're still the factory's problem. Done correctly, it gives you leverage to demand rework before you release final payment.</p>
+
+<h2>Choosing an Inspection Company</h2>
+<p>The major international inspection firms operating in China include:</p>
+<ul>
+<li><strong>Bureau Veritas (BV)</strong> — Global leader, broad product coverage</li>
+<li><strong>SGS</strong> — Strong in consumer goods and food safety</li>
+<li><strong>Intertek</strong> — Good coverage in textiles and electronics</li>
+<li><strong>QIMA</strong> — Tech-forward, strong digital reporting, competitive pricing</li>
+<li><strong>Asia Inspection / API</strong> — Competitive rates, good GBA coverage</li>
+</ul>
+<p>For most buyers, QIMA or Asia Inspection offer the best price-to-service ratio. Bureau Veritas and SGS are appropriate when your buyer (a major retailer) specifies a particular firm.</p>
+
+<h2>What Is AQL Sampling?</h2>
+<p>AQL (Acceptable Quality Level) is the statistical sampling methodology used to determine how many units to inspect from a production run — and how many defects are acceptable before rejecting the lot.</p>
+<p>Standard AQL levels for consumer goods:</p>
+<ul>
+<li><strong>Critical defects (safety risks):</strong> AQL 0 — any critical defect fails the inspection</li>
+<li><strong>Major defects (affect function or appearance significantly):</strong> AQL 2.5 — typically acceptable</li>
+<li><strong>Minor defects (cosmetic issues):</strong> AQL 4.0 — typically acceptable</li>
+</ul>
+<p>For example, on a production run of 1,200 units, AQL 2.5 requires inspecting 80 units. If more than 5 major defects are found in those 80 units, the lot fails.</p>
+
+<div class="callout"><strong>Key Point</strong>AQL sampling doesn't guarantee zero defects — it guarantees a statistically acceptable defect rate. If your product has zero tolerance for defects (medical devices, safety-critical parts), you need 100% inspection, not AQL sampling.</div>
+
+<h2>What Inspectors Check</h2>
+<p>A standard pre-shipment inspection covers:</p>
+<ul>
+<li>Product appearance and workmanship</li>
+<li>Dimensions and weight against your specifications</li>
+<li>Quantity verification (count the units)</li>
+<li>Packaging integrity and labelling accuracy</li>
+<li>Function testing (for products with functional requirements)</li>
+<li>Barcode scanning (if applicable)</li>
+<li>Carton drop test</li>
+</ul>
+<p>You should prepare a detailed inspection checklist with your specifications, defect definitions, and photos of acceptable vs. unacceptable quality. The more specific your brief, the more useful the inspection report.</p>
+
+<h2>Handling a Failed Inspection</h2>
+<p>If your inspection report shows a fail:</p>
+<ol>
+<li>Don't release final payment</li>
+<li>Review the inspection report in detail — understand exactly what failed and why</li>
+<li>Communicate the specific failures to the factory in writing</li>
+<li>Agree a rework plan with timeline and re-inspection</li>
+<li>Schedule a re-inspection (at additional cost, but worth it)</li>
+</ol>
+<p>Most factories will rework without argument if the defects are clearly documented by a third-party inspector. The inspection report is your objective evidence — use it.</p>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:3rem 0">
+      <p style="font-size:0.875rem;color:var(--ink-mute)"><em>ChinaMakersHub connects global buyers with verified manufacturers across China's Greater Bay Area. <a href="/inquiry" style="color:var(--cinnabar)">Submit an inquiry</a> to get introduced to vetted factories in your category.</em></p>
+    </article>
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h4>Source from the GBA</h4>
+        <p>ChinaMakersHub connects you directly with verified manufacturers in Shenzhen, Foshan, Dongguan and Guangzhou. No trading companies. No middlemen.</p>
+        <a href="/inquiry" class="btn-primary">Request a Quote <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a>
+      </div>
+      <div class="sidebar-card">
+        <h4>Browse Categories</h4>
+        <p>Furniture, electronics, hardware, lighting and more — all from GBA-verified manufacturers.</p>
+        <a href="/categories/furniture/" style="color:var(--cinnabar);font-size:0.875rem;font-weight:500">Browse factories →</a>
+      </div>
+      <div class="sidebar-card">
+        <h4>For Factories</h4>
+        <p>GBA manufacturer? Apply to join the CMH verified network and reach global buyers directly.</p>
+        <a href="/factory-apply" style="color:var(--cinnabar);font-size:0.875rem;font-weight:500">Apply to join →</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<section class="related-articles">
+  <div class="container">
+    <h3>More Sourcing Guides</h3>
+    <div class="related-grid"><a href="/journal/china-factory-audit-checklist/" class="related-card"><div class="tag">Due Diligence</div><h4>The 27-Point China Factory Audit Checklist</h4></a><a href="/journal/iso-certifications-china-manufacturers-explained/" class="related-card"><div class="tag">Compliance</div><h4>ISO Certifications for China Manufacturers: What They Actually Mean</h4></a><a href="/journal/payment-terms-china-factory-tt-lc-guide/" class="related-card"><div class="tag">Finance</div><h4>Payment Terms with Chinese Factories: T/T, L/C, and What to Avoid</h4></a></div>
+  </div>
+</section>
+</main>
+<footer><div class="container"><div class="footer-top"><div class="footer-brand"><div class="logo" style="color:var(--paper)"><span class="logo-mark" style="background:var(--paper);color:var(--ink)">CMH</span>ChinaMakersHub</div><p>A curated B2B sourcing platform connecting global buyers with verified manufacturers across China's Greater Bay Area.</p></div><div class="footer-col"><h5>Platform</h5><ul><li><a href="/categories/furniture/">Browse Categories</a></li><li><a href="/journal/">Journal</a></li><li><a href="/#how">How It Works</a></li></ul></div><div class="footer-col"><h5>Company</h5><ul><li><a href="/#about">About CMH</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li></ul></div></div><div class="footer-bottom"><div class="footer-legal"><strong>Qingxuan International Trading Limited</strong>Hong Kong CR No. 79771658<br>© 2026 ChinaMakersHub. All rights reserved.</div><div class="footer-bank"><strong>Banking Partner</strong>DBS Bank (Hong Kong) Limited · SWIFT: DHBKHKHH</div></div></div></footer>
+</body>
+</html>
