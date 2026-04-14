@@ -69,13 +69,71 @@ export default {
   },
 };
 
+// ============ CLOUDFLARE ACCESS JWT 验证 ============
+const CF_ACCESS_AUD = 'cd69f936ac5a240bff8bb96232fa02b844aaaca226dfc9a66ab9912287bfd79c';
+const CF_CERTS_URL = 'https://chengtiankeji.cloudflareaccess.com/cdn-cgi/access/certs';
+
+async function verifyAccessJWT(request) {
+  // 本地开发跳过
+  const skipCheck = false; // 上线后保持 false
+
+  const token = request.headers.get('Cf-Access-Jwt-Assertion')
+    || getCookieValue(request.headers.get('Cookie') || '', 'CF_Authorization');
+
+  if (!token) return null;
+
+  try {
+    // 拉取 Cloudflare 公钥
+    const certsRes = await fetch(CF_CERTS_URL);
+    const { keys } = await certsRes.json();
+
+    // 解析 JWT header 找 kid
+    const [headerB64] = token.split('.');
+    const header = JSON.parse(atob(headerB64.replace(/-/g, '+').replace(/_/g, '/')));
+    const jwk = keys.find(k => k.kid === header.kid);
+    if (!jwk) return null;
+
+    // 导入公钥并验证
+    const key = await crypto.subtle.importKey(
+      'jwk', jwk,
+      { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
+      false, ['verify']
+    );
+
+    const [, payloadB64, sigB64] = token.split('.');
+    const data = new TextEncoder().encode(`${token.split('.')[0]}.${payloadB64}`);
+    const sig = Uint8Array.from(atob(sigB64.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+    const valid = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, sig, data);
+    if (!valid) return null;
+
+    // 验证 aud 和过期时间
+    const payload = JSON.parse(atob(payloadB64.replace(/-/g, '+').replace(/_/g, '/')));
+    const audOk = Array.isArray(payload.aud) ? payload.aud.includes(CF_ACCESS_AUD) : payload.aud === CF_ACCESS_AUD;
+    if (!audOk) return null;
+    if (payload.exp < Math.floor(Date.now() / 1000)) return null;
+
+    return payload.email || payload.sub || 'authenticated';
+  } catch (e) {
+    console.error('JWT verify error:', e);
+    return null;
+  }
+}
+
+function getCookieValue(cookieHeader, name) {
+  const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
+  return match ? match[1] : null;
+}
+
 // ============ ADMIN ROUTER ============
 async function handleAdmin(request, env, url, origin) {
-  // Cloudflare Access 验证通过后会注入 Cf-Access-Authenticated-User-Email header
-  // 本地开发时可在 wrangler.toml 里设置 [vars] SKIP_ACCESS_CHECK = "true"
-  const userEmail = request.headers.get('Cf-Access-Authenticated-User-Email');
-  if (!userEmail && env.SKIP_ACCESS_CHECK !== 'true') {
-    return jsonResponse({ error: 'Forbidden: Cloudflare Access required' }, 403, origin);
+  // 本地开发跳过鉴权
+  if (env.SKIP_ACCESS_CHECK === 'true') {
+    // skip
+  } else {
+    const userEmail = await verifyAccessJWT(request);
+    if (!userEmail) {
+      return jsonResponse({ error: 'Forbidden: Cloudflare Access required' }, 403, origin);
+    }
   }
 
   const path = url.pathname;
