@@ -937,6 +937,78 @@ footer {
 a.cat, a.factory { display: block; color: inherit; text-decoration: none; }
 a.cat:hover, a.factory:hover { cursor: pointer; }
 .factory-cta { color: var(--cinnabar); font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ============ HAMBURGER MENU ============ */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+  z-index: 201;
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.3s, opacity 0.3s;
+  transform-origin: center;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--paper);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: 90px var(--gutter) 3rem;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu ul { list-style: none; flex: 1; }
+.mobile-menu ul li { border-bottom: 1px solid var(--line); }
+.mobile-menu ul li a {
+  display: block;
+  padding: 1.1rem 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  font-variation-settings: "opsz" 72;
+  transition: color 0.2s;
+}
+.mobile-menu ul li a:hover { color: var(--cinnabar); }
+.mobile-menu-cta { margin-top: 2rem; }
+.mobile-menu-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.85rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .nav-burger { display: flex; }
+  .nav-actions { display: none; }
+}
+
 </style>
 </head>
 <body>
@@ -981,8 +1053,29 @@ a.cat:hover, a.factory:hover { cursor: pointer; }
         <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </a>
     </div>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul>
+    <li><a href="/categories/furniture/">Categories</a></li>
+    <li><a href="/categories/furniture/">Factories</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/journal/">Journal</a></li>
+    <li><a href="/#about">About</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a href="/inquiry">
+      Request a Quote
+      <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+    </a>
+  </div>
+</div>
 
 <main>
 
@@ -1461,3 +1554,47 @@ a.cat:hover, a.factory:hover { cursor: pointer; }
         SWIFT: DHBKHKHH<br>
         Multi-currency T/T accepted<br>
         <a href="/cdn-cgi/l/email-protection"
+        <a href="mailto:info@chinamakershub.com">info@chinamakershub.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+(function() {
+  var burger = document.getElementById('navBurger');
+  var menu = document.getElementById('mobileMenu');
+  if (!burger || !menu) return;
+
+  burger.addEventListener('click', function() {
+    var isOpen = menu.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    menu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // 点菜单项关闭
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      menu.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-label', 'Open menu');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ESC 关闭
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && menu.classList.contains('open')) {
+      menu.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-label', 'Open menu');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
+</body>
+</html>
