@@ -438,76 +438,20 @@ input.error, select.error, textarea.error {
 }
 
 /* File upload */
-.file-upload {
-  border: 1px dashed var(--line-strong);
-  padding: 2rem 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  background: var(--paper);
-}
-.file-upload:hover { border-color: var(--cinnabar); }
-.file-upload input { display: none; }
-.file-upload-icon {
-  width: 36px;
-  height: 36px;
-  margin: 0 auto 0.8rem;
-  border: 1px solid var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1rem;
-}
-.file-upload p {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  margin-bottom: 0.3rem;
-}
-.file-upload p strong { color: var(--cinnabar); }
-.file-upload .hint { font-size: 0.72rem; color: var(--ink-mute); }
 
 
-.file-preview-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 8px;
-  margin-top: 12px;
-}
-.file-preview-item {
-  position: relative;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--paper-warm);
-}
-.file-preview-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.file-preview-remove {
-  position: absolute;
-  top: 3px; right: 3px;
-  width: 20px; height: 20px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 11px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-.file-upload-count {
-  font-size: 0.75rem;
-  color: var(--cinnabar);
-  margin-top: 6px;
-  font-family: var(--font-mono);
-}
+
+
+
+
+
+
+
+
+
+
+
+
 /* Step actions */
 .step-actions {
   margin-top: 2.5rem;
@@ -964,7 +908,7 @@ input.error, select.error, textarea.error {
               <div class="step-header">
                 <div class="step-num-label">/ Step 03 of 04</div>
                 <h2>产品与认证</h2>
-                <p>产品图片和认证是建立海外买家信任的关键。</p>
+                <p>认证资质和海外客户案例是建立海外买家信任的关键。</p>
               </div>
 
               <div class="form-group">
@@ -985,29 +929,9 @@ input.error, select.error, textarea.error {
                 </div>
               </div>
 
-              <div class="form-group">
-                <label>核心产品图片 <span class="required">*</span></label>
-                <label class="file-upload" for="productImages" id="productUploadArea">
-                  <div class="file-upload-icon">↑</div>
-                  <p><strong>点击上传</strong> 或拍照</p>
-                  <p class="hint">建议 6-10 张,JPG/PNG,单张不超过 5MB · 后续也可补充</p>
-                  <input type="file" id="productImages" name="product_images" multiple accept="image/*" capture>
-                </label>
-                <div class="file-preview-grid" id="productPreview"></div>
-                <div class="file-upload-count" id="productCount"></div>
-              </div>
 
-              <div class="form-group">
-                <label>工厂图片 <span class="hint">(车间、生产线、办公区等)</span></label>
-                <label class="file-upload" for="factoryImages" id="factoryUploadArea">
-                  <div class="file-upload-icon">↑</div>
-                  <p><strong>点击上传</strong> 或拍照</p>
-                  <p class="hint">建议 4-6 张实拍图 · 后续也可补充</p>
-                  <input type="file" id="factoryImages" name="factory_images" multiple accept="image/*" capture>
-                </label>
-                <div class="file-preview-grid" id="factoryPreview"></div>
-                <div class="file-upload-count" id="factoryCount"></div>
-              </div>
+
+
 
               <div class="form-group">
                 <label>公司网站 <span class="hint">(选填,如果有的话)</span></label>
@@ -1300,52 +1224,6 @@ function attachCheckboxLimit(name, max) {
 }
 attachCheckboxLimit('categories', 3);
 
-
-// ============ 图片预览 ============
-function setupImagePreview(inputId, previewId, countId) {
-  const input = document.getElementById(inputId);
-  const preview = document.getElementById(previewId);
-  const countEl = document.getElementById(countId);
-  let files = [];
-
-  input.addEventListener('change', () => {
-    const newFiles = [...input.files];
-    newFiles.forEach(f => {
-      if (f.size > 5 * 1024 * 1024) {
-        alert(f.name + ' 超过 5MB，已跳过');
-        return;
-      }
-      if (!f.type.startsWith('image/')) return;
-      files.push(f);
-    });
-    // 重置 input（允许重复选同一文件）
-    input.value = '';
-    renderPreview();
-  });
-
-  function renderPreview() {
-    preview.innerHTML = '';
-    files.forEach((f, i) => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const item = document.createElement('div');
-        item.className = 'file-preview-item';
-        item.innerHTML = `<img src="${e.target.result}" alt=""><button class="file-preview-remove" type="button" data-index="${i}">✕</button>`;
-        item.querySelector('button').addEventListener('click', ev => {
-          ev.preventDefault();
-          files.splice(parseInt(ev.target.dataset.index), 1);
-          renderPreview();
-        });
-        preview.appendChild(item);
-      };
-      reader.readAsDataURL(f);
-    });
-    countEl.textContent = files.length > 0 ? `已选 ${files.length} 张` : '';
-  }
-}
-
-setupImagePreview('productImages', 'productPreview', 'productCount');
-setupImagePreview('factoryImages', 'factoryPreview', 'factoryCount');
 
 // 年份下拉
 (function() {
