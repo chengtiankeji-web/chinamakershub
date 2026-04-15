@@ -691,7 +691,9 @@ function renderInquiryDetail(r) {
     `<option value="${o.value}"${r.status === o.value ? ' selected' : ''}>${o.label}</option>`
   ).join('');
 
-  const wa = r.whatsapp ? `${r.phone_code || ''} ${r.whatsapp}`.trim() : '—';
+  const waNum = r.whatsapp ? (r.phone_code || '').replace(/[^0-9]/g,'') + r.whatsapp.replace(/[^0-9]/g,'') : '';
+  const waDisplay = r.whatsapp ? `${r.phone_code || ''} ${r.whatsapp}`.trim() : '—';
+  const wa = waDisplay;
   const utmInfo = [r.utm_source, r.utm_medium, r.utm_campaign].filter(Boolean).join(' / ') || '—';
 
   document.getElementById('drawer-content').innerHTML = `
@@ -746,7 +748,7 @@ function renderInquiryDetail(r) {
 
     <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
       <a href="mailto:${r.email}?subject=Re: Your inquiry to ChinaMakersHub [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
-      ${wa !== '—' ? `<a href="https://wa.me/${(r.phone_code||'').replace(/[^0-9]/g,'') + (r.whatsapp||'').replace(/[^0-9]/g,'')}" class="btn btn-ghost" style="text-decoration:none" target="_blank">💬 WhatsApp</a>` : ''}
+      ${waNum ? `<a href="https://wa.me/${waNum}" class="btn btn-ghost" style="text-decoration:none" target="_blank">💬 WhatsApp</a>` : ''}
     </div>
   `;
 }
