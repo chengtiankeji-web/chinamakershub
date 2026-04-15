@@ -147,6 +147,10 @@ async function handleAdmin(request, env, url, origin) {
   if (path === '/api/admin/inquiries' && method === 'GET') {
     return handleAdminListInquiries(request, env, url, origin);
   }
+  // GET /api/admin/inquiries/:id  单条详情
+  if (path.startsWith('/api/admin/inquiries/') && method === 'GET') {
+    return handleAdminGetInquiry(request, env, url, origin);
+  }
   // PATCH /api/admin/inquiries/:id
   if (path.startsWith('/api/admin/inquiries/') && method === 'PATCH') {
     return handleAdminUpdateInquiry(request, env, url, origin);
@@ -154,6 +158,10 @@ async function handleAdmin(request, env, url, origin) {
   // GET /api/admin/factories
   if (path === '/api/admin/factories' && method === 'GET') {
     return handleAdminListFactories(request, env, url, origin);
+  }
+  // GET /api/admin/factories/:id  单条详情
+  if (path.startsWith('/api/admin/factories/') && method === 'GET') {
+    return handleAdminGetFactory(request, env, url, origin);
   }
   // PATCH /api/admin/factories/:id
   if (path.startsWith('/api/admin/factories/') && method === 'PATCH') {
@@ -204,6 +212,36 @@ async function handleAdminListInquiries(request, env, url, origin) {
     }, 200, origin);
   } catch (err) {
     console.error('handleAdminListInquiries error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ ADMIN: 询盘单条详情 ============
+async function handleAdminGetInquiry(request, env, url, origin) {
+  try {
+    const id = url.pathname.split('/').pop();
+    const row = await env.DB.prepare(
+      `SELECT * FROM inquiries WHERE reference_id = ?`
+    ).bind(id).first();
+    if (!row) return jsonResponse({ error: 'Not found' }, 404, origin);
+    return jsonResponse(row, 200, origin);
+  } catch (err) {
+    console.error('handleAdminGetInquiry error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ ADMIN: 工厂申请单条详情 ============
+async function handleAdminGetFactory(request, env, url, origin) {
+  try {
+    const id = url.pathname.split('/').pop();
+    const row = await env.DB.prepare(
+      `SELECT * FROM factory_applications WHERE reference_id = ?`
+    ).bind(id).first();
+    if (!row) return jsonResponse({ error: 'Not found' }, 404, origin);
+    return jsonResponse(row, 200, origin);
+  } catch (err) {
+    console.error('handleAdminGetFactory error:', err);
     return jsonResponse({ error: 'Internal server error' }, 500, origin);
   }
 }

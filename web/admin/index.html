@@ -210,6 +210,15 @@
       font-size: 20px; cursor: pointer;
     }
     .drawer-close:hover { color: var(--text); }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin: 16px 0 10px;
+    }
+
     .drawer h2 { font-size: 16px; margin-bottom: 20px; }
     .field-group { margin-bottom: 16px; }
     .field-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
@@ -559,33 +568,19 @@ async function doExport() {
 
 // ============ DETAIL DRAWER ============
 async function openDetail(id) {
-  const cfg = TABS[state.tab];
   const isInquiry = state.tab === 'inquiries';
-
-  // Fetch full record via legacy single-record endpoints
-  // (these still require ADMIN_TOKEN — we'll use the Access-protected route instead)
-  // We request the detail from the admin list and re-use the row data stored in DOM,
-  // but for simplicity let's just refetch from admin list filtered by reference_id.
-  // Simpler: open drawer and show what we can from the table row, then lazy-load.
-
   const drawerContent = document.getElementById('drawer-content');
   drawerContent.innerHTML = '<div class="state-box"><div class="icon">⏳</div><div>加载中…</div></div>';
   openDrawerUI();
 
   try {
-    // Re-use admin list endpoint with q filter to get all fields visible in list
     const endpoint = isInquiry
-      ? `${API_BASE}/admin/inquiries?q=${encodeURIComponent(id)}&page=1`
-      : `${API_BASE}/admin/factories?q=${encodeURIComponent(id)}&page=1`;
+      ? `${API_BASE}/admin/inquiries/${id}`
+      : `${API_BASE}/admin/factories/${id}`;
 
     const res = await fetch(endpoint);
-    const json = await res.json();
-    const row = json.data?.find(r => r.reference_id === id);
-
-    if (!row) {
-      drawerContent.innerHTML = '<div class="state-box"><div>未找到记录</div></div>';
-      return;
-    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const row = await res.json();
 
     if (isInquiry) {
       renderInquiryDetail(row);
@@ -603,29 +598,62 @@ function renderInquiryDetail(r) {
     `<option value="${o.value}"${r.status === o.value ? ' selected' : ''}>${o.label}</option>`
   ).join('');
 
+  const wa = r.whatsapp ? `${r.phone_code || ''} ${r.whatsapp}`.trim() : '—';
+  const utmInfo = [r.utm_source, r.utm_medium, r.utm_campaign].filter(Boolean).join(' / ') || '—';
+
   document.getElementById('drawer-content').innerHTML = `
     <h2>询盘详情</h2>
+
     <div class="fields-grid">
-      ${field('Reference ID', r.reference_id)}
+      ${field('Reference ID', `<span style="font-family:monospace;font-size:12px">${r.reference_id}</span>`)}
       ${field('状态', `<select class="status-select" onchange="updateStatus('${r.reference_id}', this.value)">${statusOpts}</select>`)}
-      ${field('姓名', r.name)}
-      ${field('公司', r.company)}
+    </div>
+    <hr/>
+
+    <div class="section-label">联系人</div>
+    <div class="fields-grid">
+      ${field('姓名', r.name || '—')}
+      ${field('公司', r.company || '—')}
       ${field('邮箱', `<a href="mailto:${r.email}" style="color:var(--accent)">${r.email}</a>`)}
-      ${field('国家', r.country)}
+      ${field('国家', r.country || '—')}
+      ${field('WhatsApp', wa)}
+      ${field('IP 国家', r.ip_country || '—')}
+    </div>
+    <hr/>
+
+    <div class="section-label">询盘内容</div>
+    <div class="fields-grid">
       ${field('品类', r.category || '—')}
       ${field('数量', r.quantity || '—')}
       ${field('时间线', r.timeline || '—')}
-      ${field('来源', r.utm_source || '—')}
+    </div>
+    <div class="field-group" style="margin-top:10px">
+      <div class="field-label">询盘详情</div>
+      <div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px;white-space:pre-wrap;line-height:1.6">${escHtml(r.inquiry || '—')}</div>
+    </div>
+    <hr/>
+
+    <div class="section-label">来源追踪</div>
+    <div class="fields-grid">
+      ${field('UTM', utmInfo)}
+      ${field('Landing Page', r.landing_page || '—')}
+      ${field('Referrer', r.referrer || '—')}
+      ${field('语言', r.language || '—')}
+      ${field('时区', r.timezone || '—')}
+    </div>
+    <hr/>
+
+    <div class="section-label">系统信息</div>
+    <div class="fields-grid">
+      ${field('IP 地址', r.ip_address || '—')}
+      ${field('城市', r.ip_city || '—')}
       ${field('创建时间', formatDate(r.created_at))}
     </div>
     <hr/>
-    <div class="field-group">
-      <div class="field-label">询盘内容</div>
-      <div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px">${escHtml(r.inquiry || '')}</div>
-    </div>
-    <hr/>
-    <div style="display:flex;gap:8px;margin-top:4px">
+
+    <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
       <a href="mailto:${r.email}?subject=Re: Your inquiry to ChinaMakersHub [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
+      ${wa !== '—' ? `<a href="https://wa.me/${(r.phone_code||'').replace(/[^0-9]/g,'') + (r.whatsapp||'').replace(/[^0-9]/g,'')}" class="btn btn-ghost" style="text-decoration:none" target="_blank">💬 WhatsApp</a>` : ''}
     </div>
   `;
 }
@@ -636,25 +664,75 @@ function renderFactoryDetail(r) {
     `<option value="${o.value}"${r.status === o.value ? ' selected' : ''}>${o.label}</option>`
   ).join('');
 
-  let cats = '—';
-  try { cats = JSON.parse(r.categories || '[]').join('、') || '—'; } catch(e) {}
+  const parse = (v, fallback='—') => { try { const a = JSON.parse(v||'[]'); return a.length ? a.join('、') : fallback; } catch(e) { return fallback; } };
 
   document.getElementById('drawer-content').innerHTML = `
     <h2>工厂申请详情</h2>
+
     <div class="fields-grid">
-      ${field('Reference ID', r.reference_id)}
+      ${field('Reference ID', `<span style="font-family:monospace;font-size:12px">${r.reference_id}</span>`)}
       ${field('状态', `<select class="status-select" onchange="updateStatus('${r.reference_id}', this.value)">${statusOpts}</select>`)}
-      ${field('公司（中文）', r.company_cn)}
-      ${field('公司（英文）', r.company_en || '—')}
-      ${field('城市', r.city || '—')}
-      ${field('品类', cats)}
-      ${field('联系人', r.contact_name || '—')}
-      ${field('电话', r.phone || '—')}
-      ${field('邮箱', `<a href="mailto:${r.email}" style="color:var(--accent)">${r.email}</a>`)}
-      ${field('创建时间', formatDate(r.created_at))}
     </div>
     <hr/>
-    <div style="display:flex;gap:8px;margin-top:4px">
+
+    <div class="section-label">企业信息</div>
+    <div class="fields-grid">
+      ${field('公司（中文）', r.company_cn || '—')}
+      ${field('公司（英文）', r.company_en || '—')}
+      ${field('统一社会信用代码', `<span style="font-family:monospace">${r.business_id || '—'}</span>`)}
+      ${field('成立年份', r.founded_year || '—')}
+      ${field('城市', r.city || '—')}
+      ${field('区/镇', r.district || '—')}
+      ${field('详细地址', r.address || '—')}
+      ${field('厂房面积', r.facility_size ? r.facility_size + ' ㎡' : '—')}
+      ${field('员工人数', r.headcount || '—')}
+    </div>
+    <hr/>
+
+    <div class="section-label">生产能力</div>
+    <div class="fields-grid">
+      ${field('主营品类', parse(r.categories))}
+      ${field('MOQ', r.moq || '—')}
+      ${field('样品交期', r.sample_lead ? r.sample_lead + ' 天' : '—')}
+      ${field('大货交期', r.production_lead ? r.production_lead + ' 天' : '—')}
+      ${field('年产能', r.annual_capacity || '—')}
+      ${field('主要出口市场', r.export_markets || '—')}
+    </div>
+    <div class="field-group" style="margin-top:10px">
+      <div class="field-label">核心产品 / 工艺优势</div>
+      <div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px;white-space:pre-wrap;line-height:1.6">${escHtml(r.capabilities || '—')}</div>
+    </div>
+    <hr/>
+
+    <div class="section-label">认证 & 资质</div>
+    <div class="fields-grid">
+      ${field('认证', parse(r.certs))}
+      ${field('网站', r.website ? `<a href="${r.website}" target="_blank" style="color:var(--accent)">${r.website}</a>` : '—')}
+    </div>
+    ${r.references_text ? `<div class="field-group" style="margin-top:10px"><div class="field-label">海外客户案例</div><div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px">${escHtml(r.references_text)}</div></div>` : ''}
+    <hr/>
+
+    <div class="section-label">联系人</div>
+    <div class="fields-grid">
+      ${field('姓名', r.contact_name || '—')}
+      ${field('职位', r.contact_title || '—')}
+      ${field('手机', r.phone || '—')}
+      ${field('微信', r.wechat || '—')}
+      ${field('邮箱', `<a href="mailto:${r.email}" style="color:var(--accent)">${r.email}</a>`)}
+      ${field('英语水平', r.english_level || '—')}
+    </div>
+    <hr/>
+
+    <div class="section-label">合作意向</div>
+    <div class="fields-grid">
+      ${field('期望服务', parse(r.services))}
+      ${field('提交时间', formatDate(r.created_at))}
+      ${field('更新时间', formatDate(r.updated_at))}
+    </div>
+    ${r.notes ? `<div class="field-group" style="margin-top:10px"><div class="field-label">备注</div><div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px">${escHtml(r.notes)}</div></div>` : ''}
+    <hr/>
+
+    <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
       <a href="mailto:${r.email}?subject=Re: 您的 ChinaMakersHub 入驻申请 [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
       ${r.phone ? `<a href="tel:${r.phone}" class="btn btn-ghost" style="text-decoration:none">📞 拨打电话</a>` : ''}
     </div>
