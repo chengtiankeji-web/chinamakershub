@@ -235,6 +235,24 @@
     .state-box .icon { font-size: 36px; margin-bottom: 12px; }
 
     /* ---- Toast ---- */
+    
+    #new-data-bar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      z-index: 999;
+      animation: slideDown .3s ease;
+    }
+    @keyframes slideDown { from{transform:translateY(-100%)} to{transform:translateY(0)} }
+    #new-data-bar:hover { background: var(--accent-hover); }
+
     #toast {
       position: fixed; bottom: 28px; right: 28px;
       background: var(--surface2);
@@ -255,6 +273,7 @@
 </head>
 <body>
 
+<div id="new-data-bar" onclick="dismissNewDataBar()">🔔 有新数据，点击刷新</div>
 <div class="shell">
   <!-- Sidebar -->
   <aside class="sidebar">
@@ -329,6 +348,45 @@
 // 如果 Worker 是独立子域，改成完整 URL。
 const API_BASE = '/api';
 
+
+// ============ 中文映射 ============
+const CITY_MAP = {
+  foshan:'佛山', guangzhou:'广州', shenzhen:'深圳', dongguan:'东莞',
+  zhongshan:'中山', huizhou:'惠州', zhuhai:'珠海', jiangmen:'江门',
+  zhaoqing:'肇庆', other:'其他大湾区城市'
+};
+const CAT_MAP = {
+  furniture:'家具家居', lighting:'灯具照明', hardware:'五金工具',
+  electronics:'消费电子', textile:'纺织服装', industrial:'工业件',
+  packaging:'包装制品', ceramics:'陶瓷卫浴', other:'其他'
+};
+const HEADCOUNT_MAP = {
+  'lt20':'少于20人', '20-50':'20-50人', '50-100':'50-100人',
+  '100-300':'100-300人', '300-500':'300-500人', 'gt500':'500人以上'
+};
+const ENGLISH_MAP = {
+  native:'流利，可直接对接外商', business:'商务英语，可邮件沟通',
+  basic:'基础英语，需翻译辅助', none:'不会英语，需CMH全程协助'
+};
+const SERVICE_MAP = {
+  display:'仅展示获取询盘', translation:'翻译/对接服务',
+  full:'全程代运营', banking:'香港收款代收',
+  logistics:'物流报关', marketing:'海外营销推广'
+};
+const CERT_MAP = {
+  iso9001:'ISO 9001', iso14001:'ISO 14001', bsci:'BSCI', sa8000:'SA8000',
+  fsc:'FSC', ce:'CE', ul:'UL', rohs:'RoHS', reach:'REACH',
+  carb:'CARB P2', oeko:'OEKO-TEX', none:'暂无'
+};
+
+function mapList(jsonStr, map) {
+  try {
+    const arr = JSON.parse(jsonStr || '[]');
+    return arr.map(v => map[v] || v).join('、') || '—';
+  } catch(e) { return jsonStr || '—'; }
+}
+function mapVal(val, map) { return map[val] || val || '—'; }
+
 // ============ STATE ============
 let state = {
   tab: 'inquiries',
@@ -394,6 +452,31 @@ const TABS = {
     statusLabel: (s) => ({ submitted:'待审核', reviewing:'审核中', approved:'已通过', rejected:'已拒绝' }[s] || s),
   },
 };
+
+
+// ============ 新数据轮询（30秒）============
+let _lastTotal = null;
+
+async function checkNewData() {
+  try {
+    const cfg = TABS[state.tab];
+    const res = await fetch(`${cfg.endpoint()}?page=1`);
+    if (!res.ok) return;
+    const json = await res.json();
+    if (_lastTotal === null) { _lastTotal = json.total; return; }
+    if (json.total > _lastTotal) {
+      document.getElementById('new-data-bar').style.display = 'block';
+    }
+  } catch(e) {}
+}
+
+function dismissNewDataBar() {
+  document.getElementById('new-data-bar').style.display = 'none';
+  _lastTotal = null;
+  loadData();
+}
+
+setInterval(checkNewData, 30000);
 
 // ============ INIT ============
 document.querySelectorAll('.nav-item').forEach(el => {
@@ -470,6 +553,7 @@ async function loadData() {
     const json = await res.json();
     state.total = json.total;
     state.totalPages = json.total_pages;
+    _lastTotal = json.total;
     renderTable(json.data, cfg);
     renderPagination();
   } catch (err) {
@@ -508,6 +592,15 @@ function renderTable(rows, cfg) {
       }
       if (col.key === 'created_at') {
         return `<td style="color:var(--muted);font-size:12px">${formatDate(row[col.key])}</td>`;
+      }
+      if (col.key === 'city') {
+        return `<td>${mapVal(row[col.key], CITY_MAP)}</td>`;
+      }
+      if (col.key === 'categories') {
+        return `<td>${mapList(row[col.key], CAT_MAP)}</td>`;
+      }
+      if (col.key === 'category') {
+        return `<td>${row[col.key] || '<span style="color:var(--muted)">—</span>'}</td>`;
       }
       const v = row[col.key];
       return `<td>${v != null ? escHtml(String(v)) : '<span style="color:var(--muted)">—</span>'}</td>`;
@@ -664,7 +757,7 @@ function renderFactoryDetail(r) {
     `<option value="${o.value}"${r.status === o.value ? ' selected' : ''}>${o.label}</option>`
   ).join('');
 
-  const parse = (v, fallback='—') => { try { const a = JSON.parse(v||'[]'); return a.length ? a.join('、') : fallback; } catch(e) { return fallback; } };
+  const parse = (v, map, fallback='—') => { try { const a = JSON.parse(v||'[]'); return a.length ? a.map(x => map?map[x]||x:x).join('、') : fallback; } catch(e) { return fallback; } };
 
   document.getElementById('drawer-content').innerHTML = `
     <h2>工厂申请详情</h2>
@@ -681,17 +774,17 @@ function renderFactoryDetail(r) {
       ${field('公司（英文）', r.company_en || '—')}
       ${field('统一社会信用代码', `<span style="font-family:monospace">${r.business_id || '—'}</span>`)}
       ${field('成立年份', r.founded_year || '—')}
-      ${field('城市', r.city || '—')}
+      ${field('城市', mapVal(r.city, CITY_MAP))}
       ${field('区/镇', r.district || '—')}
       ${field('详细地址', r.address || '—')}
       ${field('厂房面积', r.facility_size ? r.facility_size + ' ㎡' : '—')}
-      ${field('员工人数', r.headcount || '—')}
+      ${field('员工人数', mapVal(r.headcount, HEADCOUNT_MAP))}
     </div>
     <hr/>
 
     <div class="section-label">生产能力</div>
     <div class="fields-grid">
-      ${field('主营品类', parse(r.categories))}
+      ${field('主营品类', parse(r.categories, CAT_MAP))}
       ${field('MOQ', r.moq || '—')}
       ${field('样品交期', r.sample_lead ? r.sample_lead + ' 天' : '—')}
       ${field('大货交期', r.production_lead ? r.production_lead + ' 天' : '—')}
@@ -706,7 +799,7 @@ function renderFactoryDetail(r) {
 
     <div class="section-label">认证 & 资质</div>
     <div class="fields-grid">
-      ${field('认证', parse(r.certs))}
+      ${field('认证', parse(r.certs, null))}
       ${field('网站', r.website ? `<a href="${r.website}" target="_blank" style="color:var(--accent)">${r.website}</a>` : '—')}
     </div>
     ${r.references_text ? `<div class="field-group" style="margin-top:10px"><div class="field-label">海外客户案例</div><div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px">${escHtml(r.references_text)}</div></div>` : ''}
@@ -719,13 +812,13 @@ function renderFactoryDetail(r) {
       ${field('手机', r.phone || '—')}
       ${field('微信', r.wechat || '—')}
       ${field('邮箱', `<a href="mailto:${r.email}" style="color:var(--accent)">${r.email}</a>`)}
-      ${field('英语水平', r.english_level || '—')}
+      ${field('英语水平', mapVal(r.english_level, ENGLISH_MAP))}
     </div>
     <hr/>
 
     <div class="section-label">合作意向</div>
     <div class="fields-grid">
-      ${field('期望服务', parse(r.services))}
+      ${field('期望服务', parse(r.services, SERVICE_MAP))}
       ${field('提交时间', formatDate(r.created_at))}
       ${field('更新时间', formatDate(r.updated_at))}
     </div>
