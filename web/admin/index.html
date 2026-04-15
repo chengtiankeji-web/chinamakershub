@@ -226,6 +226,39 @@
     .drawer hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
     .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
+
+    .note-editor {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: var(--font);
+      resize: vertical;
+      min-height: 80px;
+      margin-top: 6px;
+      outline: none;
+      transition: border .15s;
+    }
+    .note-editor:focus { border-color: var(--accent); }
+    .note-save-btn {
+      margin-top: 8px;
+      padding: 6px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all .15s;
+    }
+    .note-save-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .note-saved { color: #2ecc71; font-size: 12px; margin-left: 8px; opacity: 0; transition: opacity .3s; }
+    .note-saved.show { opacity: 1; }
+
     /* ---- Empty / loading ---- */
     .state-box {
       text-align: center;
@@ -478,6 +511,24 @@ function dismissNewDataBar() {
 
 setInterval(checkNewData, 30000);
 
+
+// ============ 国家筛选动态填充 ============
+function populateCountryFilter(rows) {
+  const sel = document.getElementById('filter-country');
+  const current = sel.value;
+  const existing = new Set([...sel.options].map(o => o.value).filter(Boolean));
+  rows.forEach(r => {
+    if (r.country && !existing.has(r.country)) {
+      const opt = document.createElement('option');
+      opt.value = r.country;
+      opt.textContent = r.country;
+      sel.appendChild(opt);
+      existing.add(r.country);
+    }
+  });
+  sel.value = current; // 保持当前选中
+}
+
 // ============ INIT ============
 document.querySelectorAll('.nav-item').forEach(el => {
   el.addEventListener('click', () => {
@@ -556,6 +607,7 @@ async function loadData() {
     _lastTotal = json.total;
     renderTable(json.data, cfg);
     renderPagination();
+    if (state.tab === 'inquiries') populateCountryFilter(json.data);
   } catch (err) {
     showToast('加载失败: ' + err.message, 'error');
     renderEmpty();
@@ -675,6 +727,8 @@ async function openDetail(id) {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const row = await res.json();
 
+    const noteType = isInquiry ? 'inquiry' : 'factory';
+    row.admin_note = loadNote(id, noteType);
     if (isInquiry) {
       renderInquiryDetail(row);
     } else {
@@ -750,6 +804,15 @@ function renderInquiryDetail(r) {
       <a href="mailto:${r.email}?subject=Re: Your inquiry to ChinaMakersHub [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
       ${waNum ? `<a href="https://wa.me/${waNum}" class="btn btn-ghost" style="text-decoration:none" target="_blank">💬 WhatsApp</a>` : ''}
     </div>
+    <hr/>
+    <div class="section-label">内部备注</div>
+    <div class="field-group">
+      <textarea class="note-editor" id="noteEditor" placeholder="仅内部可见，不会发送给用户…">${escHtml(r.admin_note || '')}</textarea>
+      <div style="display:flex;align-items:center;margin-top:6px">
+        <button class="note-save-btn" onclick="saveNote('${r.reference_id}', 'inquiry')">保存备注</button>
+        <span class="note-saved" id="noteSaved">已保存 ✓</span>
+      </div>
+    </div>
   `;
 }
 
@@ -824,12 +887,21 @@ function renderFactoryDetail(r) {
       ${field('提交时间', formatDate(r.created_at))}
       ${field('更新时间', formatDate(r.updated_at))}
     </div>
-    ${r.notes ? `<div class="field-group" style="margin-top:10px"><div class="field-label">备注</div><div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px">${escHtml(r.notes)}</div></div>` : ''}
+    ${r.notes ? `<div class="field-group" style="margin-top:10px"><div class="field-label">工厂备注（申请时填写）</div><div class="field-value" style="background:var(--surface2);padding:12px;border-radius:6px;margin-top:6px">${escHtml(r.notes)}</div></div>` : ''}
     <hr/>
 
     <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
       <a href="mailto:${r.email}?subject=Re: 您的 ChinaMakersHub 入驻申请 [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
       ${r.phone ? `<a href="tel:${r.phone}" class="btn btn-ghost" style="text-decoration:none">📞 拨打电话</a>` : ''}
+    </div>
+    <hr/>
+    <div class="section-label">内部备注</div>
+    <div class="field-group">
+      <textarea class="note-editor" id="noteEditor" placeholder="仅内部可见，不会发送给工厂…">${escHtml(r.admin_note || '')}</textarea>
+      <div style="display:flex;align-items:center;margin-top:6px">
+        <button class="note-save-btn" onclick="saveNote('${r.reference_id}', 'factory')">保存备注</button>
+        <span class="note-saved" id="noteSaved">已保存 ✓</span>
+      </div>
     </div>
   `;
 }
@@ -848,6 +920,25 @@ function openDrawerUI() {
 function closeDrawer() {
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+
+// ============ 内部备注保存（localStorage，本地持久化）============
+function saveNote(id, type) {
+  const editor = document.getElementById('noteEditor');
+  const saved = document.getElementById('noteSaved');
+  if (!editor) return;
+
+  const key = `cmh_note_${type}_${id}`;
+  localStorage.setItem(key, editor.value);
+
+  saved.classList.add('show');
+  setTimeout(() => saved.classList.remove('show'), 2000);
+}
+
+function loadNote(id, type) {
+  const key = `cmh_note_${type}_${id}`;
+  return localStorage.getItem(key) || '';
 }
 
 // ============ UTILS ============
