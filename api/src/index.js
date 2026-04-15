@@ -589,6 +589,7 @@ async function handleFactoryApplication(request, env, ctx, origin) {
     ctx.waitUntil(Promise.all([
       sendFactoryFeishu(record),
       sendFactoryWecom(record),
+      sendConfirmationEmail(env, record.email, referenceId, record.company_cn),
     ]).catch(err => console.error('Notification error:', err)));
 
     return jsonResponse({
@@ -600,6 +601,61 @@ async function handleFactoryApplication(request, env, ctx, origin) {
   } catch (err) {
     console.error('handleFactoryApplication error:', err);
     return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+// ============ RESEND 确认邮件 ============
+async function sendConfirmationEmail(env, to, referenceId, companyName) {
+  if (!env.RESEND_API_KEY) return;
+  try {
+    const html = `<!DOCTYPE html>
+<html lang="zh">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#F4EFE6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F4EFE6;padding:40px 20px">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#FAF7F0;border:1px solid rgba(15,14,12,0.12)">
+        <tr><td style="padding:32px 40px;border-bottom:1px solid rgba(15,14,12,0.12)">
+          <span style="background:#0F0E0C;color:#F4EFE6;padding:4px 10px;font-size:11px;letter-spacing:1px;font-family:monospace">CMH</span>
+          <span style="margin-left:10px;font-size:16px;font-weight:500;color:#0F0E0C">ChinaMakersHub</span>
+        </td></tr>
+        <tr><td style="padding:40px">
+          <h1 style="margin:0 0 16px;font-size:24px;font-weight:500;color:#0F0E0C;letter-spacing:-0.02em">申请已收到</h1>
+          <p style="margin:0 0 24px;color:#2A2825;font-size:15px;line-height:1.7">您好，${companyName ? companyName + ' 的' : ''}工厂入驻申请已成功提交。我们的佛山团队将在 <strong>3 个工作日</strong>内完成初步审核并与您联系。</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#EBE4D6;border-left:3px solid #B83A26;padding:20px 24px;margin-bottom:28px">
+            <tr><td>
+              <div style="font-size:11px;color:#6B6862;letter-spacing:1px;font-family:monospace;text-transform:uppercase;margin-bottom:6px">Reference ID</div>
+              <div style="font-size:22px;font-weight:600;color:#B83A26;font-family:monospace;letter-spacing:1px">${referenceId}</div>
+            </td></tr>
+          </table>
+          <p style="margin:0 0 8px;color:#2A2825;font-size:14px;line-height:1.7">审核通过后，我们将安排佛山团队实地走访工厂，完成 <strong>CMH Verified</strong> 认证。</p>
+          <p style="margin:0 0 28px;color:#6B6862;font-size:13px;line-height:1.7">如有任何问题，请回复此邮件或发送邮件至 <a href="mailto:info@chinamakershub.com" style="color:#B83A26">info@chinamakershub.com</a></p>
+          <a href="https://chinamakershub.com" style="display:inline-block;background:#0F0E0C;color:#F4EFE6;padding:12px 24px;font-size:13px;font-weight:600;letter-spacing:1px;text-decoration:none;text-transform:uppercase">访问平台 →</a>
+        </td></tr>
+        <tr><td style="padding:20px 40px;border-top:1px solid rgba(15,14,12,0.12);font-size:12px;color:#6B6862">
+          © 2026 ChinaMakersHub · Qingxuan International Trading Limited · Hong Kong
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'ChinaMakersHub <info@chinamakershub.com>',
+        to: [to],
+        subject: `工厂入驻申请已收到 — ${referenceId}`,
+        html,
+      })
+    });
+  } catch(e) {
+    console.error('Resend error:', e);
   }
 }
 
