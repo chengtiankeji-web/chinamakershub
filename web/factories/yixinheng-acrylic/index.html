@@ -251,19 +251,47 @@ img { max-width: 100%; display: block; }
 .cap h4 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 0.6rem; font-variation-settings: "opsz" 72; }
 .cap p { font-size: 0.85rem; line-height: 1.55; color: var(--ink-soft); }
 
-/* PRODUCTS */
-.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-.product { display: flex; flex-direction: column; }
-.product-img {
-  aspect-ratio: 1; background: var(--paper-warm);
-  margin-bottom: 1.2rem; position: relative; overflow: hidden; border: 1px solid var(--line);
-}
-.product-img svg { width: 100%; height: 100%; }
-.product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.product-num { font-family: var(--font-mono); font-size: 0.62rem; color: var(--cinnabar); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.product h4 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 0.5rem; font-variation-settings: "opsz" 72; }
-.product-meta { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); display: flex; gap: 1.2rem; }
-.product-meta span::before { content: '/ '; color: var(--cinnabar); }
+/* PRODUCT CATALOG */
+.cat-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.cat-btn { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.45rem 1rem; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-mute); cursor: pointer; transition: all 0.2s; }
+.cat-btn:hover { border-color: var(--ink); color: var(--ink); }
+.cat-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.product { display: flex; flex-direction: column; cursor: pointer; }
+.product-img { aspect-ratio: 1; background: var(--paper-warm); margin-bottom: 0; position: relative; overflow: hidden; border: 1px solid var(--line); transition: border-color 0.2s; }
+.product:hover .product-img { border-color: var(--cinnabar); }
+.product-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.product:hover .product-img img { transform: scale(1.05); }
+.product-img-overlay { position: absolute; inset: 0; background: rgba(15,14,12,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; }
+.product:hover .product-img-overlay { opacity: 1; }
+.product-img-overlay span { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--paper); border: 1px solid rgba(244,239,230,0.6); padding: 0.5rem 1rem; }
+.product-info { padding: 1rem 0 0; border-top: 1px solid var(--line); margin-top: 0.8rem; }
+.product-cat { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cinnabar); margin-bottom: 0.3rem; }
+.product h4 { font-size: 0.92rem; font-weight: 500; margin-bottom: 0.5rem; line-height: 1.35; }
+.product-specs { display: flex; flex-direction: column; gap: 0.2rem; margin-bottom: 0.6rem; }
+.product-spec { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink-mute); display: flex; justify-content: space-between; }
+.product-spec strong { color: var(--ink); font-weight: 500; }
+.product-moq { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--paper); background: var(--ink); padding: 0.25rem 0.5rem; display: inline-block; }
+.lightbox { position: fixed; inset: 0; background: rgba(15,14,12,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; }
+.lightbox.open { display: flex; }
+.lightbox-inner { background: var(--paper); max-width: 900px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; max-height: 90vh; overflow: hidden; position: relative; }
+.lightbox-img { background: var(--paper-warm); overflow: hidden; }
+.lightbox-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lightbox-body { padding: 2.5rem; overflow-y: auto; display: flex; flex-direction: column; }
+.lightbox-close { position: absolute; top: 1rem; right: 1rem; background: var(--ink); border: none; color: var(--paper); width: 32px; height: 32px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
+.lightbox-cat { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--cinnabar); margin-bottom: 0.6rem; }
+.lightbox-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.1; font-variation-settings: "opsz" 72; }
+.lightbox-desc { font-size: 0.88rem; line-height: 1.65; color: var(--ink-soft); margin-bottom: 1.5rem; }
+.lightbox-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.lightbox-table tr { border-bottom: 1px solid var(--line); }
+.lightbox-table td { padding: 0.55rem 0; font-size: 0.82rem; }
+.lightbox-table td:first-child { color: var(--ink-mute); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; width: 40%; }
+.lightbox-table td:last-child { font-weight: 500; }
+.lightbox-cta { margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--line); display: flex; gap: 0.8rem; }
+.btn-inquire { flex: 1; background: var(--cinnabar); color: var(--paper); border: none; padding: 0.9rem; font-size: 0.82rem; font-weight: 500; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+.btn-inquire:hover { background: var(--cinnabar-deep); }
+.btn-wa { flex: 1; background: transparent; color: var(--ink); border: 1px solid var(--line-strong); padding: 0.9rem; font-size: 0.82rem; font-weight: 500; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+.btn-wa:hover { background: var(--ink); color: var(--paper); }
 
 /* CERTIFICATIONS */
 .certs { background: var(--paper-pure); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -602,81 +630,252 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
         </div>
         <h2 class="section-title">Display solutions shipped to <em>global retail brands.</em></h2>
       </div>
+      <!-- Category Filter -->
+      <div class="cat-filter">
+        <button class="cat-btn active" data-cat="all">All Products</button>
+        <button class="cat-btn" data-cat="display">Display Stands</button>
+        <button class="cat-btn" data-cat="trophy">Trophies & Awards</button>
+        <button class="cat-btn" data-cat="case">Display Cases</button>
+        <button class="cat-btn" data-cat="gift">Gifts & Signs</button>
+      </div>
+
       <div class="products-grid">
-        <article class="product">
+
+        <article class="product" data-cat="display" onclick="openLightbox('images/1.jpg','Branded Watch Display Stand','display','Custom-branded counter display for watch retailers. White acrylic with color-printed side panels. Supports up to 9 watch holders on 3 tiers.','White acrylic','Multi-tier counter','Custom logo print','500 pcs')">
           <div class="product-img">
-            <img src="images/1.jpg" alt="SwissSpace watch display stand" style="width:100%;height:100%;object-fit:cover;">
+            <img src="images/1.jpg" alt="Branded watch display stand">
+            <div class="product-img-overlay"><span>Quick View</span></div>
           </div>
-          <div class="product-num">/ P-001</div>
-          <h4>Branded Watch Display</h4>
-          <div class="product-meta">
-            <span>white acrylic</span>
-            <span>OEM / custom print</span>
+          <div class="product-info">
+            <div class="product-cat">Display Stand</div>
+            <h4>Branded Watch Display</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>White acrylic</strong></div>
+              <div class="product-spec"><span>Size</span><strong>Custom</strong></div>
+              <div class="product-spec"><span>Feature</span><strong>Logo print</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 500 pcs</span>
           </div>
         </article>
 
-        <article class="product">
+        <article class="product" data-cat="case" onclick="openLightbox('images/2.jpg','Lockable Watch Display Case','case','2-tier lockable acrylic display case for watches and jewelry. Clear front panel with black base. Keyed lock for retail security.','Clear + black acrylic','2-tier lockable','Keyed lock','500 pcs')">
           <div class="product-img">
-            <img src="images/2.jpg" alt="Lockable acrylic watch display case" style="width:100%;height:100%;object-fit:cover;">
+            <img src="images/2.jpg" alt="Lockable watch display case">
+            <div class="product-img-overlay"><span>Quick View</span></div>
           </div>
-          <div class="product-num">/ P-002</div>
-          <h4>Lockable Display Case</h4>
-          <div class="product-meta">
-            <span>clear + black acrylic</span>
-            <span>retail-ready</span>
+          <div class="product-info">
+            <div class="product-cat">Display Case</div>
+            <h4>Lockable Display Case</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Clear + black acrylic</strong></div>
+              <div class="product-spec"><span>Tiers</span><strong>2</strong></div>
+              <div class="product-spec"><span>Security</span><strong>Keyed lock</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 500 pcs</span>
           </div>
         </article>
 
-        <article class="product">
+        <article class="product" data-cat="case" onclick="openLightbox('images/3.jpg','Multi-Tier Watch Cabinet','case','4-tier lockable watch display cabinet. Blue-tinted acrylic panels with clear front. Double-sided lock. Ideal for jewellery counters and retail boutiques.','Blue acrylic','4-tier cabinet','Double lock','500 pcs')">
           <div class="product-img">
-            <img src="images/3.jpg" alt="Multi-tier acrylic watch display" style="width:100%;height:100%;object-fit:cover;">
+            <img src="images/3.jpg" alt="Multi-tier watch cabinet">
+            <div class="product-img-overlay"><span>Quick View</span></div>
           </div>
-          <div class="product-num">/ P-003</div>
-          <h4>Multi-Tier Watch Cabinet</h4>
-          <div class="product-meta">
-            <span>blue acrylic</span>
-            <span>lockable · 4-tier</span>
+          <div class="product-info">
+            <div class="product-cat">Display Case</div>
+            <h4>Multi-Tier Watch Cabinet</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Blue acrylic</strong></div>
+              <div class="product-spec"><span>Tiers</span><strong>4</strong></div>
+              <div class="product-spec"><span>Security</span><strong>Double lock</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 500 pcs</span>
           </div>
         </article>
 
-        <article class="product">
+        <article class="product" data-cat="case" onclick="openLightbox('images/4.jpg','Mirror-Base Watch Display','case','Open-top watch display with mirrored base and black frame side panels. Holds 9 watches. Premium boutique aesthetic.','Clear acrylic + mirror','Open top','Mirror base','500 pcs')">
           <div class="product-img">
-            <img src="images/X_001_(640x427).jpg" alt="Acrylic trophy award" style="width:100%;height:100%;object-fit:cover;">
+            <img src="images/4.jpg" alt="Mirror base watch display">
+            <div class="product-img-overlay"><span>Quick View</span></div>
           </div>
-          <div class="product-num">/ P-004</div>
-          <h4>Custom Award Trophy</h4>
-          <div class="product-meta">
-            <span>crystal acrylic</span>
-            <span>laser engraved</span>
+          <div class="product-info">
+            <div class="product-cat">Display Case</div>
+            <h4>Mirror-Base Watch Display</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Acrylic + mirror</strong></div>
+              <div class="product-spec"><span>Style</span><strong>Open top</strong></div>
+              <div class="product-spec"><span>Base</span><strong>Mirror finish</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 500 pcs</span>
           </div>
         </article>
 
-        <article class="product">
+        <article class="product" data-cat="case" onclick="openLightbox('images/5.jpg','Rotating Display Tower','case','360° rotating acrylic display tower for watches and accessories. 3 tiers with lockable front panel. Sign holder on top.','Clear acrylic','Rotating 360°','Lockable','500 pcs')">
           <div class="product-img">
-            <img src="images/X_002_(640x427).jpg" alt="Acrylic sport trophy" style="width:100%;height:100%;object-fit:cover;">
+            <img src="images/5.jpg" alt="Rotating display tower">
+            <div class="product-img-overlay"><span>Quick View</span></div>
           </div>
-          <div class="product-num">/ P-005</div>
-          <h4>Sport & Event Trophy</h4>
-          <div class="product-meta">
-            <span>full-color print</span>
-            <span>custom shape</span>
+          <div class="product-info">
+            <div class="product-cat">Display Case</div>
+            <h4>Rotating Display Tower</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Clear acrylic</strong></div>
+              <div class="product-spec"><span>Rotation</span><strong>360°</strong></div>
+              <div class="product-spec"><span>Security</span><strong>Lockable</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 500 pcs</span>
           </div>
         </article>
 
-        <article class="product">
+        <article class="product" data-cat="case" onclick="openLightbox('images/6.jpg','Double-Sided Rotating Cabinet','case','Double-sided rotating display cabinet with white panel insert. Holds accessories on both sides. Lockable base with rotating mechanism.','Clear + white acrylic','Double-sided','360° rotating base','500 pcs')">
           <div class="product-img">
-            <img src="images/X_003_(640x427).jpg" alt="Acrylic gifts and awards" style="width:100%;height:100%;object-fit:cover;">
+            <img src="images/6.jpg" alt="Double-sided rotating cabinet">
+            <div class="product-img-overlay"><span>Quick View</span></div>
           </div>
-          <div class="product-num">/ P-006</div>
-          <h4>Acrylic Gift & Souvenir</h4>
-          <div class="product-meta">
-            <span>multi-color</span>
-            <span>corporate gifting</span>
+          <div class="product-info">
+            <div class="product-cat">Display Case</div>
+            <h4>Double-Sided Rotating Cabinet</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Clear + white acrylic</strong></div>
+              <div class="product-spec"><span>Sides</span><strong>Double-sided</strong></div>
+              <div class="product-spec"><span>Base</span><strong>360° rotating</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 500 pcs</span>
           </div>
         </article>
+
+        <article class="product" data-cat="case" onclick="openLightbox('images/7.jpg','Branded Acrylic Cabinet','case','Fully enclosed branded acrylic display cabinet with sloped top and acrylic shelves. Custom logo print on top panel. Lockable front door.','Black acrylic','Enclosed cabinet','Custom logo top','500 pcs')">
+          <div class="product-img">
+            <img src="images/7.jpg" alt="Andre branded cabinet">
+            <div class="product-img-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">Display Case</div>
+            <h4>Branded Acrylic Cabinet</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Black acrylic</strong></div>
+              <div class="product-spec"><span>Style</span><strong>Enclosed</strong></div>
+              <div class="product-spec"><span>Feature</span><strong>Custom logo</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 500 pcs</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_001_(640x427).jpg','Custom Color Trophy','trophy','Full-color printed acrylic trophy with custom shape. Suitable for corporate events, sports competitions, and employee awards. Unlimited color options.','Colored acrylic','Custom shape','Full-color print','100 pcs')">
+          <div class="product-img">
+            <img src="images/X_001_(640x427).jpg" alt="Custom color trophy">
+            <div class="product-img-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">Trophy & Award</div>
+            <h4>Custom Color Trophy</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Colored acrylic</strong></div>
+              <div class="product-spec"><span>Print</span><strong>Full-color</strong></div>
+              <div class="product-spec"><span>Shape</span><strong>Custom</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 100 pcs</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_002_(640x427).jpg','Sport Event Trophy','trophy','Custom acrylic sport trophy with printed figure and black base. Popular for running events, school sports, and corporate tournaments.','Clear + black acrylic','Custom figure print','Black base','100 pcs')">
+          <div class="product-img">
+            <img src="images/X_002_(640x427).jpg" alt="Sport event trophy">
+            <div class="product-img-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">Trophy & Award</div>
+            <h4>Sport Event Trophy</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Clear acrylic</strong></div>
+              <div class="product-spec"><span>Print</span><strong>Figure + color</strong></div>
+              <div class="product-spec"><span>Base</span><strong>Black</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 100 pcs</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_003_(640x427).jpg','Multi-Piece Award Set','trophy','Set of 3 custom acrylic awards with different shapes and full-color printing. Ideal for annual award ceremonies and brand events.','Mixed acrylic','3-piece set','Custom color print','100 pcs')">
+          <div class="product-img">
+            <img src="images/X_003_(640x427).jpg" alt="Multi-piece award set">
+            <div class="product-img-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">Trophy & Award</div>
+            <h4>Multi-Piece Award Set</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Mixed acrylic</strong></div>
+              <div class="product-spec"><span>Pieces</span><strong>3 per set</strong></div>
+              <div class="product-spec"><span>Print</span><strong>Full-color</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 100 pcs</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_007_(640x427).jpg','Acrylic Plaque & Sign','gift','Custom acrylic plaque and sign holder set. Screen-printed with brand logo, text, or artwork. Used for retail counters, office signage, and corporate gifts.','Clear + color acrylic','Screen print','Custom size','200 pcs')">
+          <div class="product-img">
+            <img src="images/X_007_(640x427).jpg" alt="Acrylic plaque and sign">
+            <div class="product-img-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">Gift & Sign</div>
+            <h4>Acrylic Plaque & Sign</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Clear acrylic</strong></div>
+              <div class="product-spec"><span>Print</span><strong>Screen print</strong></div>
+              <div class="product-spec"><span>Size</span><strong>Custom</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 200 pcs</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_008_(640x427).jpg','Deal Tombstone Trophy','trophy','Acrylic deal tombstone memento. Embedded artwork, card, or document behind clear acrylic panel with black base. Popular for finance and M&A milestones.','Clear + black acrylic','Embedded artwork','Black base','50 pcs')">
+          <div class="product-img">
+            <img src="images/X_008_(640x427).jpg" alt="Deal tombstone trophy">
+            <div class="product-img-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">Trophy & Award</div>
+            <h4>Deal Tombstone Trophy</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Material</span><strong>Clear acrylic</strong></div>
+              <div class="product-spec"><span>Style</span><strong>Tombstone</strong></div>
+              <div class="product-spec"><span>Feature</span><strong>Embedded art</strong></div>
+            </div>
+            <span class="product-moq">MOQ: 50 pcs</span>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <div class="lightbox-img">
+        <img id="lb-img" src="" alt="">
+      </div>
+      <div class="lightbox-body">
+        <div class="lightbox-cat" id="lb-cat"></div>
+        <h3 class="lightbox-title" id="lb-title"></h3>
+        <p class="lightbox-desc" id="lb-desc"></p>
+        <table class="lightbox-table">
+          <tr><td>Material</td><td id="lb-material"></td></tr>
+          <tr><td>Size / Type</td><td id="lb-size"></td></tr>
+          <tr><td>Feature</td><td id="lb-feature"></td></tr>
+          <tr><td>MOQ</td><td id="lb-moq"></td></tr>
+          <tr><td>Sample Lead</td><td>14 days</td></tr>
+          <tr><td>Production Lead</td><td>35 days</td></tr>
+          <tr><td>Order Type</td><td>OEM / ODM / White label</td></tr>
+        </table>
+        <div class="lightbox-cta">
+          <a href="/inquiry?factory=CMH-F-3WQSUB" class="btn-inquire">Request a Quote →</a>
+          <a href="https://wa.me/8613266815863" class="btn-wa">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- CERTIFICATIONS -->
   <section class="section certs">
@@ -799,5 +998,41 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
   </div>
 </footer>
 
+
+<script>
+function openLightbox(img, title, cat, desc, material, size, feature, moq) {
+  document.getElementById('lb-img').src = img;
+  document.getElementById('lb-title').textContent = title;
+  document.getElementById('lb-cat').textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+  document.getElementById('lb-desc').textContent = desc;
+  document.getElementById('lb-material').textContent = material;
+  document.getElementById('lb-size').textContent = size;
+  document.getElementById('lb-feature').textContent = feature;
+  document.getElementById('lb-moq').textContent = moq + ' minimum';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeLightboxOnBg(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+// Category filter
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const cat = this.dataset.cat;
+    document.querySelectorAll('.product').forEach(p => {
+      p.style.display = (cat === 'all' || p.dataset.cat === cat) ? 'flex' : 'none';
+    });
+  });
+});
+</script>
 </body>
 </html>
