@@ -303,7 +303,6 @@
     #toast.success { border-color: var(--green); color: var(--green); }
     #toast.error   { border-color: var(--red); color: var(--red); }
   </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js"></script>
 </head>
 <body>
 
@@ -490,16 +489,18 @@ const TABS = {
 
 // ============ 新数据轮询（30秒）============
 let _lastTotal = null;
+let _lastBaseTotal = null;
 let currentDetailData = null;
 
 async function checkNewData() {
   try {
     const cfg = TABS[state.tab];
+    // 始终用无筛选的全量 total 做对比，避免筛选状态影响判断
     const res = await fetch(`${cfg.endpoint()}?page=1`);
     if (!res.ok) return;
     const json = await res.json();
-    if (_lastTotal === null) { _lastTotal = json.total; return; }
-    if (json.total > _lastTotal) {
+    if (_lastBaseTotal === null) { _lastBaseTotal = json.total; return; }
+    if (json.total > _lastBaseTotal) {
       document.getElementById('new-data-bar').style.display = 'block';
     }
   } catch(e) {}
@@ -507,7 +508,7 @@ async function checkNewData() {
 
 function dismissNewDataBar() {
   document.getElementById('new-data-bar').style.display = 'none';
-  _lastTotal = null;
+  _lastBaseTotal = null;
   loadData();
 }
 
@@ -896,7 +897,7 @@ function renderFactoryDetail(r) {
     <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
       <a href="mailto:${r.email}?subject=Re: 您的 ChinaMakersHub 入驻申请 [${r.reference_id}]" class="btn btn-primary" style="text-decoration:none">📧 回复邮件</a>
       ${r.phone ? `<a href="tel:${r.phone}" class="btn btn-ghost" style="text-decoration:none">📞 拨打电话</a>` : ''}
-      <button class="btn btn-ghost" onclick="exportFactoryWord(currentDetailData)">📄 导出 Word</button>
+      <button class="btn btn-ghost" onclick="exportFactoryHtml(currentDetailData)">🖨️ 打印 / 导出</button>
     </div>
     <hr/>
     <div class="section-label">内部备注</div>
@@ -946,167 +947,111 @@ function loadNote(id, type) {
 }
 
 
-// ============ 导出工厂申请 Word ============
-async function exportFactoryWord(r) {
+// ============ 打印/导出工厂申请 ============
+function exportFactoryHtml(r) {
   if (!r) return;
-  if (typeof docx === 'undefined') {
-    alert('Word 导出库加载中，请稍后再试');
-    return;
-  }
 
-  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-          HeadingLevel, AlignmentType, BorderStyle, WidthType, ShadingType } = docx;
-
-  const border = { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' };
-  const borders = { top: border, bottom: border, left: border, right: border };
-  const cellMargins = { top: 80, bottom: 80, left: 120, right: 120 };
-
-  const parseList = (v) => {
-    try { const a = JSON.parse(v || '[]'); return a.join('、') || '—'; }
+  const parseList = (v, map) => {
+    try { const a = JSON.parse(v || '[]'); return a.map(x => map ? (map[x] || x) : x).join('、') || '—'; }
     catch(e) { return v || '—'; }
   };
+  const val = v => v || '—';
 
-  const val = (v) => String(v || '—');
+  const row = (label, value) => `
+    <tr>
+      <td style="background:#f5f5f5;font-weight:600;width:160px;padding:8px 12px;border:1px solid #ddd;color:#333;white-space:nowrap">${label}</td>
+      <td style="padding:8px 12px;border:1px solid #ddd;color:#444">${value || '—'}</td>
+    </tr>`;
 
-  const labelRow = (label, value) => new TableRow({
-    children: [
-      new TableCell({
-        borders, margins: cellMargins,
-        width: { size: 3000, type: WidthType.DXA },
-        shading: { fill: 'F2F2F2', type: ShadingType.CLEAR },
-        children: [new Paragraph({ children: [new TextRun({ text: label, bold: true, size: 22, font: 'Arial' })] })]
-      }),
-      new TableCell({
-        borders, margins: cellMargins,
-        width: { size: 6360, type: WidthType.DXA },
-        children: [new Paragraph({ children: [new TextRun({ text: val(value), size: 22, font: 'Arial' })] })]
-      })
-    ]
-  });
+  const section = (title) => `
+    <h2 style="font-size:14px;font-weight:700;color:#B83A26;margin:24px 0 8px;padding-bottom:6px;border-bottom:2px solid #B83A26">${title}</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">`;
 
-  const sectionTitle = (text) => new Paragraph({
-    heading: HeadingLevel.HEADING_2,
-    spacing: { before: 300, after: 120 },
-    children: [new TextRun({ text, bold: true, size: 26, font: 'Arial', color: 'B83A26' })]
-  });
+  const html = `<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>工厂入驻申请 — ${r.reference_id}</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; color: #333; padding: 32px; max-width: 800px; margin: 0 auto; }
+  @media print {
+    body { padding: 0; }
+    .no-print { display: none; }
+    @page { margin: 20mm; }
+  }
+</style>
+</head>
+<body>
+  <div class="no-print" style="background:#f0f0f0;padding:12px 16px;margin-bottom:24px;border-radius:4px;display:flex;align-items:center;gap:12px">
+    <span style="font-size:13px;color:#555">打印或保存为 PDF：</span>
+    <button onclick="window.print()" style="background:#0F0E0C;color:#fff;border:none;padding:7px 16px;cursor:pointer;font-size:13px">🖨️ 打印 / 保存 PDF</button>
+  </div>
 
-  const infoTable = (rows) => new Table({
-    width: { size: 9360, type: WidthType.DXA },
-    columnWidths: [3000, 6360],
-    rows
-  });
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:3px solid #0F0E0C">
+    <div>
+      <div style="font-size:11px;letter-spacing:2px;color:#999;margin-bottom:6px">CHINAMAKERSHUB</div>
+      <h1 style="font-size:20px;font-weight:700;color:#0F0E0C">工厂入驻申请</h1>
+    </div>
+    <div style="text-align:right;font-size:12px;color:#666">
+      <div style="font-size:16px;font-weight:700;color:#B83A26;font-family:monospace">${r.reference_id}</div>
+      <div style="margin-top:4px">${r.created_at ? r.created_at.slice(0,16) : ''}</div>
+      <div style="margin-top:4px">状态：${({submitted:'待审核',reviewing:'审核中',approved:'已通过',rejected:'已拒绝'}[r.status] || r.status || '—')}</div>
+    </div>
+  </div>
 
-  const doc = new Document({
-    styles: {
-      default: { document: { run: { font: 'Arial', size: 22 } } },
-      paragraphStyles: [
-        { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true,
-          run: { size: 36, bold: true, font: 'Arial', color: '0F0E0C' },
-          paragraph: { spacing: { before: 0, after: 240 }, outlineLevel: 0 } },
-        { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true,
-          run: { size: 26, bold: true, font: 'Arial', color: 'B83A26' },
-          paragraph: { spacing: { before: 300, after: 120 }, outlineLevel: 1 } },
-      ]
-    },
-    sections: [{
-      properties: {
-        page: {
-          size: { width: 11906, height: 16838 },
-          margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
-        }
-      },
-      children: [
-        // 标题
-        new Paragraph({
-          heading: HeadingLevel.HEADING_1,
-          children: [new TextRun({ text: 'ChinaMakersHub — 工厂入驻申请', bold: true, size: 36, font: 'Arial' })]
-        }),
-        new Paragraph({
-          children: [new TextRun({ text: `Reference ID: ${r.reference_id}   |   提交时间: ${r.created_at ? r.created_at.slice(0,16) : '—'}   |   状态: ${r.status || '—'}`, size: 20, color: '666666', font: 'Arial' })]
-        }),
-        new Paragraph({ children: [new TextRun('')] }),
+  ${section('一、企业基础信息')}
+    ${row('公司全称（中文）', r.company_cn)}
+    ${row('公司英文名', r.company_en)}
+    ${row('统一社会信用代码', r.business_id)}
+    ${row('成立年份', r.founded_year)}
+    ${row('所在城市', (CITY_MAP[r.city] || r.city || '') + (r.district ? ' ' + r.district : ''))}
+    ${row('详细地址', r.address)}
+    ${row('厂房面积', r.facility_size ? r.facility_size + ' ㎡' : null)}
+    ${row('员工人数', HEADCOUNT_MAP[r.headcount] || r.headcount)}
+  </table>
 
-        // 企业信息
-        sectionTitle('一、企业基础信息'),
-        infoTable([
-          labelRow('公司全称（中文）', r.company_cn),
-          labelRow('公司英文名', r.company_en),
-          labelRow('统一社会信用代码', r.business_id),
-          labelRow('成立年份', r.founded_year),
-          labelRow('所在城市', `${CITY_MAP[r.city] || r.city || '—'} ${r.district || ''}`),
-          labelRow('详细地址', r.address),
-          labelRow('厂房面积', r.facility_size ? r.facility_size + ' ㎡' : '—'),
-          labelRow('员工人数', HEADCOUNT_MAP[r.headcount] || r.headcount),
-        ]),
-        new Paragraph({ children: [new TextRun('')] }),
+  ${section('二、生产能力')}
+    ${row('主营品类', parseList(r.categories, CAT_MAP))}
+    ${row('最小起订量 (MOQ)', r.moq)}
+    ${row('样品交期', r.sample_lead ? r.sample_lead + ' 天' : null)}
+    ${row('大货交期', r.production_lead ? r.production_lead + ' 天' : null)}
+    ${row('年产能', r.annual_capacity)}
+    ${row('主要出口市场', r.export_markets)}
+  </table>
+  ${r.capabilities ? `<div style="margin-top:10px"><strong>核心产品 / 工艺优势：</strong><p style="margin-top:6px;line-height:1.7;color:#444">${r.capabilities}</p></div>` : ''}
 
-        // 生产能力
-        sectionTitle('二、生产能力'),
-        infoTable([
-          labelRow('主营品类', parseList(r.categories)),
-          labelRow('最小起订量 (MOQ)', r.moq),
-          labelRow('样品交期', r.sample_lead ? r.sample_lead + ' 天' : '—'),
-          labelRow('大货交期', r.production_lead ? r.production_lead + ' 天' : '—'),
-          labelRow('年产能', r.annual_capacity),
-          labelRow('主要出口市场', r.export_markets),
-        ]),
-        new Paragraph({ children: [new TextRun('')] }),
-        new Paragraph({ children: [new TextRun({ text: '核心产品 / 工艺优势：', bold: true, font: 'Arial', size: 22 })] }),
-        new Paragraph({ children: [new TextRun({ text: r.capabilities || '—', font: 'Arial', size: 22 })] }),
-        new Paragraph({ children: [new TextRun('')] }),
+  ${section('三、认证资质')}
+    ${row('已有认证', parseList(r.certs, null))}
+    ${row('公司网站', r.website ? `<a href="${r.website}">${r.website}</a>` : null)}
+  </table>
+  ${r.references_text ? `<div style="margin-top:10px"><strong>海外客户案例：</strong><p style="margin-top:6px;line-height:1.7;color:#444">${r.references_text}</p></div>` : ''}
 
-        // 认证资质
-        sectionTitle('三、认证资质'),
-        infoTable([
-          labelRow('已有认证', parseList(r.certs)),
-          labelRow('公司网站', r.website),
-        ]),
-        ...(r.references_text ? [
-          new Paragraph({ children: [new TextRun('')] }),
-          new Paragraph({ children: [new TextRun({ text: '海外客户案例：', bold: true, font: 'Arial', size: 22 })] }),
-          new Paragraph({ children: [new TextRun({ text: r.references_text, font: 'Arial', size: 22 })] }),
-        ] : []),
-        new Paragraph({ children: [new TextRun('')] }),
+  ${section('四、联系人信息')}
+    ${row('对接人姓名', r.contact_name)}
+    ${row('职位', r.contact_title)}
+    ${row('手机号', r.phone)}
+    ${row('微信号', r.wechat)}
+    ${row('电子邮箱', r.email)}
+    ${row('英语沟通能力', ENGLISH_MAP[r.english_level] || r.english_level)}
+  </table>
 
-        // 联系人
-        sectionTitle('四、联系人信息'),
-        infoTable([
-          labelRow('对接人姓名', r.contact_name),
-          labelRow('职位', r.contact_title),
-          labelRow('手机号', r.phone),
-          labelRow('微信号', r.wechat),
-          labelRow('电子邮箱', r.email),
-          labelRow('英语沟通能力', ENGLISH_MAP[r.english_level] || r.english_level),
-        ]),
-        new Paragraph({ children: [new TextRun('')] }),
+  ${section('五、合作意向')}
+    ${row('期望服务', parseList(r.services, SERVICE_MAP))}
+    ${r.notes ? row('补充说明', r.notes) : ''}
+  </table>
 
-        // 合作意向
-        sectionTitle('五、合作意向'),
-        infoTable([
-          labelRow('期望服务', parseList(r.services)),
-          ...(r.notes ? [labelRow('补充说明', r.notes)] : []),
-        ]),
+  <div style="margin-top:32px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#aaa;text-align:center">
+    本文档由 ChinaMakersHub 后台系统生成 · © 2026 Qingxuan International Trading Limited
+  </div>
+</body>
+</html>`;
 
-        // 页脚说明
-        new Paragraph({ children: [new TextRun('')] }),
-        new Paragraph({
-          children: [new TextRun({ text: '— 本文档由 ChinaMakersHub 后台系统自动生成 —', size: 18, color: '999999', font: 'Arial' })],
-          alignment: AlignmentType.CENTER
-        }),
-      ]
-    }]
-  });
-
-  const blob = await Packer.toBlob(doc);
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `CMH-工厂申请-${r.reference_id}-${(r.company_cn || '').slice(0,10)}.docx`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  const win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
 }
+
 
 // ============ UTILS ============
 function showLoading(v) {
