@@ -159,13 +159,13 @@ async function handleAdmin(request, env, url, origin) {
   if (path === '/api/admin/factories' && method === 'GET') {
     return handleAdminListFactories(request, env, url, origin);
   }
+  // GET /api/admin/factories/export  （必须在 :id 之前匹配）
+  if (path === '/api/admin/factories/export' && method === 'GET') {
+    return handleAdminExportFactories(request, env, url);
+  }
   // GET /api/admin/factories/:id  单条详情
   if (path.startsWith('/api/admin/factories/') && method === 'GET') {
     return handleAdminGetFactory(request, env, url, origin);
-  }
-  // GET /api/admin/factories/export
-  if (path === '/api/admin/factories/export' && method === 'GET') {
-    return handleAdminExportFactories(request, env, url);
   }
   // PATCH /api/admin/factories/:id
   if (path.startsWith('/api/admin/factories/') && method === 'PATCH') {
