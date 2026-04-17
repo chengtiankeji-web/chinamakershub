@@ -163,6 +163,10 @@ async function handleAdmin(request, env, url, origin) {
   if (path.startsWith('/api/admin/factories/') && method === 'GET') {
     return handleAdminGetFactory(request, env, url, origin);
   }
+  // GET /api/admin/factories/export
+  if (path === '/api/admin/factories/export' && method === 'GET') {
+    return handleAdminExportFactories(request, env, url);
+  }
   // PATCH /api/admin/factories/:id
   if (path.startsWith('/api/admin/factories/') && method === 'PATCH') {
     return handleAdminUpdateFactory(request, env, url, origin);
@@ -361,6 +365,59 @@ async function handleAdminListFactories(request, env, url, origin) {
   } catch (err) {
     console.error('handleAdminListFactories error:', err);
     return jsonResponse({ error: 'Internal server error' }, 500, origin);
+  }
+}
+
+
+// ============ ADMIN: 导出工厂申请 CSV ============
+async function handleAdminExportFactories(request, env, url) {
+  try {
+    const params = url.searchParams;
+    const status = params.get('status') || '';
+
+    let where = '1=1';
+    const binds = [];
+    if (status) { where += ' AND status = ?'; binds.push(status); }
+
+    const rows = await env.DB.prepare(
+      `SELECT reference_id, company_cn, company_en, business_id, founded_year,
+              city, district, address, facility_size, headcount,
+              categories, capabilities, moq, sample_lead, production_lead,
+              annual_capacity, export_markets, certs, website, references_text,
+              contact_name, contact_title, phone, wechat, email,
+              english_level, services, notes, status, created_at
+       FROM factory_applications WHERE ${where}
+       ORDER BY created_at DESC LIMIT 5000`
+    ).bind(...binds).all();
+
+    const headers = [
+      'reference_id','company_cn','company_en','business_id','founded_year',
+      'city','district','address','facility_size','headcount',
+      'categories','capabilities','moq','sample_lead','production_lead',
+      'annual_capacity','export_markets','certs','website','references_text',
+      'contact_name','contact_title','phone','wechat','email',
+      'english_level','services','notes','status','created_at'
+    ];
+    const escape = v => {
+      if (v == null) return '';
+      const s = String(v).replace(/"/g, '""');
+      return s.includes(',') || s.includes('"') || s.includes('') ? `"${s}"` : s;
+    };
+    const csv = [
+      headers.join(','),
+      ...rows.results.map(r => headers.map(h => escape(r[h])).join(','))
+    ].join('');
+
+    return new Response('﻿' + csv, {  // BOM 让 Excel 正确识别 UTF-8
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv; charset=utf-8',
+        'Content-Disposition': `attachment; filename="factories-${new Date().toISOString().slice(0,10)}.csv"`,
+      }
+    });
+  } catch (err) {
+    console.error('handleAdminExportFactories error:', err);
+    return new Response('Export failed', { status: 500 });
   }
 }
 

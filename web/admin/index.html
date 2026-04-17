@@ -479,7 +479,7 @@ const TABS = {
     ],
     showCountryFilter: false,
     endpoint: () => `${API_BASE}/admin/factories`,
-    exportEndpoint: null,
+    exportEndpoint: () => `${API_BASE}/admin/factories/export`,
     patchEndpoint: (id) => `${API_BASE}/admin/factories/${id}`,
     statusClass: (s) => `badge badge-${s}`,
     statusLabel: (s) => ({ submitted:'待审核', reviewing:'审核中', approved:'已通过', rejected:'已拒绝' }[s] || s),
