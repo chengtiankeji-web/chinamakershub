@@ -118,7 +118,13 @@ img { display: block; max-width: 100%; }
 .section-title em { font-family: var(--font-editorial); font-style: italic; color: var(--cinnabar); }
 
 /* PRODUCT CATALOG */
-.cat-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.cat-filter-wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.5rem; }
+.cat-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.cat-pager { display: flex; align-items: center; gap: 0.5rem; }
+.cat-page-btn { width: 30px; height: 30px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-mute); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.cat-page-btn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+.cat-page-btn:disabled { opacity: 0.25; cursor: default; }
+.cat-page-info { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-mute); min-width: 36px; text-align: center; }
 .cat-btn { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.45rem 1rem; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-mute); cursor: pointer; transition: all 0.2s; }
 .cat-btn:hover { border-color: var(--ink); color: var(--ink); }
 .cat-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
@@ -144,7 +150,7 @@ img { display: block; max-width: 100%; }
 .lightbox.open { display: flex; }
 .lightbox-inner { background: var(--paper); max-width: 900px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; max-height: 90vh; overflow: hidden; position: relative; }
 .lightbox-img { background: var(--paper-warm); overflow: visible; position: relative; cursor: crosshair; }
-.lightbox-img img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.lightbox-img img { width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none; }
 
 /* ZOOM LENS */
 .zoom-lens { position: absolute; border: 1.5px solid var(--line-strong); background: rgba(244,239,230,0.15); pointer-events: none; display: none; z-index: 10; box-shadow: 0 0 0 1px rgba(15,14,12,0.08); }
@@ -515,12 +521,23 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
         <div class="section-num"><strong>01</strong>Products</div>
         <h2 class="section-title">Display solutions shipped to <em>global retail brands.</em></h2>
       </div>
-      <div class="cat-filter">
-        <button class="cat-btn active" data-cat="all">All Products</button>
-        <button class="cat-btn" data-cat="display">Display Stands</button>
-        <button class="cat-btn" data-cat="case">Display Cases</button>
-        <button class="cat-btn" data-cat="trophy">Trophies & Awards</button>
-        <button class="cat-btn" data-cat="gift">Gifts & Signs</button>
+      <div class="cat-filter-wrap">
+        <div class="cat-filter">
+          <button class="cat-btn active" data-cat="all">All Products</button>
+          <button class="cat-btn" data-cat="display">Display Stands</button>
+          <button class="cat-btn" data-cat="case">Display Cases</button>
+          <button class="cat-btn" data-cat="trophy">Trophies & Awards</button>
+          <button class="cat-btn" data-cat="gift">Gifts & Signs</button>
+        </div>
+        <div class="cat-pager" id="cat-pager">
+          <button class="cat-page-btn" id="cat-prev" onclick="changePage(-1)">
+            <svg width="10" height="8" viewBox="0 0 12 10" fill="none"><path d="M11 5H1m0 0l4-4M1 5l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+          <span class="cat-page-info" id="cat-page-info">1 / 1</span>
+          <button class="cat-page-btn" id="cat-next" onclick="changePage(1)">
+            <svg width="10" height="8" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+        </div>
       </div>
       <div class="products-grid">
 
@@ -1120,11 +1137,18 @@ function renderPage() {
     p.style.display = (inCat && pageItems.has(p)) ? 'flex' : 'none';
   });
 
+  // 底部分页
   document.getElementById('page-total').textContent = totalPages;
   document.querySelector('#page-info strong').textContent = currentPage;
   document.getElementById('page-prev').disabled = currentPage <= 1;
   document.getElementById('page-next').disabled = currentPage >= totalPages;
   document.getElementById('pagination').style.display = totalPages <= 1 ? 'none' : 'flex';
+
+  // 顶部分类翻页
+  document.getElementById('cat-page-info').textContent = currentPage + ' / ' + totalPages;
+  document.getElementById('cat-prev').disabled = currentPage <= 1;
+  document.getElementById('cat-next').disabled = currentPage >= totalPages;
+  document.getElementById('cat-pager').style.display = totalPages <= 1 ? 'none' : 'flex';
 }
 
 function changePage(delta) {
