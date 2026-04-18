@@ -251,6 +251,11 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
 .footer-bottom strong { display: block; color: rgba(244,239,230,0.7); margin-bottom: 0.3rem; text-transform: uppercase; }
 .footer-bank { text-align: right; }
 
+/* VERIFIED BADGE CHIP */
+.verified-badge-chip { display: inline-flex; align-items: center; gap: 0.45rem; margin-top: 1.8rem; padding: 0.45rem 0.9rem; background: transparent; border: 1px solid var(--jade); color: var(--jade); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; }
+.verified-badge-chip:hover { background: var(--jade); color: var(--paper); }
+.verified-badge-chip svg { flex-shrink: 0; }
+
 /* VIDEO PLACEHOLDER */
 .video-placeholder { margin-bottom: 1.2rem; border: 1px solid var(--line); background: var(--paper-warm); aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; cursor: pointer; position: relative; overflow: hidden; transition: border-color 0.2s; }
 .video-placeholder:hover { border-color: var(--ink-mute); }
@@ -366,7 +371,7 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
       <div class="f-header">
         <div class="f-header-grid">
           <div>
-            <div class="f-eyebrow">/ Verified Workshop <span class="f-id">CMH-F-3WQSUB</span></div>
+            <div class="f-eyebrow">/ Acrylic Manufacturer <span class="f-id">CMH-F-3WQSUB</span></div>
             <h1 class="f-title">Yixinheng<br>Acrylic</h1>
             <p class="f-tagline">26 years making display solutions for the world's retail brands. From cosmetic counters to vape racks — if it showcases a product, we've built it in acrylic.</p>
             <div class="f-quick">
@@ -375,23 +380,13 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
               <span class="f-quick-item">12,000 m² facility</span>
               <span class="f-quick-item">20–50 staff</span>
             </div>
+            <button class="verified-badge-chip" onclick="openVerifiedModal()">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+              CMH Verified
+            </button>
           </div>
           <aside class="trust-card">
-            <div class="trust-card-top">
-              <span>Verification Status</span>
-              <span class="trust-check" onclick="openVerifiedModal()" title="View verification details">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-                Verified ↗
-              </span>
-            </div>
-            <div class="trust-card-body">
-              <div class="trust-row"><span>Last audit</span><span>April 2026</span></div>
-              <div class="trust-row"><span>Auditor</span><span>CMH Foshan team</span></div>
-              <div class="trust-row"><span>Response time</span><span>~2 hours</span></div>
-              <div class="trust-row"><span>Sample lead</span><span>14 days</span></div>
-              <div class="trust-row"><span>Languages</span><span>EN · 中</span></div>
-            </div>
-            <div class="trust-card-cta">
+            <div class="trust-card-cta" style="border-top:none;">
               <div class="video-placeholder" onclick="alert('Factory video coming soon. Contact Mr. Qiao for a live walkthrough via WhatsApp.')">
                 <div class="video-play-icon">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none" opacity="0.4"/><polygon points="5 3 19 12 5 21 5 3"/></svg>
