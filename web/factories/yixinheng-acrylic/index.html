@@ -143,8 +143,14 @@ img { display: block; max-width: 100%; }
 .lightbox { position: fixed; inset: 0; background: rgba(15,14,12,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; }
 .lightbox.open { display: flex; }
 .lightbox-inner { background: var(--paper); max-width: 900px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; max-height: 90vh; overflow: hidden; position: relative; }
-.lightbox-img { background: var(--paper-warm); overflow: hidden; }
-.lightbox-img img { width: 100%; height: 100%; object-fit: cover; }
+.lightbox-img { background: var(--paper-warm); overflow: visible; position: relative; cursor: crosshair; }
+.lightbox-img img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+
+/* ZOOM LENS */
+.zoom-lens { position: absolute; border: 1.5px solid var(--line-strong); background: rgba(244,239,230,0.15); pointer-events: none; display: none; z-index: 10; box-shadow: 0 0 0 1px rgba(15,14,12,0.08); }
+.zoom-lens.active { display: block; }
+.zoom-preview { position: absolute; top: 0; left: calc(100% + 1px); width: 100%; height: 100%; border: 1px solid var(--line-strong); background: var(--paper-warm) no-repeat; overflow: hidden; display: none; z-index: 20; pointer-events: none; }
+.zoom-preview.active { display: block; }
 .lightbox-body { padding: 2.5rem; overflow-y: auto; display: flex; flex-direction: column; }
 .lightbox-close { position: absolute; top: 1rem; right: 1rem; background: var(--ink); border: none; color: var(--paper); width: 32px; height: 32px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
 .lightbox-cat { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--cinnabar); margin-bottom: 0.6rem; }
@@ -518,160 +524,168 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
       </div>
       <div class="products-grid">
 
+        <!-- DISPLAY STANDS (8) -->
         <article class="product" data-cat="display" onclick="openLightbox('images/1.jpg','Branded Watch Display Stand','Display Stand','Custom-branded counter display for watch retailers. White acrylic with color-printed side panels. Supports up to 9 watch holders on 3 tiers.','White acrylic','Multi-tier counter','Custom logo print','500 pcs')">
           <div class="product-img"><img src="images/1.jpg" alt="Branded watch display"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Display Stand</div>
-            <h4>Branded Watch Display</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Material</span><strong>White acrylic</strong></div>
-              <div class="product-spec"><span>Feature</span><strong>Custom logo print</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Branded Watch Display</h4><div class="product-specs"><div class="product-spec"><span>Material</span><strong>White acrylic</strong></div><div class="product-spec"><span>Feature</span><strong>Custom logo print</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
         </article>
 
+        <article class="product" data-cat="display" onclick="openLightbox('images/X_010.jpg','Counter Display Rack','Display Stand','Multi-slot acrylic counter display rack. Clear construction with adjustable dividers. Suitable for cosmetic, vape, or 3C accessories.','Clear acrylic','Counter-top','Adjustable slots','500 pcs')">
+          <div class="product-img"><img src="images/X_010.jpg" alt="Counter display rack"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Counter Display Rack</h4><div class="product-specs"><div class="product-spec"><span>Material</span><strong>Clear acrylic</strong></div><div class="product-spec"><span>Feature</span><strong>Adjustable slots</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="display" onclick="openLightbox('images/X_011.jpg','Tiered Retail Stand','Display Stand','3-tier stepped acrylic display stand. Ideal for cosmetic testers, small electronics, or retail merchandise. Clear finish.','Clear acrylic','3-tier stepped','Open front','500 pcs')">
+          <div class="product-img"><img src="images/X_011.jpg" alt="Tiered retail stand"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Tiered Retail Stand</h4><div class="product-specs"><div class="product-spec"><span>Tiers</span><strong>3-tier stepped</strong></div><div class="product-spec"><span>Style</span><strong>Open front</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="display" onclick="openLightbox('images/X_012.jpg','Acrylic Product Riser','Display Stand','Single-tier acrylic product riser block. Used for elevating hero products in retail windows and counters. Custom height available.','Clear acrylic','Single riser','Custom height','500 pcs')">
+          <div class="product-img"><img src="images/X_012.jpg" alt="Product riser"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Acrylic Product Riser</h4><div class="product-specs"><div class="product-spec"><span>Type</span><strong>Riser block</strong></div><div class="product-spec"><span>Height</span><strong>Custom</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="display" onclick="openLightbox('images/X_013.jpg','Floor Display Tower','Display Stand','Floor-standing acrylic display tower with multiple shelves. Suitable for supermarket, pharmacy, or beauty retail environments.','Clear acrylic','Floor-standing','Multi-shelf','200 pcs')">
+          <div class="product-img"><img src="images/X_013.jpg" alt="Floor display tower"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Floor Display Tower</h4><div class="product-specs"><div class="product-spec"><span>Type</span><strong>Floor-standing</strong></div><div class="product-spec"><span>Shelves</span><strong>Multi-shelf</strong></div></div><span class="product-moq">MOQ: 200 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="display" onclick="openLightbox('images/X_020.jpg','Pegboard Display Unit','Display Stand','Acrylic pegboard display unit with hook slots. Configurable layout for accessories, tools, or packaged goods. Custom size available.','Clear acrylic','Pegboard','Hook slots','300 pcs')">
+          <div class="product-img"><img src="images/X_020.jpg" alt="Pegboard display"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Pegboard Display Unit</h4><div class="product-specs"><div class="product-spec"><span>Type</span><strong>Pegboard</strong></div><div class="product-spec"><span>Feature</span><strong>Hook slots</strong></div></div><span class="product-moq">MOQ: 300 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="display" onclick="openLightbox('images/X_021.jpg','Eyewear Counter Stand','Display Stand','Counter-top eyewear display stand. Holds 12–24 frames. Clear acrylic with mirror-finish base. Popular for optical boutiques.','Clear + mirror acrylic','Counter-top','12–24 frames','500 pcs')">
+          <div class="product-img"><img src="images/X_021.jpg" alt="Eyewear stand"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Eyewear Counter Stand</h4><div class="product-specs"><div class="product-spec"><span>Capacity</span><strong>12–24 frames</strong></div><div class="product-spec"><span>Base</span><strong>Mirror finish</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="display" onclick="openLightbox('images/X_022.jpg','Cosmetic Tester Stand','Display Stand','Cosmetic tester display stand with branded header panel. Holds 6–12 product testers on tiered shelves. OEM branding available.','White + clear acrylic','Counter-top','Branded header','500 pcs')">
+          <div class="product-img"><img src="images/X_022.jpg" alt="Cosmetic tester stand"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Stand</div><h4>Cosmetic Tester Stand</h4><div class="product-specs"><div class="product-spec"><span>Header</span><strong>Branded OEM</strong></div><div class="product-spec"><span>Capacity</span><strong>6–12 testers</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
+        </article>
+
+        <!-- DISPLAY CASES (8) -->
         <article class="product" data-cat="case" onclick="openLightbox('images/2.jpg','Lockable Watch Display Case','Display Case','2-tier lockable acrylic display case for watches and jewelry. Clear front panel with black base. Keyed lock for retail security.','Clear + black acrylic','2-tier','Keyed lock','500 pcs')">
           <div class="product-img"><img src="images/2.jpg" alt="Lockable display case"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Display Case</div>
-            <h4>Lockable Display Case</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Material</span><strong>Clear + black</strong></div>
-              <div class="product-spec"><span>Security</span><strong>Keyed lock</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Lockable Display Case</h4><div class="product-specs"><div class="product-spec"><span>Material</span><strong>Clear + black</strong></div><div class="product-spec"><span>Security</span><strong>Keyed lock</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
         </article>
 
         <article class="product" data-cat="case" onclick="openLightbox('images/3.jpg','Multi-Tier Watch Cabinet','Display Case','4-tier lockable watch display cabinet. Blue-tinted acrylic panels with clear front. Double-sided lock.','Blue acrylic','4-tier','Double lock','500 pcs')">
           <div class="product-img"><img src="images/3.jpg" alt="Multi-tier watch cabinet"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Display Case</div>
-            <h4>Multi-Tier Watch Cabinet</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Material</span><strong>Blue acrylic</strong></div>
-              <div class="product-spec"><span>Tiers</span><strong>4</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Multi-Tier Watch Cabinet</h4><div class="product-specs"><div class="product-spec"><span>Material</span><strong>Blue acrylic</strong></div><div class="product-spec"><span>Tiers</span><strong>4</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
         </article>
 
         <article class="product" data-cat="case" onclick="openLightbox('images/4.jpg','Mirror-Base Watch Display','Display Case','Open-top watch display with mirrored base and black frame side panels. Holds 9 watches. Premium boutique aesthetic.','Clear + mirror base','Open top','Mirror finish','500 pcs')">
           <div class="product-img"><img src="images/4.jpg" alt="Mirror base display"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Display Case</div>
-            <h4>Mirror-Base Watch Display</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Base</span><strong>Mirror finish</strong></div>
-              <div class="product-spec"><span>Style</span><strong>Open top</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Mirror-Base Watch Display</h4><div class="product-specs"><div class="product-spec"><span>Base</span><strong>Mirror finish</strong></div><div class="product-spec"><span>Style</span><strong>Open top</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
         </article>
 
         <article class="product" data-cat="case" onclick="openLightbox('images/5.jpg','Rotating Display Tower','Display Case','360° rotating acrylic display tower. 3 tiers with lockable front panel and sign holder on top.','Clear acrylic','3-tier','360° rotating','500 pcs')">
           <div class="product-img"><img src="images/5.jpg" alt="Rotating tower"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Display Case</div>
-            <h4>Rotating Display Tower</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Rotation</span><strong>360°</strong></div>
-              <div class="product-spec"><span>Security</span><strong>Lockable</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Rotating Display Tower</h4><div class="product-specs"><div class="product-spec"><span>Rotation</span><strong>360°</strong></div><div class="product-spec"><span>Security</span><strong>Lockable</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
         </article>
 
         <article class="product" data-cat="case" onclick="openLightbox('images/6.jpg','Double-Sided Rotating Cabinet','Display Case','Double-sided rotating display cabinet with white panel insert. Lockable base with 360° rotating mechanism.','Clear + white acrylic','Double-sided','360° rotating base','500 pcs')">
           <div class="product-img"><img src="images/6.jpg" alt="Double-sided cabinet"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Display Case</div>
-            <h4>Double-Sided Rotating Cabinet</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Sides</span><strong>Double-sided</strong></div>
-              <div class="product-spec"><span>Base</span><strong>360° rotating</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Double-Sided Rotating Cabinet</h4><div class="product-specs"><div class="product-spec"><span>Sides</span><strong>Double-sided</strong></div><div class="product-spec"><span>Base</span><strong>360° rotating</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
         </article>
 
         <article class="product" data-cat="case" onclick="openLightbox('images/7.jpg','Branded Acrylic Cabinet','Display Case','Fully enclosed branded acrylic display cabinet with sloped top. Custom logo print. Lockable front door.','Black acrylic','Enclosed','Custom logo','500 pcs')">
           <div class="product-img"><img src="images/7.jpg" alt="Branded cabinet"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Display Case</div>
-            <h4>Branded Acrylic Cabinet</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Material</span><strong>Black acrylic</strong></div>
-              <div class="product-spec"><span>Feature</span><strong>Custom logo</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Branded Acrylic Cabinet</h4><div class="product-specs"><div class="product-spec"><span>Material</span><strong>Black acrylic</strong></div><div class="product-spec"><span>Feature</span><strong>Custom logo</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
         </article>
 
+        <article class="product" data-cat="case" onclick="openLightbox('images/X_023.jpg','Vape Display Case','Display Case','Lockable acrylic display case for vape and e-cigarette products. 3-shelf configuration with keyed side lock. Clear panels.','Clear acrylic','3-shelf','Keyed lock','300 pcs')">
+          <div class="product-img"><img src="images/X_023.jpg" alt="Vape display case"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Vape Display Case</h4><div class="product-specs"><div class="product-spec"><span>Shelves</span><strong>3-shelf</strong></div><div class="product-spec"><span>Security</span><strong>Keyed lock</strong></div></div><span class="product-moq">MOQ: 300 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="case" onclick="openLightbox('images/X_024.jpg','Jewelry Display Cabinet','Display Case','Enclosed jewelry display cabinet with LED-compatible top panel. Black base with clear acrylic sides. Custom compartment layout.','Clear + black acrylic','Enclosed','LED-ready top','500 pcs')">
+          <div class="product-img"><img src="images/X_024.jpg" alt="Jewelry display cabinet"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Display Case</div><h4>Jewelry Display Cabinet</h4><div class="product-specs"><div class="product-spec"><span>Top</span><strong>LED-ready</strong></div><div class="product-spec"><span>Base</span><strong>Black acrylic</strong></div></div><span class="product-moq">MOQ: 500 pcs</span></div>
+        </article>
+
+        <!-- TROPHIES & AWARDS (8) -->
         <article class="product" data-cat="trophy" onclick="openLightbox('images/X_001_(640x427).jpg','Custom Color Trophy','Trophy & Award','Full-color printed acrylic trophy with custom shape. Suitable for corporate events, sports competitions, and employee awards.','Colored acrylic','Custom shape','Full-color print','100 pcs')">
           <div class="product-img"><img src="images/X_001_(640x427).jpg" alt="Color trophy"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Trophy & Award</div>
-            <h4>Custom Color Trophy</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Print</span><strong>Full-color</strong></div>
-              <div class="product-spec"><span>Shape</span><strong>Custom</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 100 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Custom Color Trophy</h4><div class="product-specs"><div class="product-spec"><span>Print</span><strong>Full-color</strong></div><div class="product-spec"><span>Shape</span><strong>Custom</strong></div></div><span class="product-moq">MOQ: 100 pcs</span></div>
         </article>
 
         <article class="product" data-cat="trophy" onclick="openLightbox('images/X_002_(640x427).jpg','Sport Event Trophy','Trophy & Award','Custom acrylic sport trophy with printed figure and black base. Popular for running events and corporate tournaments.','Clear + black acrylic','Custom figure','Color print','100 pcs')">
           <div class="product-img"><img src="images/X_002_(640x427).jpg" alt="Sport trophy"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Trophy & Award</div>
-            <h4>Sport Event Trophy</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Base</span><strong>Black</strong></div>
-              <div class="product-spec"><span>Print</span><strong>Figure + color</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 100 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Sport Event Trophy</h4><div class="product-specs"><div class="product-spec"><span>Base</span><strong>Black</strong></div><div class="product-spec"><span>Print</span><strong>Figure + color</strong></div></div><span class="product-moq">MOQ: 100 pcs</span></div>
         </article>
 
         <article class="product" data-cat="trophy" onclick="openLightbox('images/X_003_(640x427).jpg','Multi-Piece Award Set','Trophy & Award','Set of 3 custom acrylic awards with different shapes and full-color printing. Ideal for annual award ceremonies.','Mixed acrylic','3-piece set','Full-color print','100 pcs')">
           <div class="product-img"><img src="images/X_003_(640x427).jpg" alt="Award set"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Trophy & Award</div>
-            <h4>Multi-Piece Award Set</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Pieces</span><strong>3 per set</strong></div>
-              <div class="product-spec"><span>Print</span><strong>Full-color</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 100 pcs</span>
-          </div>
-        </article>
-
-        <article class="product" data-cat="gift" onclick="openLightbox('images/X_007_(640x427).jpg','Acrylic Plaque & Sign','Gift & Sign','Custom acrylic plaque and sign holder. Screen-printed with brand logo, text, or artwork. For retail counters and office signage.','Clear + color acrylic','Custom size','Screen print','200 pcs')">
-          <div class="product-img"><img src="images/X_007_(640x427).jpg" alt="Plaque sign"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Gift & Sign</div>
-            <h4>Acrylic Plaque & Sign</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Print</span><strong>Screen print</strong></div>
-              <div class="product-spec"><span>Size</span><strong>Custom</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 200 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Multi-Piece Award Set</h4><div class="product-specs"><div class="product-spec"><span>Pieces</span><strong>3 per set</strong></div><div class="product-spec"><span>Print</span><strong>Full-color</strong></div></div><span class="product-moq">MOQ: 100 pcs</span></div>
         </article>
 
         <article class="product" data-cat="trophy" onclick="openLightbox('images/X_008_(640x427).jpg','Deal Tombstone Trophy','Trophy & Award','Acrylic deal tombstone memento. Embedded artwork behind clear acrylic panel with black base. Popular for finance and M&A milestones.','Clear + black acrylic','Tombstone style','Embedded artwork','50 pcs')">
           <div class="product-img"><img src="images/X_008_(640x427).jpg" alt="Deal tombstone"><div class="product-overlay"><span>Quick View</span></div></div>
-          <div class="product-info">
-            <div class="product-cat-tag">Trophy & Award</div>
-            <h4>Deal Tombstone Trophy</h4>
-            <div class="product-specs">
-              <div class="product-spec"><span>Style</span><strong>Tombstone</strong></div>
-              <div class="product-spec"><span>Feature</span><strong>Embedded art</strong></div>
-            </div>
-            <span class="product-moq">MOQ: 50 pcs</span>
-          </div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Deal Tombstone Trophy</h4><div class="product-specs"><div class="product-spec"><span>Style</span><strong>Tombstone</strong></div><div class="product-spec"><span>Feature</span><strong>Embedded art</strong></div></div><span class="product-moq">MOQ: 50 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_031_(640x427).jpg','Crystal-Look Trophy','Trophy & Award','Premium crystal-effect acrylic trophy with laser-engraved text panel. Black base. Ideal for employee recognition and milestone awards.','Crystal-effect acrylic','Laser engraved','Black base','50 pcs')">
+          <div class="product-img"><img src="images/X_031_(640x427).jpg" alt="Crystal trophy"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Crystal-Look Trophy</h4><div class="product-specs"><div class="product-spec"><span>Finish</span><strong>Crystal-effect</strong></div><div class="product-spec"><span>Engraving</span><strong>Laser engraved</strong></div></div><span class="product-moq">MOQ: 50 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_039_(640x427).jpg','Shield Award Plaque','Trophy & Award','Shield-shaped acrylic award plaque with full-color center print and gold trim. Popular for sports leagues and corporate recognition.','Clear acrylic','Shield shape','Gold trim','100 pcs')">
+          <div class="product-img"><img src="images/X_039_(640x427).jpg" alt="Shield award"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Shield Award Plaque</h4><div class="product-specs"><div class="product-spec"><span>Shape</span><strong>Shield</strong></div><div class="product-spec"><span>Trim</span><strong>Gold accent</strong></div></div><span class="product-moq">MOQ: 100 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_041_(640x427).jpg','Arch Trophy','Trophy & Award','Arch-shaped acrylic trophy with UV-printed artwork and chrome base. Elegant design for business awards and gala events.','Clear acrylic','Arch shape','Chrome base','50 pcs')">
+          <div class="product-img"><img src="images/X_041_(640x427).jpg" alt="Arch trophy"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Arch Trophy</h4><div class="product-specs"><div class="product-spec"><span>Shape</span><strong>Arch</strong></div><div class="product-spec"><span>Base</span><strong>Chrome</strong></div></div><span class="product-moq">MOQ: 50 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="trophy" onclick="openLightbox('images/X_044_(640x427).jpg','Flame Award Trophy','Trophy & Award','Flame-shaped acrylic trophy with gradient color print. Bold visual impact for top performer and sales achievement awards.','Colored acrylic','Flame shape','Gradient print','100 pcs')">
+          <div class="product-img"><img src="images/X_044_(640x427).jpg" alt="Flame trophy"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Trophy & Award</div><h4>Flame Award Trophy</h4><div class="product-specs"><div class="product-spec"><span>Shape</span><strong>Flame</strong></div><div class="product-spec"><span>Print</span><strong>Gradient color</strong></div></div><span class="product-moq">MOQ: 100 pcs</span></div>
+        </article>
+
+        <!-- GIFTS & SIGNS (8) -->
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_007_(640x427).jpg','Acrylic Plaque & Sign','Gift & Sign','Custom acrylic plaque and sign holder. Screen-printed with brand logo, text, or artwork. For retail counters and office signage.','Clear + color acrylic','Custom size','Screen print','200 pcs')">
+          <div class="product-img"><img src="images/X_007_(640x427).jpg" alt="Plaque sign"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Acrylic Plaque & Sign</h4><div class="product-specs"><div class="product-spec"><span>Print</span><strong>Screen print</strong></div><div class="product-spec"><span>Size</span><strong>Custom</strong></div></div><span class="product-moq">MOQ: 200 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_054_(640x427).jpg','Branded Gift Box Set','Gift & Sign','Custom-printed acrylic gift box set. UV-coated surface with magnetic closure. Popular for corporate gifting and premium packaging.','Clear acrylic','Magnetic close','UV-coated','200 pcs')">
+          <div class="product-img"><img src="images/X_054_(640x427).jpg" alt="Gift box set"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Branded Gift Box Set</h4><div class="product-specs"><div class="product-spec"><span>Closure</span><strong>Magnetic</strong></div><div class="product-spec"><span>Surface</span><strong>UV-coated</strong></div></div><span class="product-moq">MOQ: 200 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_056.jpg','Letter Block Sign','Gift & Sign','3D acrylic letter block sign with backlit-ready hollow construction. Custom text and color. For retail, events, and office branding.','Colored acrylic','3D letter','Backlit-ready','200 pcs')">
+          <div class="product-img"><img src="images/X_056.jpg" alt="Letter block sign"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Letter Block Sign</h4><div class="product-specs"><div class="product-spec"><span>Style</span><strong>3D letter</strong></div><div class="product-spec"><span>Feature</span><strong>Backlit-ready</strong></div></div><span class="product-moq">MOQ: 200 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_060.jpg','Keepsake Photo Frame','Gift & Sign','Acrylic keepsake photo frame with custom engraved text. Clear base with frosted panel. Popular for weddings, graduations, and milestone gifts.','Clear + frosted acrylic','Photo frame','Laser engraved','100 pcs')">
+          <div class="product-img"><img src="images/X_060.jpg" alt="Photo frame"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Keepsake Photo Frame</h4><div class="product-specs"><div class="product-spec"><span>Style</span><strong>Frosted panel</strong></div><div class="product-spec"><span>Engraving</span><strong>Laser engraved</strong></div></div><span class="product-moq">MOQ: 100 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_061.jpg','Desk Name Plate','Gift & Sign','Acrylic desk name plate with double-layer construction. Black base with clear top panel. Screen or UV print. For offices and reception desks.','Clear + black acrylic','Desk plate','UV print','100 pcs')">
+          <div class="product-img"><img src="images/X_061.jpg" alt="Desk name plate"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Desk Name Plate</h4><div class="product-specs"><div class="product-spec"><span>Base</span><strong>Black acrylic</strong></div><div class="product-spec"><span>Print</span><strong>UV print</strong></div></div><span class="product-moq">MOQ: 100 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_062.jpg','Menu & Price Tag Holder','Gift & Sign','Clear acrylic menu and price tag holder. Single or double-sided insert. A4, A5, or custom size. Ideal for restaurants and retail.','Clear acrylic','A4/A5','Double-sided','200 pcs')">
+          <div class="product-img"><img src="images/X_062.jpg" alt="Menu holder"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Menu & Price Tag Holder</h4><div class="product-specs"><div class="product-spec"><span>Size</span><strong>A4 / A5 / custom</strong></div><div class="product-spec"><span>Style</span><strong>Double-sided</strong></div></div><span class="product-moq">MOQ: 200 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_063.jpg','Brochure Literature Holder','Gift & Sign','Wall-mount or counter-top acrylic brochure and literature holder. A4 portrait. Clear construction. For offices, hotels, and retail lobbies.','Clear acrylic','A4 portrait','Wall-mount','200 pcs')">
+          <div class="product-img"><img src="images/X_063.jpg" alt="Brochure holder"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Brochure Literature Holder</h4><div class="product-specs"><div class="product-spec"><span>Size</span><strong>A4 portrait</strong></div><div class="product-spec"><span>Mount</span><strong>Wall / counter</strong></div></div><span class="product-moq">MOQ: 200 pcs</span></div>
+        </article>
+
+        <article class="product" data-cat="gift" onclick="openLightbox('images/X_064_(640x427).jpg','Table Tent Card Holder','Gift & Sign','Double-sided acrylic table tent card holder. A5 or custom insert size. Clear, black, or frosted finish. For restaurants, hotels, and events.','Clear acrylic','Table tent','A5 insert','200 pcs')">
+          <div class="product-img"><img src="images/X_064_(640x427).jpg" alt="Table tent holder"><div class="product-overlay"><span>Quick View</span></div></div>
+          <div class="product-info"><div class="product-cat-tag">Gift & Sign</div><h4>Table Tent Card Holder</h4><div class="product-specs"><div class="product-spec"><span>Size</span><strong>A5 / custom</strong></div><div class="product-spec"><span>Style</span><strong>Double-sided</strong></div></div><span class="product-moq">MOQ: 200 pcs</span></div>
         </article>
 
       </div>
@@ -747,7 +761,11 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
   <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
     <div class="lightbox-inner">
       <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-      <div class="lightbox-img"><img id="lb-img" src="" alt=""></div>
+      <div class="lightbox-img" id="lb-img-wrap">
+        <img id="lb-img" src="" alt="">
+        <div class="zoom-lens" id="zoom-lens"></div>
+        <div class="zoom-preview" id="zoom-preview"></div>
+      </div>
       <div class="lightbox-body">
         <div class="lightbox-cat" id="lb-cat"></div>
         <h3 class="lightbox-title" id="lb-title"></h3>
@@ -991,9 +1009,58 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
 </footer>
 
 <script>
-// ── LIGHTBOX ──
+// ── LIGHTBOX + ZOOM ──
+const ZOOM      = 2.5;
+const LENS_SIZE = 100;
+
+const lbImgWrap = document.getElementById('lb-img-wrap');
+const lbImg     = document.getElementById('lb-img');
+const zoomLens  = document.getElementById('zoom-lens');
+const zoomPrev  = document.getElementById('zoom-preview');
+
+zoomLens.style.width  = LENS_SIZE + 'px';
+zoomLens.style.height = LENS_SIZE + 'px';
+
+lbImgWrap.addEventListener('mouseenter', () => {
+  zoomLens.classList.add('active');
+  zoomPrev.classList.add('active');
+});
+lbImgWrap.addEventListener('mouseleave', () => {
+  zoomLens.classList.remove('active');
+  zoomPrev.classList.remove('active');
+});
+lbImgWrap.addEventListener('mousemove', (e) => {
+  const rect   = lbImgWrap.getBoundingClientRect();
+  const wrapW  = rect.width;
+  const wrapH  = rect.height;
+  const natW   = lbImg.naturalWidth  || wrapW;
+  const natH   = lbImg.naturalHeight || wrapH;
+  const halfL  = LENS_SIZE / 2;
+
+  let x = Math.max(halfL, Math.min(e.clientX - rect.left, wrapW - halfL));
+  let y = Math.max(halfL, Math.min(e.clientY - rect.top,  wrapH - halfL));
+
+  zoomLens.style.left = (x - halfL) + 'px';
+  zoomLens.style.top  = (y - halfL) + 'px';
+
+  // object-fit: cover offset
+  const scale     = Math.max(wrapW / natW, wrapH / natH);
+  const rendW     = natW * scale;
+  const rendH     = natH * scale;
+  const offX      = (wrapW - rendW) / 2;
+  const offY      = (wrapH - rendH) / 2;
+  const fracX     = (x - offX) / rendW;
+  const fracY     = (y - offY) / rendH;
+  const bgW       = rendW * ZOOM;
+  const bgH       = rendH * ZOOM;
+
+  zoomPrev.style.backgroundSize     = `${bgW}px ${bgH}px`;
+  zoomPrev.style.backgroundPosition = `-${fracX * bgW - wrapW / 2}px -${fracY * bgH - wrapH / 2}px`;
+});
+
 function openLightbox(img, title, cat, desc, material, size, feature, moq) {
-  document.getElementById('lb-img').src = img;
+  lbImg.src = img;
+  zoomPrev.style.backgroundImage = `url('${img}')`;
   document.getElementById('lb-title').textContent = title;
   document.getElementById('lb-cat').textContent = cat;
   document.getElementById('lb-desc').textContent = desc;
@@ -1007,6 +1074,8 @@ function openLightbox(img, title, cat, desc, material, size, feature, moq) {
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
+  zoomLens.classList.remove('active');
+  zoomPrev.classList.remove('active');
 }
 function closeLightboxOnBg(e) {
   if (e.target === document.getElementById('lightbox')) closeLightbox();
