@@ -12,16 +12,10 @@
 
 <style>
 :root {
-  --ink: #0F0E0C;
-  --ink-soft: #2A2825;
-  --ink-mute: #6B6862;
-  --paper: #F4EFE6;
-  --paper-warm: #EBE4D6;
-  --paper-pure: #FAF7F0;
-  --cinnabar: #B83A26;
-  --jade: #4A6B5C;
-  --line: rgba(15, 14, 12, 0.12);
-  --line-strong: rgba(15, 14, 12, 0.25);
+  --ink: #0F0E0C; --ink-soft: #2A2825; --ink-mute: #6B6862;
+  --paper: #F4EFE6; --paper-warm: #EBE4D6; --paper-pure: #FAF7F0;
+  --cinnabar: #B83A26; --cinnabar-deep: #8B2A1B; --jade: #4A6B5C;
+  --line: rgba(15,14,12,0.12); --line-strong: rgba(15,14,12,0.25);
   --font-display: 'Fraunces', Georgia, serif;
   --font-editorial: 'Instrument Serif', Georgia, serif;
   --font-body: 'Inter Tight', -apple-system, sans-serif;
@@ -38,11 +32,10 @@ body::before {
 }
 main, header, footer { position: relative; z-index: 2; }
 a { color: inherit; text-decoration: none; }
-
 .container { max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter); }
 
 /* NAV */
-.nav { border-bottom: 1px solid var(--line); background: rgba(244, 239, 230, 0.92); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 100; }
+.nav { border-bottom: 1px solid var(--line); background: rgba(244,239,230,0.92); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 100; }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 0; }
 .logo { display: flex; align-items: baseline; gap: 0.6rem; font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; letter-spacing: -0.02em; }
 .logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--ink); color: var(--paper); font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; position: relative; top: 6px; }
@@ -91,15 +84,27 @@ a { color: inherit; text-decoration: none; }
 .factory-card { position: relative; overflow: hidden; background: var(--ink); aspect-ratio: 3/4; display: flex; flex-direction: column; justify-content: flex-end; transition: all 0.3s; }
 .factory-card:hover .factory-card-overlay { opacity: 1; }
 .factory-card:hover .factory-card-arrow { transform: translateX(4px); }
-
 .factory-card-bg { position: absolute; inset: 0; }
 .factory-card-bg svg { width: 100%; height: 100%; }
-
 .factory-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,14,12,0.92) 0%, rgba(15,14,12,0.4) 50%, rgba(15,14,12,0.1) 100%); transition: opacity 0.3s; }
-
 .factory-card-content { position: relative; z-index: 2; padding: 2rem 1.8rem; }
-.factory-card-badges { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; }
-.badge-verified { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.3rem 0.6rem; background: var(--jade); color: var(--paper); display: flex; align-items: center; gap: 0.3rem; }
+.factory-card-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; align-items: center; }
+
+/* Verified badge — jade 绿改为 cinnabar 红 */
+.badge-verified {
+  font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.3rem 0.6rem; background: var(--cinnabar); color: var(--paper);
+  display: flex; align-items: center; gap: 0.3rem;
+}
+
+/* NEW badge — 默认隐藏，JS 控制 .show 类 */
+.badge-new {
+  font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.3rem 0.6rem; border: 1px solid rgba(244,239,230,0.55); color: rgba(244,239,230,0.9);
+  display: none; align-items: center; gap: 0.3rem;
+}
+.badge-new.show { display: flex; }
+
 .badge-id { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.3rem 0.6rem; border: 1px solid rgba(244,239,230,0.3); color: rgba(244,239,230,0.6); }
 .factory-card-name { font-family: var(--font-display); font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 300; line-height: 1; letter-spacing: -0.02em; color: var(--paper); margin-bottom: 0.5rem; font-variation-settings: "opsz" 144; }
 .factory-card-name em { font-family: var(--font-editorial); font-style: italic; color: var(--cinnabar); }
@@ -111,8 +116,8 @@ a { color: inherit; text-decoration: none; }
 .factory-card-meta strong { display: block; color: var(--paper); font-weight: 500; }
 .factory-card-arrow { color: var(--cinnabar); font-size: 1.2rem; transition: transform 0.3s; }
 
-/* COMING SOON CARD */
-.factory-card.coming-soon { background: var(--paper-warm); border: 2px dashed var(--line-strong); aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; }
+/* COMING SOON */
+.factory-card.coming-soon { background: var(--paper-warm); border: 2px dashed var(--line-strong); display: flex; align-items: center; justify-content: center; }
 .coming-soon-inner { text-align: center; padding: 2rem; }
 .coming-soon-inner .icon { width: 48px; height: 48px; border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; color: var(--ink-mute); }
 .coming-soon-inner h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 0.5rem; font-variation-settings: "opsz" 72; }
@@ -136,7 +141,7 @@ a { color: inherit; text-decoration: none; }
 
 /* FOOTER */
 footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; border-top: 1px solid rgba(244,239,230,0.08); }
-.footer-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; color: rgba(244, 239, 230, 0.5); line-height: 1.7; }
+.footer-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; color: rgba(244,239,230,0.5); line-height: 1.7; }
 .footer-bottom strong { display: block; color: var(--paper); margin-bottom: 0.5rem; text-transform: uppercase; }
 .footer-bank { text-align: right; }
 
@@ -159,10 +164,7 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href="/" class="logo">
-      <span class="logo-mark">CMH</span>
-      ChinaMakersHub
-    </a>
+    <a href="/" class="logo"><span class="logo-mark">CMH</span>ChinaMakersHub</a>
     <nav>
       <ul class="nav-links">
         <li><a href="/categories/">Categories</a></li>
@@ -172,20 +174,13 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
         <li><a href="/#about">About</a></li>
       </ul>
     </nav>
-    <a href="/inquiry/" class="btn-primary">
-      Request a Quote
-      <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
-    </a>
+    <a href="/inquiry/" class="btn-primary">Request a Quote <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a>
   </div>
 </header>
 
 <main>
   <div class="container">
-    <nav class="breadcrumb">
-      <a href="/">Home</a>
-      <span class="sep">/</span>
-      <span class="current">Factories</span>
-    </nav>
+    <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span class="current">Factories</span></nav>
   </div>
 
   <!-- PAGE HEADER -->
@@ -194,23 +189,14 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
       <div class="page-header">
         <div class="page-header-grid">
           <div>
-            <div class="page-eyebrow">/ Verified Workshops</div>
+            <div class="page-eyebrow">/ Verified Workshops &amp; Suppliers</div>
             <h1 class="page-title">Every factory<br>audited <em>in person.</em></h1>
             <p class="page-desc">No directory listings. No self-reported data. Every manufacturer on this page has been visited by our Foshan team, walked floor-to-floor, and approved before going live.</p>
           </div>
           <div class="page-stats">
-            <div class="stat-item">
-              <div class="stat-num">2</div>
-              <div class="stat-label">Verified workshops</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num">2</div>
-              <div class="stat-label">Categories covered</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num">48h</div>
-              <div class="stat-label">Avg. inquiry response</div>
-            </div>
+            <div class="stat-item"><div class="stat-num">16</div><div class="stat-label">Workshops &amp; suppliers</div></div>
+            <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Categories covered</div></div>
+            <div class="stat-item"><div class="stat-num">48h</div><div class="stat-label">Avg. inquiry response</div></div>
           </div>
         </div>
       </div>
@@ -224,11 +210,15 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
         <div class="filter-inner">
           <div class="filter-group">
             <span class="filter-label">Category:</span>
-            <button class="filter-chip active">All</button>
-            <button class="filter-chip">Furniture</button>
-            <button class="filter-chip">Acrylic & Display</button>
+            <button class="filter-chip active" data-cat="all">All</button>
+            <button class="filter-chip" data-cat="furniture">Furniture</button>
+            <button class="filter-chip" data-cat="hardware">Hardware</button>
+            <button class="filter-chip" data-cat="lighting">Lighting</button>
+            <button class="filter-chip" data-cat="display">Display &amp; Acrylic</button>
+            <button class="filter-chip" data-cat="electronics">Electronics</button>
+            <button class="filter-chip" data-cat="other">Packaging &amp; Bath</button>
           </div>
-          <div class="results-count">Showing <strong>2</strong> of <strong>2</strong> verified workshops</div>
+          <div class="results-count">Showing <strong id="js-count">16</strong> of <strong>16</strong> listings</div>
         </div>
       </div>
     </div>
@@ -237,68 +227,19 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
   <!-- FACTORY GRID -->
   <section class="factories-section">
     <div class="container">
-      <div class="factory-grid">
+      <div class="factory-grid" id="js-grid">
 
-        <!-- Gaosi Furniture -->
-        <a href="/factories/gaosi-furniture/" class="factory-card">
-          <div class="factory-card-bg">
-            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
-              <rect width="400" height="530" fill="#0F0E0C"/>
-              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.25">
-                <rect x="60" y="180" width="280" height="160"/>
-                <line x1="60" y1="260" x2="340" y2="260"/>
-                <line x1="60" y1="340" x2="340" y2="340"/>
-                <line x1="130" y1="180" x2="130" y2="340"/>
-                <line x1="200" y1="180" x2="200" y2="340"/>
-                <line x1="270" y1="180" x2="270" y2="340"/>
-                <line x1="80" y1="340" x2="80" y2="420"/>
-                <line x1="320" y1="340" x2="320" y2="420"/>
-              </g>
-              <text x="200" y="140" font-family="Instrument Serif, serif" font-size="36" font-style="italic" text-anchor="middle" fill="#B83A26">solid wood</text>
-            </svg>
-          </div>
-          <div class="factory-card-overlay"></div>
-          <div class="factory-card-content">
-            <div class="factory-card-badges">
-              <span class="badge-verified">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
-                Verified
-              </span>
-              <span class="badge-id">F-001</span>
-            </div>
-            <h2 class="factory-card-name">Gaosi<br><em>Furniture</em></h2>
-            <div class="factory-card-location">Foshan, Guangdong</div>
-            <div class="factory-card-tags">
-              <span class="factory-card-tag">Solid Wood</span>
-              <span class="factory-card-tag">OEM</span>
-              <span class="factory-card-tag">FSC Certified</span>
-              <span class="factory-card-tag">Scandinavian</span>
-            </div>
-            <div class="factory-card-footer">
-              <div class="factory-card-meta">
-                <strong>12,000 m² · 180 staff</strong>
-                MOQ 500 units · 35–45 day lead
-              </div>
-              <span class="factory-card-arrow">→</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Yixinheng Acrylic -->
-        <a href="/factories/yixinheng-acrylic/" class="factory-card">
+        <!-- ① Yixinheng Acrylic ── REAL · Verified · NEW -->
+        <a href="/factories/yixinheng-acrylic/" class="factory-card" data-cat="display" data-added="2026-04-01">
           <div class="factory-card-bg">
             <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
               <rect width="400" height="530" fill="#1A1008"/>
               <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.25">
                 <rect x="80" y="140" width="120" height="220"/>
-                <line x1="80" y1="213" x2="200" y2="213"/>
-                <line x1="80" y1="286" x2="200" y2="286"/>
-                <rect x="95" y="153" width="90" height="48"/>
-                <rect x="95" y="226" width="90" height="48"/>
-                <rect x="95" y="299" width="90" height="48"/>
+                <line x1="80" y1="213" x2="200" y2="213"/><line x1="80" y1="286" x2="200" y2="286"/>
+                <rect x="95" y="153" width="90" height="48"/><rect x="95" y="226" width="90" height="48"/><rect x="95" y="299" width="90" height="48"/>
                 <rect x="220" y="170" width="100" height="160"/>
-                <line x1="220" y1="250" x2="320" y2="250"/>
-                <line x1="270" y1="170" x2="270" y2="330"/>
+                <line x1="220" y1="250" x2="320" y2="250"/><line x1="270" y1="170" x2="270" y2="330"/>
               </g>
               <text x="200" y="110" font-family="Instrument Serif, serif" font-size="34" font-style="italic" text-anchor="middle" fill="#B83A26">acrylic display</text>
             </svg>
@@ -306,25 +247,554 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
           <div class="factory-card-overlay"></div>
           <div class="factory-card-content">
             <div class="factory-card-badges">
-              <span class="badge-verified">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
-                Verified
-              </span>
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
               <span class="badge-id">CMH-F-3WQSUB</span>
             </div>
             <h2 class="factory-card-name">Yixinheng<br><em>Acrylic</em></h2>
             <div class="factory-card-location">Shenzhen, Guangdong</div>
             <div class="factory-card-tags">
-              <span class="factory-card-tag">Acrylic Display</span>
-              <span class="factory-card-tag">OEM / ODM</span>
-              <span class="factory-card-tag">Cosmetic</span>
-              <span class="factory-card-tag">3C · Vape</span>
+              <span class="factory-card-tag">Acrylic Display</span><span class="factory-card-tag">OEM / ODM</span>
+              <span class="factory-card-tag">Cosmetic</span><span class="factory-card-tag">3C · Vape</span>
             </div>
             <div class="factory-card-footer">
-              <div class="factory-card-meta">
-                <strong>12,000 m² · 20–50 staff</strong>
-                MOQ 500 pcs · 35 day lead
-              </div>
+              <div class="factory-card-meta"><strong>12,000 m² · 20–50 staff</strong>MOQ 500 pcs · 35 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ② Huihexin Technology ── REAL · Verified · NEW -->
+        <a href="/factories/huihexin-technology/" class="factory-card" data-cat="electronics" data-added="2026-04-17">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#080C18"/>
+              <g stroke="#4A9EFF" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="110" y="185" width="180" height="170"/>
+                <rect x="130" y="205" width="50" height="50"/><rect x="220" y="205" width="50" height="50"/>
+                <rect x="130" y="280" width="50" height="50"/><rect x="220" y="280" width="50" height="50"/>
+                <line x1="110" y1="270" x2="290" y2="270"/><line x1="200" y1="185" x2="200" y2="355"/>
+                <line x1="155" y1="185" x2="155" y2="120"/><line x1="245" y1="185" x2="245" y2="120"/>
+                <line x1="155" y1="355" x2="155" y2="420"/><line x1="245" y1="355" x2="245" y2="420"/>
+              </g>
+              <text x="200" y="120" font-family="Instrument Serif, serif" font-size="28" font-style="italic" text-anchor="middle" fill="#B83A26">components</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-S-HHX016</span>
+            </div>
+            <h2 class="factory-card-name">Huihexin<br><em>Technology</em></h2>
+            <div class="factory-card-location">Shenzhen, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">MCU · Power IC</span><span class="factory-card-tag">Sensors</span>
+              <span class="factory-card-tag">Authorized Dist.</span><span class="factory-card-tag">FAE Support</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>Bao'an · 20 staff</strong>No min. samples · 3–5 day dispatch</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ③ Gaosi Furniture ── virtual · Verified -->
+        <a href="/factories/gaosi-furniture/" class="factory-card" data-cat="furniture" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#0F0E0C"/>
+              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.25">
+                <rect x="60" y="180" width="280" height="160"/>
+                <line x1="60" y1="260" x2="340" y2="260"/><line x1="60" y1="340" x2="340" y2="340"/>
+                <line x1="130" y1="180" x2="130" y2="340"/><line x1="200" y1="180" x2="200" y2="340"/><line x1="270" y1="180" x2="270" y2="340"/>
+                <line x1="80" y1="340" x2="80" y2="420"/><line x1="320" y1="340" x2="320" y2="420"/>
+              </g>
+              <text x="200" y="140" font-family="Instrument Serif, serif" font-size="36" font-style="italic" text-anchor="middle" fill="#B83A26">solid wood</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-GSF001</span>
+            </div>
+            <h2 class="factory-card-name">Gaosi<br><em>Furniture</em></h2>
+            <div class="factory-card-location">Foshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Solid Wood</span><span class="factory-card-tag">OEM</span>
+              <span class="factory-card-tag">FSC Certified</span><span class="factory-card-tag">Scandinavian</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>12,000 m² · 180 staff</strong>MOQ 500 units · 35–45 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ④ Mingde Office Furniture ── virtual · Verified -->
+        <a href="/factories/mingde-office-furniture/" class="factory-card" data-cat="furniture" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#0A0F1A"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="60" y="170" width="280" height="200"/>
+                <rect x="80" y="190" width="80" height="60"/><rect x="200" y="190" width="80" height="60"/>
+                <rect x="80" y="275" width="80" height="60"/><rect x="200" y="275" width="80" height="60"/>
+                <line x1="60" y1="265" x2="340" y2="265"/><line x1="180" y1="170" x2="180" y2="370"/>
+                <line x1="100" y1="370" x2="100" y2="430"/><line x1="300" y1="370" x2="300" y2="430"/>
+              </g>
+              <text x="200" y="130" font-family="Instrument Serif, serif" font-size="28" font-style="italic" text-anchor="middle" fill="#B83A26">office systems</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-MDF002</span>
+            </div>
+            <h2 class="factory-card-name">Mingde<br><em>Office</em></h2>
+            <div class="factory-card-location">Foshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Office Furniture</span><span class="factory-card-tag">BIFMA</span>
+              <span class="factory-card-tag">Sit-Stand</span><span class="factory-card-tag">OEM</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>22,000 m² · 310 staff</strong>MOQ 100 units · 35–42 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑤ Tianlong Outdoor ── virtual · no Verified -->
+        <a href="/factories/tianlong-outdoor/" class="factory-card" data-cat="furniture" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#0A1508"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <path d="M80 360 Q200 190 320 360"/><path d="M100 395 Q200 235 300 395"/>
+                <line x1="200" y1="190" x2="200" y2="445"/>
+                <line x1="80" y1="360" x2="320" y2="360"/>
+              </g>
+              <text x="200" y="150" font-family="Instrument Serif, serif" font-size="30" font-style="italic" text-anchor="middle" fill="#B83A26">outdoor living</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-TLO003</span>
+            </div>
+            <h2 class="factory-card-name">Tianlong<br><em>Outdoor</em></h2>
+            <div class="factory-card-location">Zhongshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Outdoor Furniture</span><span class="factory-card-tag">Teak · Aluminium</span>
+              <span class="factory-card-tag">Rope Weave</span><span class="factory-card-tag">Contract</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>14,000 m² · 185 staff</strong>MOQ 100 units · 35–45 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑥ Ruijin Metal Furniture ── virtual · Verified -->
+        <a href="/factories/ruijin-metal-furniture/" class="factory-card" data-cat="furniture" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#101010"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="90" y="170" width="220" height="245"/>
+                <line x1="90" y1="258" x2="310" y2="258"/><line x1="90" y1="328" x2="310" y2="328"/>
+                <line x1="200" y1="170" x2="200" y2="415"/>
+              </g>
+              <text x="200" y="130" font-family="Instrument Serif, serif" font-size="28" font-style="italic" text-anchor="middle" fill="#B83A26">metal furniture</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-RJM004</span>
+            </div>
+            <h2 class="factory-card-name">Ruijin<br><em>Metal</em></h2>
+            <div class="factory-card-location">Guangzhou, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Metal Furniture</span><span class="factory-card-tag">Powder Coat</span>
+              <span class="factory-card-tag">Retail Fixtures</span><span class="factory-card-tag">Cast Iron</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>18,000 m² · 260 staff</strong>MOQ 200 units · 28–38 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑦ Chengtai Upholstery ── virtual · no Verified -->
+        <a href="/factories/chengtai-upholstery/" class="factory-card" data-cat="furniture" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#120C08"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <path d="M60 335 Q60 252 130 252 L270 252 Q340 252 340 335 L340 392 L60 392 Z"/>
+                <line x1="80" y1="392" x2="80" y2="445"/><line x1="320" y1="392" x2="320" y2="445"/>
+                <line x1="60" y1="318" x2="340" y2="318"/>
+              </g>
+              <text x="200" y="195" font-family="Instrument Serif, serif" font-size="28" font-style="italic" text-anchor="middle" fill="#B83A26">upholstery</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-CTU005</span>
+            </div>
+            <h2 class="factory-card-name">Chengtai<br><em>Upholstery</em></h2>
+            <div class="factory-card-location">Foshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Soft Furnishings</span><span class="factory-card-tag">Hospitality</span>
+              <span class="factory-card-tag">FR Fabric</span><span class="factory-card-tag">COM</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>16,000 m² · 230 staff</strong>MOQ 200 units · 40–55 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑧ Dahua Door Hardware ── virtual · Verified -->
+        <a href="/factories/dahua-door-hardware/" class="factory-card" data-cat="hardware" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#101820"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="110" y="160" width="180" height="272"/>
+                <circle cx="278" cy="296" r="18"/>
+                <line x1="110" y1="226" x2="290" y2="226"/>
+              </g>
+              <text x="200" y="120" font-family="Instrument Serif, serif" font-size="26" font-style="italic" text-anchor="middle" fill="#B83A26">door hardware</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-DHD006</span>
+            </div>
+            <h2 class="factory-card-name">Dahua<br><em>Hardware</em></h2>
+            <div class="factory-card-location">Foshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Door Hardware</span><span class="factory-card-tag">ANSI · EN · AS</span>
+              <span class="factory-card-tag">PVD Finish</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>16,000 m² · 220 staff</strong>MOQ 1,000 pcs · 25–35 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑨ Xinglong Fasteners ── virtual · Verified -->
+        <a href="/factories/xinglong-fasteners/" class="factory-card" data-cat="hardware" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#181818"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <circle cx="200" cy="265" r="92"/><circle cx="200" cy="265" r="56"/><circle cx="200" cy="265" r="18"/>
+                <line x1="200" y1="173" x2="200" y2="108"/><line x1="200" y1="357" x2="200" y2="422"/>
+                <line x1="108" y1="265" x2="48" y2="265"/><line x1="292" y1="265" x2="352" y2="265"/>
+              </g>
+              <text x="200" y="128" font-family="JetBrains Mono, monospace" font-size="17" text-anchor="middle" fill="#B83A26">fasteners</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-XLF007</span>
+            </div>
+            <h2 class="factory-card-name">Xinglong<br><em>Fasteners</em></h2>
+            <div class="factory-card-location">Dongguan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Industrial Fasteners</span><span class="factory-card-tag">IATF 16949</span>
+              <span class="factory-card-tag">Automotive</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>28,000 m² · 420 staff</strong>MOQ 5,000 pcs · 15–35 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑩ Boshi Lock ── virtual · no Verified -->
+        <a href="/factories/boshi-lock/" class="factory-card" data-cat="hardware" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#0A0A14"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="145" y="256" width="110" height="156"/>
+                <path d="M165 256 Q165 175 200 175 Q235 175 235 256"/>
+                <circle cx="200" cy="325" r="14"/><line x1="200" y1="339" x2="200" y2="372"/>
+              </g>
+              <text x="200" y="140" font-family="Instrument Serif, serif" font-size="26" font-style="italic" text-anchor="middle" fill="#B83A26">security locks</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-BSL008</span>
+            </div>
+            <h2 class="factory-card-name">Boshi<br><em>Lock</em></h2>
+            <div class="factory-card-location">Zhongshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Security Locks</span><span class="factory-card-tag">ANSI · UL</span>
+              <span class="factory-card-tag">Smart Locks</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>12,000 m² · 180 staff</strong>MOQ 500 pcs · 25–35 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑪ Weichuang Sheet Metal ── virtual · Verified -->
+        <a href="/factories/weichuang-sheet-metal/" class="factory-card" data-cat="hardware" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#0F0808"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="78" y="192" width="244" height="180"/>
+                <line x1="78" y1="272" x2="322" y2="272"/><line x1="200" y1="192" x2="200" y2="372"/>
+                <polyline points="78,192 56,165 344,165 322,192"/>
+              </g>
+              <text x="200" y="138" font-family="JetBrains Mono, monospace" font-size="16" text-anchor="middle" fill="#B83A26">sheet metal</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-WCS009</span>
+            </div>
+            <h2 class="factory-card-name">Weichuang<br><em>Sheet Metal</em></h2>
+            <div class="factory-card-location">Shenzhen, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Sheet Metal</span><span class="factory-card-tag">Laser Cut</span>
+              <span class="factory-card-tag">CNC Punching</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>15,000 m² · 200 staff</strong>MOQ 200 pcs · 20–30 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑫ Haoguang LED ── virtual · Verified -->
+        <a href="/factories/haoguang-led/" class="factory-card" data-cat="lighting" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#080808"/>
+              <g stroke="#FFD060" stroke-width="0.4" fill="none" opacity="0.2">
+                <circle cx="200" cy="246" r="92"/><circle cx="200" cy="246" r="56"/><circle cx="200" cy="246" r="22"/>
+                <line x1="200" y1="154" x2="200" y2="100"/>
+                <line x1="200" y1="338" x2="200" y2="440"/>
+                <line x1="108" y1="246" x2="54" y2="246"/><line x1="292" y1="246" x2="346" y2="246"/>
+              </g>
+              <text x="200" y="122" font-family="JetBrains Mono, monospace" font-size="17" text-anchor="middle" fill="#B83A26">commercial LED</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-HGL010</span>
+            </div>
+            <h2 class="factory-card-name">Haoguang<br><em>LED</em></h2>
+            <div class="factory-card-location">Zhongshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Commercial LED</span><span class="factory-card-tag">UL · DLC · CE</span>
+              <span class="factory-card-tag">High-Bay</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>20,000 m² · 260 staff</strong>MOQ 200 pcs · 28–35 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑬ Junhui Outdoor Lighting ── virtual · no Verified -->
+        <a href="/factories/junhui-outdoor-lighting/" class="factory-card" data-cat="lighting" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#060810"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <line x1="200" y1="128" x2="200" y2="395"/>
+                <path d="M158 228 Q200 188 242 228"/>
+                <circle cx="200" cy="406" r="33"/>
+                <line x1="158" y1="406" x2="72" y2="406"/><line x1="242" y1="406" x2="328" y2="406"/>
+              </g>
+              <text x="200" y="118" font-family="Instrument Serif, serif" font-size="26" font-style="italic" text-anchor="middle" fill="#B83A26">outdoor light</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-JHL011</span>
+            </div>
+            <h2 class="factory-card-name">Junhui<br><em>Outdoor</em></h2>
+            <div class="factory-card-location">Guangzhou, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Outdoor Lighting</span><span class="factory-card-tag">IP66 · IK10</span>
+              <span class="factory-card-tag">Solar · Street</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>18,000 m² · 230 staff</strong>MOQ 100 pcs · 30–40 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑭ Yimei Decorative Lighting ── virtual · Verified -->
+        <a href="/factories/yimei-decorative-lighting/" class="factory-card" data-cat="lighting" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#100808"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <path d="M200 162 Q266 207 266 282 Q266 357 200 382 Q134 357 134 282 Q134 207 200 162"/>
+                <line x1="200" y1="116" x2="200" y2="162"/>
+                <line x1="168" y1="382" x2="168" y2="442"/><line x1="232" y1="382" x2="232" y2="442"/>
+              </g>
+              <text x="200" y="118" font-family="Instrument Serif, serif" font-size="24" font-style="italic" text-anchor="middle" fill="#B83A26">decorative light</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-YML012</span>
+            </div>
+            <h2 class="factory-card-name">Yimei<br><em>Decorative</em></h2>
+            <div class="factory-card-location">Zhongshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Decorative Lighting</span><span class="factory-card-tag">UL · CE · SAA</span>
+              <span class="factory-card-tag">Custom Glass</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>14,000 m² · 200 staff</strong>MOQ 50 pcs · 30–40 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑮ Longda Packaging ── virtual · no Verified -->
+        <a href="/factories/longda-packaging/" class="factory-card" data-cat="other" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#0A0808"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="94" y="198" width="212" height="204"/>
+                <polyline points="94,198 200,135 306,198"/>
+                <line x1="200" y1="135" x2="200" y2="198"/>
+                <line x1="94" y1="272" x2="306" y2="272"/>
+              </g>
+              <text x="200" y="120" font-family="Instrument Serif, serif" font-size="26" font-style="italic" text-anchor="middle" fill="#B83A26">packaging</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-LDP013</span>
+            </div>
+            <h2 class="factory-card-name">Longda<br><em>Packaging</em></h2>
+            <div class="factory-card-location">Dongguan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Corrugated Box</span><span class="factory-card-tag">Rigid Box</span>
+              <span class="factory-card-tag">Custom Print</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>18,000 m² · 180 staff</strong>MOQ 1,000 pcs · 15–25 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ⑯ Kaiwei Sanitary ── virtual · Verified -->
+        <a href="/factories/kaiwei-sanitary/" class="factory-card" data-cat="other" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#080C0C"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <ellipse cx="200" cy="296" rx="126" ry="86"/>
+                <rect x="162" y="200" width="76" height="96"/>
+                <line x1="200" y1="154" x2="200" y2="200"/>
+                <path d="M140 382 Q140 442 200 442 Q260 442 260 382"/>
+              </g>
+              <text x="200" y="144" font-family="Instrument Serif, serif" font-size="24" font-style="italic" text-anchor="middle" fill="#B83A26">sanitary ware</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-KWS014</span>
+            </div>
+            <h2 class="factory-card-name">Kaiwei<br><em>Sanitary</em></h2>
+            <div class="factory-card-location">Foshan, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">Bath · Sanitary</span><span class="factory-card-tag">CUPC · CE</span>
+              <span class="factory-card-tag">OEM</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>20,000 m² · 240 staff</strong>MOQ 200 pcs · 30–40 day lead</div>
+              <span class="factory-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Xinte Electronics ── virtual · Verified -->
+        <a href="/factories/xinte-electronics/" class="factory-card" data-cat="electronics" data-added="2025-10-01">
+          <div class="factory-card-bg">
+            <svg viewBox="0 0 400 530" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="530" fill="#080C18"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.18">
+                <rect x="120" y="205" width="160" height="132"/>
+                <rect x="140" y="225" width="40" height="40"/><rect x="220" y="225" width="40" height="40"/>
+                <rect x="140" y="286" width="40" height="28"/><rect x="220" y="286" width="40" height="28"/>
+                <line x1="78" y1="235" x2="120" y2="235"/><line x1="78" y1="276" x2="120" y2="276"/>
+                <line x1="280" y1="235" x2="322" y2="235"/><line x1="280" y1="276" x2="322" y2="276"/>
+                <line x1="160" y1="205" x2="160" y2="144"/><line x1="240" y1="205" x2="240" y2="144"/>
+              </g>
+              <text x="200" y="126" font-family="JetBrains Mono, monospace" font-size="16" text-anchor="middle" fill="#B83A26">PCBA</text>
+            </svg>
+          </div>
+          <div class="factory-card-overlay"></div>
+          <div class="factory-card-content">
+            <div class="factory-card-badges">
+              <span class="badge-verified"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Verified</span>
+              <span class="badge-new"><svg width="7" height="7" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>New</span>
+              <span class="badge-id">CMH-F-XTE015</span>
+            </div>
+            <h2 class="factory-card-name">Xinte<br><em>Electronics</em></h2>
+            <div class="factory-card-location">Shenzhen, Guangdong</div>
+            <div class="factory-card-tags">
+              <span class="factory-card-tag">PCB Assembly</span><span class="factory-card-tag">SMT · DIP</span>
+              <span class="factory-card-tag">IATF 16949</span>
+            </div>
+            <div class="factory-card-footer">
+              <div class="factory-card-meta"><strong>12,000 m² · 160 staff</strong>MOQ 100 pcs · 20–35 day lead</div>
               <span class="factory-card-arrow">→</span>
             </div>
           </div>
@@ -333,15 +803,10 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
         <!-- Coming Soon -->
         <div class="factory-card coming-soon">
           <div class="coming-soon-inner">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
-            </div>
+            <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg></div>
             <h3>More factories<br>coming soon</h3>
             <p>We audit 2–3 new workshops every month. Are you a manufacturer in the Greater Bay Area?</p>
-            <a href="/factory-apply/" class="btn-apply">
-              Apply to join
-              <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
-            </a>
+            <a href="/factory-apply/" class="btn-apply">Apply to join <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a>
           </div>
         </div>
 
@@ -355,10 +820,7 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
       <h2>Can't find what<br>you're <em>looking for?</em></h2>
       <p>Tell us your product category and sourcing requirements. Our Foshan team will identify the right workshop within 48 hours.</p>
       <div class="cta-buttons">
-        <a href="/inquiry/" class="btn-light">
-          Submit a sourcing request
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
-        </a>
+        <a href="/inquiry/" class="btn-light">Submit a sourcing request <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a>
         <a href="/factory-apply/" class="btn-ghost">Apply as a factory</a>
       </div>
     </div>
@@ -383,6 +845,43 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
     </div>
   </div>
 </footer>
+
+<script>
+// ── NEW 标签逻辑 ──────────────────────────────────────────────────────
+// 每张卡记 data-added="YYYY-MM-DD"（上线日期）。
+// 页面加载时计算距今天数，≤ 90 天则显示 NEW 标签，超过自动消失。
+// 无需手动维护，到期后刷新即失效。
+const NEW_TTL_DAYS = 90;
+const NOW = Date.now();
+
+document.querySelectorAll('.factory-card[data-added]').forEach(card => {
+  const age = (NOW - new Date(card.dataset.added).getTime()) / 86400000;
+  if (age <= NEW_TTL_DAYS) {
+    const badge = card.querySelector('.badge-new');
+    if (badge) badge.classList.add('show');
+  }
+});
+
+// ── 分类 filter ──────────────────────────────────────────────────────
+const chips = document.querySelectorAll('.filter-chip[data-cat]');
+const cards = document.querySelectorAll('#js-grid .factory-card[data-cat]');
+const countEl = document.getElementById('js-count');
+
+chips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    const cat = chip.dataset.cat;
+    let n = 0;
+    cards.forEach(card => {
+      const show = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = show ? '' : 'none';
+      if (show) n++;
+    });
+    countEl.textContent = n;
+  });
+});
+</script>
 
 </body>
 </html>
