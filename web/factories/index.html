@@ -145,6 +145,14 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
 .footer-bottom strong { display: block; color: var(--paper); margin-bottom: 0.5rem; text-transform: uppercase; }
 .footer-bank { text-align: right; }
 
+/* PAGINATION */
+.pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+.page-btn { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.55rem 1.2rem; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-mute); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+.page-btn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+.page-btn:disabled { opacity: 0.3; cursor: default; }
+.page-info { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); }
+.page-info strong { color: var(--ink); }
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .nav-links { display: none; }
@@ -849,6 +857,11 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
         </div>
 
       </div>
+      <div class="pagination" id="js-pagination">
+        <button class="page-btn" id="page-prev" onclick="changePage(-1)"><svg width="10" height="8" viewBox="0 0 12 10" fill="none"><path d="M11 5H1m0 0l4-4M1 5l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg> Prev</button>
+        <span class="page-info" id="page-info">Page <strong>1</strong> of <strong id="page-total">1</strong></span>
+        <button class="page-btn" id="page-next" onclick="changePage(1)">Next <svg width="10" height="8" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></button>
+      </div>
     </div>
   </section>
 
@@ -885,13 +898,11 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; bord
 </footer>
 
 <script>
-// ── NEW 标签逻辑 ──────────────────────────────────────────────────────
-// 每张卡记 data-added="YYYY-MM-DD"（上线日期）。
-// 页面加载时计算距今天数，≤ 90 天则显示 NEW 标签，超过自动消失。
-// 无需手动维护，到期后刷新即失效。
+const PAGE_SIZE = 9;
 const NEW_TTL_DAYS = 90;
 const NOW = Date.now();
 
+// ── NEW 标签逻辑 ──────────────────────────────────────────────────────
 document.querySelectorAll('.factory-card[data-added]').forEach(card => {
   const age = (NOW - new Date(card.dataset.added).getTime()) / 86400000;
   if (age <= NEW_TTL_DAYS) {
@@ -900,25 +911,74 @@ document.querySelectorAll('.factory-card[data-added]').forEach(card => {
   }
 });
 
-// ── 分类 filter ──────────────────────────────────────────────────────
+// ── 排序：NEW 工厂排在前面 ────────────────────────────────────────────
+const grid = document.getElementById('js-grid');
+const allCards = Array.from(grid.querySelectorAll('.factory-card[data-cat]'));
+const comingSoon = grid.querySelector('.factory-card.coming-soon');
+
+allCards.sort((a, b) => {
+  const aAge = (NOW - new Date(a.dataset.added).getTime()) / 86400000;
+  const bAge = (NOW - new Date(b.dataset.added).getTime()) / 86400000;
+  const aNew = aAge <= NEW_TTL_DAYS ? 1 : 0;
+  const bNew = bAge <= NEW_TTL_DAYS ? 1 : 0;
+  if (aNew !== bNew) return bNew - aNew;
+  return new Date(b.dataset.added).getTime() - new Date(a.dataset.added).getTime();
+});
+
+allCards.forEach(card => grid.appendChild(card));
+if (comingSoon) grid.appendChild(comingSoon);
+
+// ── Filter + Pagination ───────────────────────────────────────────────
+let currentPage = 1;
+let currentCat = 'all';
 const chips = document.querySelectorAll('.filter-chip[data-cat]');
-const cards = document.querySelectorAll('#js-grid .factory-card[data-cat]');
 const countEl = document.getElementById('js-count');
+const pageTotalEl = document.getElementById('page-total');
+const pageInfoEl = document.querySelector('#page-info strong');
+const pagePrev = document.getElementById('page-prev');
+const pageNext = document.getElementById('page-next');
+const paginationEl = document.getElementById('js-pagination');
+
+function getVisibleCards() {
+  return allCards.filter(card => currentCat === 'all' || card.dataset.cat === currentCat);
+}
+
+function renderGrid() {
+  const visible = getVisibleCards();
+  const totalPages = Math.max(1, Math.ceil(visible.length / PAGE_SIZE));
+  currentPage = Math.min(currentPage, totalPages);
+
+  allCards.forEach(card => card.style.display = 'none');
+  const pageCards = visible.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  pageCards.forEach(card => card.style.display = '');
+
+  countEl.textContent = visible.length;
+  pageTotalEl.textContent = totalPages;
+  pageInfoEl.textContent = currentPage;
+  pagePrev.disabled = currentPage <= 1;
+  pageNext.disabled = currentPage >= totalPages;
+  paginationEl.style.display = totalPages <= 1 ? 'none' : 'flex';
+
+  if (comingSoon) comingSoon.style.display = '';
+}
+
+function changePage(delta) {
+  currentPage += delta;
+  renderGrid();
+  document.querySelector('.factories-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 chips.forEach(chip => {
   chip.addEventListener('click', () => {
     chips.forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
-    const cat = chip.dataset.cat;
-    let n = 0;
-    cards.forEach(card => {
-      const show = cat === 'all' || card.dataset.cat === cat;
-      card.style.display = show ? '' : 'none';
-      if (show) n++;
-    });
-    countEl.textContent = n;
+    currentCat = chip.dataset.cat;
+    currentPage = 1;
+    renderGrid();
   });
 });
+
+renderGrid();
 </script>
 
 </body>
