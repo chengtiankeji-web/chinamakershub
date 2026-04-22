@@ -558,11 +558,11 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
       </div>
       <div class="cat-filter-wrap">
         <div class="cat-filter">
-          <button class="cat-btn active" data-cat="all">All Categories</button>
-          <button class="cat-btn" data-cat="mcu">MCU</button>
-          <button class="cat-btn" data-cat="power">Power IC</button>
-          <button class="cat-btn" data-cat="sensor">Sensors</button>
-          <button class="cat-btn" data-cat="connector">Connectors</button>
+          <button class="cat-btn active" data-cat="all">All Products</button>
+          <button class="cat-btn" data-cat="sot">SOT Series</button>
+          <button class="cat-btn" data-cat="dfn">DFN / PDFN</button>
+          <button class="cat-btn" data-cat="sop">SOP / TSSOP</button>
+          <button class="cat-btn" data-cat="to">TO Series</button>
         </div>
         <div class="cat-pager" id="cat-pager">
           <button class="cat-page-btn" id="cat-prev" onclick="changePage(-1)"><svg width="10" height="8" viewBox="0 0 12 10" fill="none"><path d="M11 5H1m0 0l4-4M1 5l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></button>
@@ -570,133 +570,261 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
           <button class="cat-page-btn" id="cat-next" onclick="changePage(1)"><svg width="10" height="8" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></button>
         </div>
       </div>
-      <div class="products-grid">
+            <div class="products-grid">
 
-        <article class="product" data-cat="mcu" onclick="openLightbox('images/mcu-stm32.jpg','STM32 Series MCU','MCU','STM32F103 / F4 / H7 series. Arm Cortex-M core. Authorized ST distributor — original tray/reel packaging with full date code traceability. Domestic GD32 cross-reference available.','ST Microelectronics','STM32F103 · F4 · H7','Original tray/reel','100 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#080C18"/><g stroke="#4A9EFF" stroke-width="0.6" fill="none" opacity="0.4"><rect x="150" y="150" width="100" height="100"/><line x1="100" y1="170" x2="150" y2="170"/><line x1="100" y1="190" x2="150" y2="190"/><line x1="100" y1="210" x2="150" y2="210"/><line x1="100" y1="230" x2="150" y2="230"/><line x1="250" y1="170" x2="300" y2="170"/><line x1="250" y1="190" x2="300" y2="190"/><line x1="250" y1="210" x2="300" y2="210"/><line x1="250" y1="230" x2="300" y2="230"/><line x1="170" y1="100" x2="170" y2="150"/><line x1="190" y1="100" x2="190" y2="150"/><line x1="210" y1="100" x2="210" y2="150"/><line x1="230" y1="100" x2="230" y2="150"/><line x1="170" y1="250" x2="170" y2="300"/><line x1="190" y1="250" x2="190" y2="300"/><line x1="210" y1="250" x2="210" y2="300"/><line x1="230" y1="250" x2="230" y2="300"/></g><text x="200" y="370" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle" fill="#B83A26">STM32</text></svg>
+        <article class="product" data-cat="sot" onclick="openLightbox('images/SOT23.png','SOT-23 Single MOSFET','SOT Series','Standard SOT-23 3-pin single MOSFET. Compact footprint for low-voltage switching and load switching applications. N-channel and P-channel variants available.','Silicon MOSFET die','SOT-23 · 3-pin','Vds 8V–100V range','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/SOT23.png" alt="SOT-23 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">MCU</div>
-            <h4>STM32 Series MCU</h4>
+            <div class="product-cat-tag">SOT Series</div>
+            <h4>SOT-23 Single MOSFET</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Brand</span><strong>ST Micro</strong></div>
-              <div class="product-spec"><span>Alt</span><strong>GD32 substitute</strong></div>
+              <div class="product-spec"><span>Package</span><strong>SOT-23</strong></div>
+              <div class="product-spec"><span>Type</span><strong>N-Ch / P-Ch single</strong></div>
             </div>
-            <span class="product-moq">MOQ: 100 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
-        <article class="product" data-cat="mcu" onclick="openLightbox('images/mcu-esp32.jpg','ESP32 / ESP8266 Series','MCU','Espressif ESP32-S3, ESP32-C3, and ESP8266 series. Wi-Fi + Bluetooth SoC. Authorized distributor — original tape and reel. Suitable for IoT and smart device design.','Espressif Systems','ESP32-S3 / C3 / ESP8266','Wi-Fi + BT SoC','500 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#0A1205"/><g stroke="#4AFF88" stroke-width="0.6" fill="none" opacity="0.4"><rect x="140" y="140" width="120" height="120"/><circle cx="200" cy="200" r="40"/><line x1="90" y1="180" x2="140" y2="180"/><line x1="90" y1="200" x2="140" y2="200"/><line x1="90" y1="220" x2="140" y2="220"/><line x1="260" y1="180" x2="310" y2="180"/><line x1="260" y1="200" x2="310" y2="200"/><line x1="260" y1="220" x2="310" y2="220"/></g><text x="200" y="370" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle" fill="#B83A26">ESP32</text></svg>
+        <article class="product" data-cat="sot" onclick="openLightbox('images/SOT23-6.png','SOT-23-6 Dual MOSFET','SOT Series','SOT-23-6 dual MOSFET package. Two independent MOSFETs in a single compact footprint. N+N and complementary N+P configurations available.','Silicon MOSFET die','SOT-23-6 · 6-pin','Dual channel · space saving','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/SOT23-6.png" alt="SOT-23-6 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">MCU</div>
-            <h4>ESP32 / ESP8266 Series</h4>
+            <div class="product-cat-tag">SOT Series</div>
+            <h4>SOT-23-6 Dual MOSFET</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Brand</span><strong>Espressif</strong></div>
-              <div class="product-spec"><span>Feature</span><strong>Wi-Fi + Bluetooth</strong></div>
+              <div class="product-spec"><span>Package</span><strong>SOT-23-6</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Dual N+N / N+P</strong></div>
             </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
-        <article class="product" data-cat="mcu" onclick="openLightbox('images/mcu-gd32.jpg','GD32 Domestic MCU','MCU','GigaDevice GD32 series — pin-compatible STM32 domestic substitute. GD32F103, GD32F407 and GD32H7 variants. Authorized distributor, full traceability, competitive pricing for BOM reduction.','GigaDevice','GD32F103 / F4 / H7','STM32 pin-compatible','500 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#120808"/><g stroke="#FF6B4A" stroke-width="0.6" fill="none" opacity="0.4"><rect x="150" y="150" width="100" height="100"/><rect x="165" y="165" width="70" height="70"/><line x1="100" y1="175" x2="150" y2="175"/><line x1="100" y1="200" x2="150" y2="200"/><line x1="100" y1="225" x2="150" y2="225"/><line x1="250" y1="175" x2="300" y2="175"/><line x1="250" y1="200" x2="300" y2="200"/><line x1="250" y1="225" x2="300" y2="225"/></g><text x="200" y="370" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle" fill="#B83A26">GD32</text></svg>
+        <article class="product" data-cat="sot" onclick="openLightbox('images/SOT323.png','SOT-323 Small Signal','SOT Series','SOT-323 (SC-70) ultra-compact single MOSFET. Smaller footprint than SOT-23. Suitable for handheld, wearable, and high-density PCB designs.','Silicon MOSFET die','SOT-323 · 3-pin','SC-70 compatible','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/SOT323.png" alt="SOT-323 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">MCU</div>
-            <h4>GD32 Domestic MCU</h4>
+            <div class="product-cat-tag">SOT Series</div>
+            <h4>SOT-323 Small Signal</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Brand</span><strong>GigaDevice</strong></div>
-              <div class="product-spec"><span>Compat</span><strong>STM32 pin-compat</strong></div>
+              <div class="product-spec"><span>Package</span><strong>SOT-323</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Ultra-compact single</strong></div>
             </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
-        <article class="product" data-cat="power" onclick="openLightbox('images/power-buck.jpg','Buck / Step-Down Converter','Power IC','Synchronous buck converter ICs — Texas Instruments LM2596, LM2675 and domestic substitutes. 1A to 5A output range. In stock for rapid delivery. BOM substitution advice available.','TI / Domestic alt.','1A – 5A output','Synchronous buck','1,000 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#0A0A14"/><g stroke="#FFD700" stroke-width="0.6" fill="none" opacity="0.4"><rect x="160" y="170" width="80" height="60"/><line x1="80" y1="200" x2="160" y2="200"/><line x1="240" y1="200" x2="320" y2="200"/><line x1="290" y1="160" x2="290" y2="200"/><line x1="290" y1="160" x2="260" y2="160"/><circle cx="110" cy="200" r="15"/><rect x="270" y="155" width="40" height="10"/></g><text x="200" y="370" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" fill="#B83A26">Buck Converter</text></svg>
+        <article class="product" data-cat="sot" onclick="openLightbox('images/SOT223-3L.png','SOT-223 Power Package','SOT Series','SOT-223 3-pin medium power MOSFET with exposed drain tab for improved thermal dissipation. Suitable for DC-DC converters and load switches up to 3A.','Silicon MOSFET die','SOT-223 · 3-pin + tab','Thermal tab · PCB mount','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/SOT223-3L.png" alt="SOT-223 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">Power IC</div>
-            <h4>Buck / Step-Down Converter</h4>
+            <div class="product-cat-tag">SOT Series</div>
+            <h4>SOT-223 Power Package</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Range</span><strong>1A – 5A output</strong></div>
-              <div class="product-spec"><span>Brands</span><strong>TI · Domestic alt</strong></div>
+              <div class="product-spec"><span>Package</span><strong>SOT-223</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Medium power · tab drain</strong></div>
             </div>
-            <span class="product-moq">MOQ: 1,000 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
-        <article class="product" data-cat="power" onclick="openLightbox('images/power-ldo.jpg','LDO Voltage Regulator','Power IC','Low dropout linear regulators — AMS1117, LM1117 and domestic equivalents. 3.3V, 5V, and adjustable output. SOT-223 and TO-220 packages. Large inventory for immediate shipment.','AMS / Domestic','3.3V · 5V · ADJ','LDO · SOT-223','5,000 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#0F0A00"/><g stroke="#FFB84A" stroke-width="0.6" fill="none" opacity="0.4"><rect x="170" y="160" width="60" height="80"/><line x1="80" y1="190" x2="170" y2="190"/><line x1="230" y1="190" x2="320" y2="190"/><line x1="200" y1="240" x2="200" y2="310"/><line x1="185" y1="310" x2="215" y2="310"/></g><text x="200" y="370" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" fill="#B83A26">LDO Regulator</text></svg>
+        <article class="product" data-cat="sot" onclick="openLightbox('images/SOT-523.jpg','SOT-523 Ultra-Small','SOT Series','SOT-523 ultra-small MOSFET for space-critical designs. Smaller than SOT-323. Used in smartphones, IoT devices, and miniaturised power management circuits.','Silicon MOSFET die','SOT-523 · 3-pin','Smallest SOT footprint','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/SOT-523.jpg" alt="SOT-523 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">Power IC</div>
-            <h4>LDO Voltage Regulator</h4>
+            <div class="product-cat-tag">SOT Series</div>
+            <h4>SOT-523 Ultra-Small</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Output</span><strong>3.3V · 5V · ADJ</strong></div>
-              <div class="product-spec"><span>Package</span><strong>SOT-223 · TO-220</strong></div>
+              <div class="product-spec"><span>Package</span><strong>SOT-523</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Ultra-small · 3-pin</strong></div>
             </div>
-            <span class="product-moq">MOQ: 5,000 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
-        <article class="product" data-cat="sensor" onclick="openLightbox('images/sensor-temp.jpg','Temperature & Humidity Sensor','Sensors','SHT30, SHT31, DHT22 and domestic HDC1080-compatible alternatives. ±0.2°C accuracy. I²C interface. Reel and bulk packaging. Popular for HVAC, smart home, and industrial monitoring.','Sensirion / Domestic','±0.2°C · ±2%RH','I²C interface','1,000 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#EBE4D6"/><g stroke="#0F0E0C" stroke-width="0.5" fill="none" opacity="0.4"><rect x="160" y="140" width="80" height="120"/><path d="M200 200 Q200 240 200 260"/><circle cx="200" cy="268" r="20"/><line x1="180" y1="160" x2="220" y2="160"/><line x1="180" y1="180" x2="220" y2="180"/><line x1="180" y1="200" x2="220" y2="200"/></g><text x="200" y="370" font-family="Fraunces, serif" font-size="16" font-style="italic" text-anchor="middle" fill="#B83A26">Temp Sensor</text></svg>
+        <article class="product" data-cat="dfn" onclick="openLightbox('images/DFN2X2-8L.png','DFN 2×2-8L N-Channel','DFN / PDFN','DFN 2×2mm 8-lead single N-channel MOSFET. Large exposed drain pad for superior thermal performance. Ideal for synchronous buck converters and motor drive.','Silicon MOSFET die','2×2mm · 8-lead','Exposed drain pad · low Rds(on)','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/DFN2X2-8L.png" alt="DFN 2x2-8L Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">Sensors</div>
-            <h4>Temperature & Humidity</h4>
+            <div class="product-cat-tag">DFN / PDFN</div>
+            <h4>DFN 2×2-8L N-Channel</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Accuracy</span><strong>±0.2°C · ±2%RH</strong></div>
-              <div class="product-spec"><span>Interface</span><strong>I²C</strong></div>
+              <div class="product-spec"><span>Package</span><strong>DFN 2×2-8L</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Single N-channel</strong></div>
             </div>
-            <span class="product-moq">MOQ: 1,000 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
-        <article class="product" data-cat="sensor" onclick="openLightbox('images/sensor-imu.jpg','IMU / Motion Sensor','Sensors','MPU-6050, MPU-6500, ICM-42688 6-axis IMU and domestic QMI8658 alternatives. ±2g to ±16g accelerometer. SPI/I²C. Popular for robotics, drone, and wearable applications.','InvenSense / Domestic','6-axis · ±16g','SPI / I²C','500 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#080C18"/><g stroke="#4A9EFF" stroke-width="0.5" fill="none" opacity="0.4"><rect x="165" y="165" width="70" height="70"/><line x1="200" y1="100" x2="200" y2="165"/><line x1="200" y1="235" x2="200" y2="300"/><line x1="100" y1="200" x2="165" y2="200"/><line x1="235" y1="200" x2="300" y2="200"/><circle cx="200" cy="200" r="20"/></g><text x="200" y="370" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" fill="#B83A26">IMU Sensor</text></svg>
+        <article class="product" data-cat="dfn" onclick="openLightbox('images/DFN3x3.png','DFN 3×3 Power MOSFET','DFN / PDFN','DFN 3×3mm single MOSFET with large exposed pad for high current applications. Low profile and excellent thermal resistance. Used in notebook and server power stages.','Silicon MOSFET die','3×3mm · 8-lead','High current · low Rds(on)','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/DFN3x3.png" alt="DFN 3x3 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">Sensors</div>
-            <h4>IMU / Motion Sensor</h4>
+            <div class="product-cat-tag">DFN / PDFN</div>
+            <h4>DFN 3×3 Power MOSFET</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Axes</span><strong>6-axis · ±16g</strong></div>
-              <div class="product-spec"><span>Alt</span><strong>QMI8658 domestic</strong></div>
+              <div class="product-spec"><span>Package</span><strong>DFN 3×3</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Single · high current</strong></div>
             </div>
-            <span class="product-moq">MOQ: 500 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
-        <article class="product" data-cat="connector" onclick="openLightbox('images/connector-usbc.jpg','USB Type-C Connector','Connectors','USB-C 2.0 / 3.1 / 3.2 receptacle and plug connectors. 16-pin, 24-pin. Mid-mount and through-hole. Molex, Amphenol, and domestic HRS-compatible alternatives. Tape and reel for SMT.','Molex / Amphenol / HRS','16p · 24p · SMT','2.0 / 3.1 / 3.2','5,000 pcs')">
-          <div class="product-img">
-            <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="400" fill="#101010"/><g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.4"><rect x="130" y="170" width="140" height="60" rx="8"/><rect x="155" y="182" width="90" height="36" rx="4"/><line x1="100" y1="200" x2="130" y2="200"/><line x1="270" y1="200" x2="300" y2="200"/><line x1="150" y1="230" x2="150" y2="270"/><line x1="175" y1="230" x2="175" y2="270"/><line x1="200" y1="230" x2="200" y2="270"/><line x1="225" y1="230" x2="225" y2="270"/><line x1="250" y1="230" x2="250" y2="270"/></g><text x="200" y="360" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" fill="#B83A26">USB-C</text></svg>
+        <article class="product" data-cat="dfn" onclick="openLightbox('images/DFN3X3-8.png','DFN 3×3-8L Dual N','DFN / PDFN','DFN 3×3mm 8-lead dual N-channel MOSFET. Two independent N-channel devices in one package. Used in half-bridge and H-bridge motor driver circuits.','Silicon MOSFET die','3×3mm · 8-lead dual','Half-bridge ready','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/DFN3X3-8.png" alt="DFN 3x3-8L Dual Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
             <div class="product-overlay"><span>Quick View</span></div>
           </div>
           <div class="product-info">
-            <div class="product-cat-tag">Connectors</div>
-            <h4>USB Type-C Connector</h4>
+            <div class="product-cat-tag">DFN / PDFN</div>
+            <h4>DFN 3×3-8L Dual N</h4>
             <div class="product-specs">
-              <div class="product-spec"><span>Pins</span><strong>16p · 24p · SMT</strong></div>
-              <div class="product-spec"><span>Spec</span><strong>USB 2.0 / 3.1 / 3.2</strong></div>
+              <div class="product-spec"><span>Package</span><strong>DFN 3×3-8L</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Dual N-channel</strong></div>
             </div>
-            <span class="product-moq">MOQ: 5,000 pcs</span>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="dfn" onclick="openLightbox('images/PDFN3X3-8L.png','PDFN 3×3-8L','DFN / PDFN','PDFN (Power DFN) 3×3mm 8-lead package with enhanced drain pad area. Superior thermal and electrical performance vs standard DFN. For high-efficiency power conversion.','Silicon MOSFET die','3×3mm · 8-lead','Enhanced pad · power grade','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/PDFN3X3-8L.png" alt="PDFN 3x3-8L Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">DFN / PDFN</div>
+            <h4>PDFN 3×3-8L</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>PDFN 3×3-8L</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Power DFN · single</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="dfn" onclick="openLightbox('images/PDFN5X6-8L.png','PDFN 5×6-8L Power','DFN / PDFN','PDFN 5×6mm 8-lead high-power MOSFET package. Very large exposed source/drain pad for maximum thermal dissipation. Suited for motor drive, UPS, and industrial power supplies.','Silicon MOSFET die','5×6mm · 8-lead','Max thermal · industrial grade','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/PDFN5X6-8L.png" alt="PDFN 5x6-8L Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">DFN / PDFN</div>
+            <h4>PDFN 5×6-8L Power</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>PDFN 5×6-8L</strong></div>
+              <div class="product-spec"><span>Type</span><strong>High power · large pad</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="sop" onclick="openLightbox('images/SOP-8.png','SOP-8 Logic Package','SOP / TSSOP','Standard SOP-8 (SOIC-8) 8-lead package. Used for gate drivers, op-amps, voltage regulators, and logic ICs. Wide body with 1.27mm pitch. Industry-standard footprint.','Various IC die','SOP-8 · 1.27mm pitch','Industry standard · wide body','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/SOP-8.png" alt="SOP-8 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">SOP / TSSOP</div>
+            <h4>SOP-8 Logic Package</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>SOP-8</strong></div>
+              <div class="product-spec"><span>Type</span><strong>8-lead wide body</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="sop" onclick="openLightbox('images/ESOP-8.jpg','ESOP-8 Enhanced SOP','SOP / TSSOP','ESOP-8 (SOP-8 with exposed pad) combines standard SOP-8 footprint with an exposed thermal pad on the underside for improved heat dissipation in power management ICs.','Power management IC die','ESOP-8 · exposed pad','Thermal pad · SOP-8 compatible','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/ESOP-8.jpg" alt="ESOP-8 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">SOP / TSSOP</div>
+            <h4>ESOP-8 Enhanced SOP</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>ESOP-8</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Exposed pad · enhanced thermal</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="sop" onclick="openLightbox('images/TSSop-8.png','TSSOP-8 Compact SOP','SOP / TSSOP','TSSOP-8 thin shrink small outline package. Narrower than SOP-8 with 0.65mm pitch. Used in space-constrained designs for logic, analog, and mixed-signal ICs.','Various IC die','TSSOP-8 · 0.65mm pitch','Narrow · high density PCB','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/TSSop-8.png" alt="TSSOP-8 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">SOP / TSSOP</div>
+            <h4>TSSOP-8 Compact SOP</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>TSSOP-8</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Thin shrink SOP</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="to" onclick="openLightbox('images/TO-220.png','TO-220 Power MOSFET','TO Series','TO-220 3-pin through-hole power MOSFET. Industry-standard package with mounting hole for external heatsink. Wide Vds range 20V–600V+. For linear regulators, motor control, and power switching.','Silicon MOSFET die','TO-220 · 3-pin','Heatsink mount · high power','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/TO-220.png" alt="TO-220 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">TO Series</div>
+            <h4>TO-220 Power MOSFET</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>TO-220</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Through-hole · heatsink mount</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="to" onclick="openLightbox('images/TO-252.png','TO-252 Medium Power','TO Series','TO-252 (D-PAK) surface-mount power package. Large exposed tab for thermal dissipation without external heatsink. Drop-in SMT replacement for TO-220 in many designs.','Silicon MOSFET die','TO-252 · 3-pin SMT','D-PAK · SMT power','No minimum · sample available')">
+          <div class="product-img" style="background:#0A0C14;">
+            <img src="images/TO-252.png" alt="TO-252 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">TO Series</div>
+            <h4>TO-252 Medium Power</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>TO-252 (D-PAK)</strong></div>
+              <div class="product-spec"><span>Type</span><strong>Surface mount · tab</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
+          </div>
+        </article>
+
+        <article class="product" data-cat="to" onclick="openLightbox('images/TO-247-3L.png','TO-247 High Power','TO Series','TO-247 3-pin high-power MOSFET package. Larger than TO-220 with better thermal performance and higher current ratings. For inverters, motor drives, and high-current switching power supplies.','Silicon MOSFET die','TO-247 · 3-pin','Max current · inverter grade','No minimum · sample available')">
+          <div class="product-img" style="background:#0F0E0C;">
+            <img src="images/TO-247-3L.png" alt="TO-247 Package" style="width:80%;height:80%;object-fit:contain;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);mix-blend-mode:lighten;">
+            <div class="product-overlay"><span>Quick View</span></div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat-tag">TO Series</div>
+            <h4>TO-247 High Power</h4>
+            <div class="product-specs">
+              <div class="product-spec"><span>Package</span><strong>TO-247</strong></div>
+              <div class="product-spec"><span>Type</span><strong>High power · through-hole</strong></div>
+            </div>
+            <span class="product-moq">MOQ: No minimum · sample available</span>
           </div>
         </article>
 
@@ -777,9 +905,9 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
           <tr><td>Spec / Part No.</td><td id="lb-size"></td></tr>
           <tr><td>Feature</td><td id="lb-feature"></td></tr>
           <tr><td>MOQ</td><td id="lb-moq"></td></tr>
-          <tr><td>Lead Time</td><td>In stock · 3–5 days dispatch</td></tr>
-          <tr><td>Traceability</td><td>Date code · lot number per reel</td></tr>
-          <tr><td>Incoterms</td><td>EXW · FOB · DDP</td></tr>
+          <tr><td>Sample</td><td>Available on request</td></tr>
+          <tr><td>Lead Time</td><td>3–5 days dispatch</td></tr>
+          <tr><td>Payment</td><td>T/T · PayPal · Alipay</td></tr>
         </table>
         <div class="lightbox-cta">
           <a href="/inquiry?supplier=CMH-S-HHX016" class="btn-inquire">Request a Quote →</a>
@@ -1053,7 +1181,7 @@ function openLightbox(img, title, cat, desc, material, size, feature, moq) {
   document.getElementById('lb-material').textContent = material;
   document.getElementById('lb-size').textContent = size;
   document.getElementById('lb-feature').textContent = feature;
-  document.getElementById('lb-moq').textContent = moq + ' minimum';
+  document.getElementById('lb-moq').textContent = moq;
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
