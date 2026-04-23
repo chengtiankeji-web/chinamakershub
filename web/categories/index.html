@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product Categories — ChinaMakersHub | Greater Bay Area Manufacturers</title>
-<meta name="description" content="Browse verified manufacturers by product category. Furniture, acrylic displays, hardware, lighting and more — all sourced directly from the Greater Bay Area.">
+<title>Categories — ChinaMakersHub</title>
+<meta name="description" content="Browse 6 verified manufacturing categories across China's Greater Bay Area. Furniture, hardware, lighting, display & acrylic, electronics, and packaging.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,9 +17,7 @@
   --ink-mute: #6B6862;
   --paper: #F4EFE6;
   --paper-warm: #EBE4D6;
-  --paper-pure: #FAF7F0;
   --cinnabar: #B83A26;
-  --jade: #4A6B5C;
   --line: rgba(15, 14, 12, 0.12);
   --line-strong: rgba(15, 14, 12, 0.25);
   --font-display: 'Fraunces', Georgia, serif;
@@ -30,9 +28,16 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-body { font-family: var(--font-body); background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.55; }
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.55;
+}
 body::before {
-  content: ''; position: fixed; inset: 0;
+  content: '';
+  position: fixed; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
   opacity: 0.05; pointer-events: none; z-index: 1; mix-blend-mode: multiply;
 }
@@ -41,93 +46,166 @@ a { color: inherit; text-decoration: none; }
 .container { max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter); }
 
 /* NAV */
-.nav { border-bottom: 1px solid var(--line); background: rgba(244, 239, 230, 0.92); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 100; }
+.nav {
+  border-bottom: 1px solid var(--line);
+  background: rgba(244, 239, 230, 0.92);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 100;
+}
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 0; }
-.logo { display: flex; align-items: baseline; gap: 0.6rem; font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; letter-spacing: -0.02em; }
-.logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--ink); color: var(--paper); font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; position: relative; top: 6px; }
+.logo {
+  display: flex; align-items: baseline; gap: 0.6rem;
+  font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; letter-spacing: -0.02em;
+}
+.logo-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; background: var(--ink); color: var(--paper);
+  font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+  position: relative; top: 6px;
+}
 .logo-mark::after { content: ''; position: absolute; inset: 3px; border: 1px solid var(--paper); }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; font-size: 0.88rem; font-weight: 500; }
 .nav-links a { position: relative; padding: 0.3rem 0; }
-.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--cinnabar); transition: width 0.3s; }
-.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 .nav-links a.active { color: var(--cinnabar); }
-.btn-primary { background: var(--ink); color: var(--paper); padding: 0.75rem 1.4rem; font-size: 0.82rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--ink); transition: all 0.3s; }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+  background: var(--cinnabar); transition: width 0.3s;
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.btn-primary {
+  background: var(--ink); color: var(--paper); padding: 0.75rem 1.4rem;
+  font-size: 0.82rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;
+  border: 1px solid var(--ink); transition: all 0.3s;
+}
 .btn-primary:hover { background: var(--cinnabar); border-color: var(--cinnabar); }
 
 /* BREADCRUMB */
-.breadcrumb { padding: 1.5rem 0 0; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); }
+.breadcrumb {
+  padding: 1.5rem 0 0;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute);
+}
 .breadcrumb a:hover { color: var(--cinnabar); }
 .breadcrumb .sep { margin: 0 0.6rem; color: var(--line-strong); }
 .breadcrumb .current { color: var(--ink); }
 
-/* PAGE HEADER */
-.page-header { padding: 3.5rem 0 4rem; border-bottom: 1px solid var(--line); }
-.page-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--cinnabar); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
-.page-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--cinnabar); }
-.page-title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 300; line-height: 0.95; letter-spacing: -0.035em; margin-bottom: 1.4rem; font-variation-settings: "opsz" 144; }
-.page-title em { font-family: var(--font-editorial); font-style: italic; color: var(--cinnabar); }
-.page-desc { font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); max-width: 40em; }
+/* HEADER */
+.cat-header {
+  padding: 3rem 0 4rem; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: 1.6fr 1fr; gap: 4rem; align-items: end;
+}
+.cat-eyebrow {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.18em; color: var(--cinnabar);
+  margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;
+}
+.cat-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--cinnabar); }
+.cat-title {
+  font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 300; line-height: 0.95; letter-spacing: -0.035em; margin-bottom: 1.5rem;
+  font-variation-settings: "opsz" 144;
+}
+.cat-title em { font-family: var(--font-editorial); font-style: italic; color: var(--cinnabar); }
+.cat-desc { font-size: 1.05rem; line-height: 1.65; color: var(--ink-soft); max-width: 36em; }
+.cat-meta {
+  border-left: 1px solid var(--line-strong); padding-left: 2rem;
+  font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-mute); line-height: 1.8;
+}
+.cat-meta strong {
+  display: block; color: var(--ink); font-family: var(--font-display);
+  font-size: 2.2rem; font-weight: 400; letter-spacing: -0.02em;
+  text-transform: none; margin-bottom: 0.2rem; font-variation-settings: "opsz" 144;
+}
+.cat-meta-row { margin-bottom: 1.5rem; }
+.cat-meta-row:last-child { margin-bottom: 0; }
 
-/* CATEGORIES GRID */
-.categories-section { padding: clamp(3rem, 6vw, 5rem) 0; }
-.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-
-.cat-card { position: relative; overflow: hidden; aspect-ratio: 4/5; display: block; }
-.cat-card:hover .cat-card-inner { transform: scale(1.02); }
-.cat-card:hover .cat-card-arrow { transform: translateX(4px); }
-
-.cat-card-inner { position: absolute; inset: 0; transition: transform 0.4s ease; }
-.cat-card-inner svg { width: 100%; height: 100%; }
-
-.cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,14,12,0.88) 0%, rgba(15,14,12,0.3) 55%, rgba(15,14,12,0.05) 100%); }
-
-.cat-card-content { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 2rem 1.8rem; }
-.cat-card-num { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(244,239,230,0.45); margin-bottom: 0.6rem; }
-.cat-card-name { font-family: var(--font-display); font-size: clamp(1.8rem, 2.5vw, 2.4rem); font-weight: 300; line-height: 1; letter-spacing: -0.025em; color: var(--paper); margin-bottom: 0.4rem; font-variation-settings: "opsz" 144; }
-.cat-card-name em { font-family: var(--font-editorial); font-style: italic; color: var(--cinnabar); }
-.cat-card-desc { font-size: 0.85rem; line-height: 1.55; color: rgba(244,239,230,0.6); margin-bottom: 1.2rem; max-width: 26em; }
-.cat-card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid rgba(244,239,230,0.15); }
-.cat-card-stats { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(244,239,230,0.5); line-height: 1.7; }
-.cat-card-stats strong { display: block; color: var(--paper); font-weight: 500; font-size: 0.7rem; }
-.cat-card-arrow { color: var(--cinnabar); font-size: 1.1rem; transition: transform 0.3s; }
-
-/* COMING SOON CARD */
-.cat-card-coming { aspect-ratio: 4/5; background: var(--paper-warm); border: 2px dashed var(--line-strong); display: flex; align-items: center; justify-content: center; }
-.coming-inner { text-align: center; padding: 2rem; }
-.coming-inner .icon { width: 44px; height: 44px; border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--ink-mute); }
-.coming-inner h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 0.4rem; font-variation-settings: "opsz" 72; }
-.coming-inner p { font-size: 0.82rem; color: var(--ink-mute); line-height: 1.6; }
-
-/* CTA BAND */
-.cta-band { background: var(--cinnabar); color: var(--paper); padding: clamp(4rem, 8vw, 6rem) 0; text-align: center; position: relative; overflow: hidden; }
-.cta-band::before { content: ''; position: absolute; top: -150px; left: -150px; width: 400px; height: 400px; border: 1px solid rgba(244,239,230,0.1); border-radius: 50%; }
-.cta-band::after { content: ''; position: absolute; bottom: -150px; right: -150px; width: 400px; height: 400px; border: 1px solid rgba(244,239,230,0.1); border-radius: 50%; }
-.cta-band-inner { position: relative; z-index: 2; }
-.cta-band h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; letter-spacing: -0.03em; margin-bottom: 1rem; font-variation-settings: "opsz" 144; }
-.cta-band h2 em { font-family: var(--font-editorial); font-style: italic; }
-.cta-band p { font-size: 1rem; max-width: 28em; margin: 0 auto 2rem; opacity: 0.85; }
-.cta-buttons { display: flex; gap: 1rem; justify-content: center; }
-.btn-light { background: var(--paper); color: var(--ink); padding: 1rem 1.8rem; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.6rem; border: 1px solid var(--paper); transition: all 0.3s; }
-.btn-light:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.btn-outline { background: transparent; color: var(--paper); padding: 1rem 1.8rem; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(244,239,230,0.4); transition: all 0.3s; }
-.btn-outline:hover { background: var(--paper); color: var(--cinnabar); border-color: var(--paper); }
+/* CATEGORY GRID */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+  margin: 3rem 0 6rem;
+}
+.cat-card {
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--paper);
+  cursor: pointer;
+  transition: background 0.4s;
+  display: flex;
+  flex-direction: column;
+}
+.cat-card:hover { background: var(--paper-warm); }
+.cat-card-image {
+  aspect-ratio: 4/3;
+  background: var(--paper-warm);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line-strong);
+}
+.cat-card-image svg { width: 100%; height: 100%; display: block; }
+.cat-card-badge {
+  position: absolute; top: 1rem; left: 1rem;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--font-mono); font-size: 0.62rem;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.35rem 0.6rem;
+}
+.cat-card-id {
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; color: var(--ink-mute);
+  background: var(--paper); padding: 0.3rem 0.55rem;
+  border: 1px solid var(--line);
+}
+.cat-card-body { padding: 1.6rem 1.6rem 1.8rem; flex: 1; display: flex; flex-direction: column; }
+.cat-card-count {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--cinnabar); margin-bottom: 0.6rem;
+}
+.cat-card-name {
+  font-family: var(--font-display); font-size: 1.45rem;
+  font-weight: 500; letter-spacing: -0.015em; line-height: 1.15;
+  margin-bottom: 0.8rem; font-variation-settings: "opsz" 72;
+  transition: color 0.3s;
+}
+.cat-card:hover .cat-card-name { color: var(--cinnabar); }
+.cat-card-desc {
+  font-size: 0.88rem; color: var(--ink-soft); line-height: 1.55;
+  margin-bottom: 1.2rem; flex: 1;
+}
+.cat-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1.2rem; border-top: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 0.65rem;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute);
+}
+.cat-card-arrow { color: var(--cinnabar); font-size: 0.9rem; }
 
 /* FOOTER */
 footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
-.footer-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; color: rgba(244, 239, 230, 0.5); line-height: 1.7; }
+.footer-bottom {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.05em; color: rgba(244, 239, 230, 0.5); line-height: 1.7;
+}
 .footer-bottom strong { display: block; color: var(--paper); margin-bottom: 0.5rem; text-transform: uppercase; }
 .footer-bank { text-align: right; }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .nav-links { display: none; }
+  .cat-header { grid-template-columns: 1fr; gap: 2rem; }
   .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-bottom { grid-template-columns: 1fr; }
+  .footer-bank { text-align: left; }
 }
 @media (max-width: 640px) {
   .cat-grid { grid-template-columns: 1fr; }
-  .footer-bottom { grid-template-columns: 1fr; }
-  .footer-bank { text-align: left; }
-  .cta-buttons { flex-direction: column; align-items: center; }
 }
 </style>
 </head>
@@ -141,14 +219,14 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
     </a>
     <nav>
       <ul class="nav-links">
-        <li><a href="/categories/" class="active">Categories</a></li>
-        <li><a href="/factories/">Factories</a></li>
-        <li><a href="/#how">How It Works</a></li>
-        <li><a href="/journal/">Journal</a></li>
-        <li><a href="/#about">About</a></li>
+        <li><a href="/categories" class="active">Categories</a></li>
+        <li><a href="/factories">Factories</a></li>
+        <li><a href="/how">How It Works</a></li>
+        <li><a href="/journal">Journal</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
     </nav>
-    <a href="/inquiry/" class="btn-primary">
+    <a href="/inquiry" class="btn-primary">
       Request a Quote
       <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
     </a>
@@ -164,148 +242,207 @@ footer { background: var(--ink); color: var(--paper); padding: 4rem 0 2rem; }
     </nav>
   </div>
 
-  <!-- PAGE HEADER -->
   <section>
     <div class="container">
-      <div class="page-header">
-        <div class="page-eyebrow">/ Product Categories</div>
-        <h1 class="page-title">Find factories by<br>what they <em>make.</em></h1>
-        <p class="page-desc">Every category below contains only verified workshops — audited in person by our Foshan team before going live. Browse by product type and connect directly with the maker.</p>
+      <div class="cat-header">
+        <div>
+          <div class="cat-eyebrow">/ Browse All</div>
+          <h1 class="cat-title">Manufacturing<br><em>Categories</em></h1>
+          <p class="cat-desc">
+            Six verified categories across China's Greater Bay Area. Every workshop listed has been visited, audited, and approved by our Foshan operations team.
+          </p>
+        </div>
+        <aside class="cat-meta">
+          <div class="cat-meta-row">
+            <strong>18</strong>
+            Verified workshops
+          </div>
+          <div class="cat-meta-row">
+            <strong>6</strong>
+            Active categories
+          </div>
+          <div class="cat-meta-row">
+            <strong>4 cities</strong>
+            Greater Bay Area coverage
+          </div>
+        </aside>
       </div>
     </div>
   </section>
 
-  <!-- CATEGORIES GRID -->
-  <section class="categories-section">
+  <section>
     <div class="container">
       <div class="cat-grid">
 
-        <!-- Furniture -->
+        <!-- 001 Furniture -->
         <a href="/categories/furniture/" class="cat-card">
-          <div class="cat-card-inner">
-            <svg viewBox="0 0 480 600" preserveAspectRatio="xMidYMid slice">
-              <rect width="480" height="600" fill="#0F0E0C"/>
-              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.22">
-                <rect x="60" y="200" width="360" height="180"/>
-                <line x1="60" y1="290" x2="420" y2="290"/>
-                <line x1="60" y1="380" x2="420" y2="380"/>
-                <line x1="150" y1="200" x2="150" y2="380"/>
-                <line x1="240" y1="200" x2="240" y2="380"/>
-                <line x1="330" y1="200" x2="330" y2="380"/>
-                <line x1="80" y1="380" x2="80" y2="480"/>
-                <line x1="400" y1="380" x2="400" y2="480"/>
+          <div class="cat-card-image">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#EBE4D6"/>
+              <g stroke="#0F0E0C" stroke-width="0.6" fill="none" opacity="0.45">
+                <rect x="80" y="120" width="240" height="100"/>
+                <line x1="80" y1="170" x2="320" y2="170"/>
+                <line x1="100" y1="220" x2="100" y2="260"/>
+                <line x1="300" y1="220" x2="300" y2="260"/>
+                <circle cx="200" cy="80" r="30"/>
               </g>
-              <text x="240" y="160" font-family="Instrument Serif, serif" font-size="42" font-style="italic" text-anchor="middle" fill="#B83A26">solid wood</text>
+              <text x="200" y="170" font-family="Fraunces, serif" font-size="22" font-style="italic" text-anchor="middle" fill="#B83A26" opacity="0.9">solid wood</text>
             </svg>
+            <span class="cat-card-badge">Furniture</span>
+            <span class="cat-card-id">/ 001</span>
           </div>
-          <div class="cat-card-overlay"></div>
-          <div class="cat-card-content">
-            <div class="cat-card-num">/ Category 001</div>
-            <h2 class="cat-card-name">Furniture &<br><em>Home Living</em></h2>
-            <p class="cat-card-desc">Solid wood, upholstery, metal frame, and engineered furniture from Foshan — the global capital of mid-to-high tier furniture production.</p>
+          <div class="cat-card-body">
+            <div class="cat-card-count">6 workshops</div>
+            <h3 class="cat-card-name">Furniture & Home Living</h3>
+            <p class="cat-card-desc">Solid wood, upholstery, metal frame, and engineered furniture from Foshan and surrounding cities.</p>
             <div class="cat-card-footer">
-              <div class="cat-card-stats">
-                <strong>Foshan cluster</strong>
-                OEM · ODM · FSC certified
-              </div>
+              <span>Foshan · Zhongshan · Guangzhou</span>
               <span class="cat-card-arrow">→</span>
             </div>
           </div>
         </a>
 
-        <!-- Hardware -->
+        <!-- 002 Hardware -->
         <a href="/categories/hardware/" class="cat-card">
-          <div class="cat-card-inner">
-            <svg viewBox="0 0 480 600" preserveAspectRatio="xMidYMid slice">
-              <rect width="480" height="600" fill="#1A1008"/>
-              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.22">
-                <circle cx="240" cy="300" r="120"/>
-                <circle cx="240" cy="300" r="80"/>
-                <circle cx="240" cy="300" r="20"/>
-                <line x1="120" y1="300" x2="360" y2="300"/>
-                <line x1="240" y1="180" x2="240" y2="420"/>
-                <line x1="155" y1="215" x2="325" y2="385"/>
-                <line x1="325" y1="215" x2="155" y2="385"/>
+          <div class="cat-card-image">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#101820"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="110" y="160" width="180" height="272"/>
+                <circle cx="278" cy="296" r="18"/>
+                <line x1="110" y1="226" x2="290" y2="226"/>
               </g>
-              <text x="240" y="160" font-family="Instrument Serif, serif" font-size="42" font-style="italic" text-anchor="middle" fill="#B83A26">precision parts</text>
+              <text x="200" y="120" font-family="Instrument Serif, serif" font-size="26" font-style="italic" text-anchor="middle" fill="#B83A26">door hardware</text>
             </svg>
+            <span class="cat-card-badge">Hardware</span>
+            <span class="cat-card-id">/ 002</span>
           </div>
-          <div class="cat-card-overlay"></div>
-          <div class="cat-card-content">
-            <div class="cat-card-num">/ Category 002</div>
-            <h2 class="cat-card-name">Hardware &<br><em>Metal Parts</em></h2>
-            <p class="cat-card-desc">Precision castings, stampings, CNC machined parts, and fasteners. Serving automotive, construction, and consumer electronics OEM buyers.</p>
+          <div class="cat-card-body">
+            <div class="cat-card-count">4 workshops</div>
+            <h3 class="cat-card-name">Hardware & Metal Parts</h3>
+            <p class="cat-card-desc">Architectural hardware, industrial fasteners, security locks, and precision sheet metal fabrication.</p>
             <div class="cat-card-footer">
-              <div class="cat-card-stats">
-                <strong>Greater Bay Area</strong>
-                CNC · Casting · Stamping
-              </div>
+              <span>Foshan · Dongguan · Shenzhen · Zhongshan</span>
               <span class="cat-card-arrow">→</span>
             </div>
           </div>
         </a>
 
-        <!-- Lighting -->
+        <!-- 003 Lighting -->
         <a href="/categories/lighting/" class="cat-card">
-          <div class="cat-card-inner">
-            <svg viewBox="0 0 480 600" preserveAspectRatio="xMidYMid slice">
-              <rect width="480" height="600" fill="#0A0A14"/>
-              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.22">
-                <ellipse cx="240" cy="260" rx="80" ry="100"/>
-                <line x1="240" y1="160" x2="240" y2="120"/>
-                <line x1="240" y1="360" x2="240" y2="440"/>
-                <line x1="160" y1="260" x2="100" y2="220"/>
-                <line x1="320" y1="260" x2="380" y2="220"/>
-                <line x1="160" y1="300" x2="100" y2="340"/>
-                <line x1="320" y1="300" x2="380" y2="340"/>
+          <div class="cat-card-image">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#080808"/>
+              <g stroke="#FFD060" stroke-width="0.4" fill="none" opacity="0.2">
+                <circle cx="200" cy="246" r="92"/><circle cx="200" cy="246" r="56"/><circle cx="200" cy="246" r="22"/>
+                <line x1="200" y1="154" x2="200" y2="100"/>
+                <line x1="200" y1="338" x2="200" y2="440"/>
+                <line x1="108" y1="246" x2="54" y2="246"/><line x1="292" y1="246" x2="346" y2="246"/>
               </g>
-              <text x="240" y="160" font-family="Instrument Serif, serif" font-size="42" font-style="italic" text-anchor="middle" fill="#B83A26">illumination</text>
+              <text x="200" y="122" font-family="JetBrains Mono, monospace" font-size="17" text-anchor="middle" fill="#B83A26">commercial LED</text>
             </svg>
+            <span class="cat-card-badge">Lighting</span>
+            <span class="cat-card-id">/ 003</span>
           </div>
-          <div class="cat-card-overlay"></div>
-          <div class="cat-card-content">
-            <div class="cat-card-num">/ Category 003</div>
-            <h2 class="cat-card-name">Lighting &<br><em>Fixtures</em></h2>
-            <p class="cat-card-desc">Pendant lights, floor lamps, LED panels, and architectural lighting. Zhongshan and Guzhen cluster — the world's lighting manufacturing capital.</p>
+          <div class="cat-card-body">
+            <div class="cat-card-count">3 workshops</div>
+            <h3 class="cat-card-name">Lighting & Fixtures</h3>
+            <p class="cat-card-desc">Commercial LED, outdoor lighting, and decorative fixtures from Zhongshan — the world's lighting capital.</p>
             <div class="cat-card-footer">
-              <div class="cat-card-stats">
-                <strong>Zhongshan cluster</strong>
-                LED · OEM · CE certified
-              </div>
+              <span>Zhongshan · Guangzhou</span>
               <span class="cat-card-arrow">→</span>
             </div>
           </div>
         </a>
 
-        <!-- Coming Soon -->
-        <div class="cat-card-coming">
-          <div class="coming-inner">
-            <div class="icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
-            </div>
-            <h3>More categories<br>coming soon</h3>
-            <p>Electronics, Textiles, Packaging and more — we add new categories as we verify workshops on the ground.</p>
+        <!-- 004 Display & Acrylic -->
+        <a href="/categories/display-acrylic/" class="cat-card">
+          <div class="cat-card-image">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#1A1008"/>
+              <g stroke="#F4EFE6" stroke-width="0.5" fill="none" opacity="0.25">
+                <rect x="80" y="140" width="120" height="220"/>
+                <line x1="80" y1="213" x2="200" y2="213"/><line x1="80" y1="286" x2="200" y2="286"/>
+                <rect x="95" y="153" width="90" height="48"/><rect x="95" y="226" width="90" height="48"/><rect x="95" y="299" width="90" height="48"/>
+                <rect x="220" y="170" width="100" height="160"/>
+                <line x1="220" y1="250" x2="320" y2="250"/><line x1="270" y1="170" x2="270" y2="330"/>
+              </g>
+              <text x="200" y="110" font-family="Instrument Serif, serif" font-size="34" font-style="italic" text-anchor="middle" fill="#B83A26">acrylic display</text>
+            </svg>
+            <span class="cat-card-badge">Display</span>
+            <span class="cat-card-id">/ 004</span>
           </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-band">
-    <div class="container cta-band-inner">
-      <h2>Don't see your<br><em>product category?</em></h2>
-      <p>Tell us what you're sourcing. Our Foshan team will find the right workshop for you within 48 hours.</p>
-      <div class="cta-buttons">
-        <a href="/inquiry/" class="btn-light">
-          Submit a sourcing request
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10m0 0L7 1m4 4L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+          <div class="cat-card-body">
+            <div class="cat-card-count">1 workshop</div>
+            <h3 class="cat-card-name">Display & Acrylic</h3>
+            <p class="cat-card-desc">Custom acrylic displays, cosmetic stands, 3C retail fixtures, and vape showcases with OEM/ODM capability.</p>
+            <div class="cat-card-footer">
+              <span>Shenzhen</span>
+              <span class="cat-card-arrow">→</span>
+            </div>
+          </div>
         </a>
-        <a href="/factory-apply/" class="btn-outline">Apply as a factory</a>
+
+        <!-- 005 Electronics -->
+        <a href="/categories/electronics/" class="cat-card">
+          <div class="cat-card-image">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#080C18"/>
+              <g stroke="#4A9EFF" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="110" y="185" width="180" height="170"/>
+                <rect x="130" y="205" width="50" height="50"/><rect x="220" y="205" width="50" height="50"/>
+                <rect x="130" y="280" width="50" height="50"/><rect x="220" y="280" width="50" height="50"/>
+                <line x1="110" y1="270" x2="290" y2="270"/><line x1="200" y1="185" x2="200" y2="355"/>
+                <line x1="155" y1="185" x2="155" y2="120"/><line x1="245" y1="185" x2="245" y2="120"/>
+                <line x1="155" y1="355" x2="155" y2="420"/><line x1="245" y1="355" x2="245" y2="420"/>
+              </g>
+              <text x="200" y="120" font-family="Instrument Serif, serif" font-size="28" font-style="italic" text-anchor="middle" fill="#B83A26">components</text>
+            </svg>
+            <span class="cat-card-badge">Electronics</span>
+            <span class="cat-card-id">/ 005</span>
+          </div>
+          <div class="cat-card-body">
+            <div class="cat-card-count">2 workshops</div>
+            <h3 class="cat-card-name">Electronics & Components</h3>
+            <p class="cat-card-desc">Authorized IC distribution, BOM optimization, and PCB assembly services for global electronics buyers.</p>
+            <div class="cat-card-footer">
+              <span>Shenzhen · Bao'an</span>
+              <span class="cat-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 006 Packaging & Bath -->
+        <a href="/categories/packaging-bath/" class="cat-card">
+          <div class="cat-card-image">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#0A0808"/>
+              <g stroke="#F4EFE6" stroke-width="0.4" fill="none" opacity="0.2">
+                <rect x="94" y="198" width="212" height="204"/>
+                <polyline points="94,198 200,135 306,198"/>
+                <line x1="200" y1="135" x2="200" y2="198"/>
+                <line x1="94" y1="272" x2="306" y2="272"/>
+              </g>
+              <text x="200" y="120" font-family="Instrument Serif, serif" font-size="26" font-style="italic" text-anchor="middle" fill="#B83A26">packaging</text>
+            </svg>
+            <span class="cat-card-badge">Packaging</span>
+            <span class="cat-card-id">/ 006</span>
+          </div>
+          <div class="cat-card-body">
+            <div class="cat-card-count">2 workshops</div>
+            <h3 class="cat-card-name">Packaging & Bath</h3>
+            <p class="cat-card-desc">Corrugated and rigid packaging, custom printing, plus sanitary ware and bathroom fixtures with CUPC certification.</p>
+            <div class="cat-card-footer">
+              <span>Dongguan · Foshan</span>
+              <span class="cat-card-arrow">→</span>
+            </div>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
+
 </main>
 
 <footer>
